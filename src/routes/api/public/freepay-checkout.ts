@@ -106,7 +106,7 @@ export const Route = createFileRoute('/api/public/freepay-checkout')({
               amount,
               payment_method: 'pix',
               postback_url: webhookUrl,
-              metadata: JSON.stringify({ product: productName }),
+              metadata: { product: productName },
               customer: {
                 name: name,
                 email: email,
