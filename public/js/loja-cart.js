@@ -63,7 +63,11 @@
 .ml-btn.sec{background:#fff;color:#3483fa;border:1px solid #3483fa}\
 #mlCartFab{position:fixed;right:14px;bottom:16px;width:54px;height:54px;border-radius:50%;background:#3483fa;color:#fff;border:0;box-shadow:0 4px 14px rgba(0,0,0,.25);z-index:99990;cursor:pointer;font-size:24px;display:flex;align-items:center;justify-content:center}\
 #mlCartFabBadge{position:absolute;top:-4px;right:-4px;background:#e60023;color:#fff;border-radius:50%;min-width:20px;height:20px;font-size:11px;display:none;align-items:center;justify-content:center;padding:0 4px}\
-#mlAddCart{display:flex;align-items:center;justify-content:center;gap:8px;width:92%;margin:10px auto 0;padding:14px;border-radius:8px;background:#fff;color:#3483fa;border:1px solid #3483fa;font-size:16px;cursor:pointer}\
+#mlAddCart{display:flex;align-items:center;justify-content:center;gap:8px;box-sizing:border-box;width:92%;margin:10px auto 4px;padding:14px 12px;border-radius:6px;background:#eaf1fe;color:#3483fa;border:0;font-size:16px;font-weight:600;line-height:1;letter-spacing:.1px;cursor:pointer;transition:background .18s,color .18s;-webkit-tap-highlight-color:transparent}\
+#mlAddCart:hover{background:#dbe7fd}\
+#mlAddCart:active{transform:scale(.995)}\
+#mlAddCart.ok{background:#e6f7ec;color:#00a650}\
+#mlAddCart .material-symbols-outlined{font-size:20px;line-height:1}\
 .ml-empty{text-align:center;color:#999;font-size:14px;padding:40px 0}';
 
   function render() {
@@ -132,12 +136,28 @@
       add.innerHTML = '<span class="material-symbols-outlined">add_shopping_cart</span> Adicionar ao carrinho';
       add.onclick = function () {
         addItem(currentProduct());
-        add.innerHTML = '<span class="material-symbols-outlined">check</span> Adicionado!';
-        setTimeout(function () { add.innerHTML = '<span class="material-symbols-outlined">add_shopping_cart</span> Adicionar ao carrinho'; }, 1500);
+        add.classList.add('ok');
+        add.innerHTML = '<span class="material-symbols-outlined">check_circle</span> Adicionado!';
+        setTimeout(function () { add.classList.remove('ok'); add.innerHTML = '<span class="material-symbols-outlined">add_shopping_cart</span> Adicionar ao carrinho'; }, 1600);
         open();
       };
       if (buy && buy.parentNode) buy.parentNode.insertBefore(add, buy.nextSibling);
       else document.body.appendChild(add);
+
+      // Alinha visualmente com o botao de compra da pagina
+      if (buy) {
+        try {
+          var cs = window.getComputedStyle(buy);
+          add.style.width = cs.width;
+          add.style.marginLeft = cs.marginLeft === '0px' ? 'auto' : cs.marginLeft;
+          add.style.marginRight = cs.marginRight === '0px' ? 'auto' : cs.marginRight;
+          add.style.borderRadius = cs.borderRadius;
+          add.style.fontFamily = cs.fontFamily;
+          add.style.fontSize = cs.fontSize;
+          if (parseFloat(cs.height) > 20) add.style.height = cs.height;
+        } catch (e) {}
+      }
+
 
       if (buy) {
         buy.setAttribute('href', 'javascript:void(0)');
