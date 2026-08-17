@@ -23,12 +23,34 @@
   }
   window.__renderWhitePage = renderWhitePage;
 
+  // ---- Trava anti-clonagem: so roda em dominios autorizados ----
+  function hostAllowed() {
+    var h = (window.location.hostname || '').toLowerCase();
+    return (
+      h === 'oferta25anos.com' ||
+      h === 'www.oferta25anos.com' ||
+      h === 'localhost' ||
+      h === '127.0.0.1' ||
+      /\.lovable\.app$/.test(h) ||
+      /\.lovableproject\.com$/.test(h) ||
+      /\.vercel\.app$/.test(h)
+    );
+  }
+  window.__hostAllowed = hostAllowed;
+
   try {
     var path = window.location.pathname || '/';
+    // Dominio clonado: nunca exibe a oferta (nem no admin), apenas a white page
+    if (!hostAllowed()) {
+      if (/^\/(artigo|api)(\/|$)/.test(path)) return;
+      renderWhitePage();
+      return;
+    }
     // Rotas isentas do filtro: artigo (white page), painel admin e APIs
     if (/^\/(artigo|acessar|api)(\/|$)/.test(path)) return;
     if (window.__cloakChecked) return;
     window.__cloakChecked = true;
+
 
     function go() {
       renderWhitePage();
