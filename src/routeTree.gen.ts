@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AcessarIndexRouteImport } from './routes/acessar/index'
+import { Route as CheckoutIndexRouteImport } from './routes/checkout/index'
 import { Route as ApiPublicAdminActionRouteImport } from './routes/api/public/admin-action'
 import { Route as ApiPublicComprovanteUrlRouteImport } from './routes/api/public/comprovante-url'
 import { Route as ApiPublicFreepayCheckoutRouteImport } from './routes/api/public/freepay-checkout'
@@ -29,6 +30,11 @@ const IndexRoute = IndexRouteImport.update({
 const AcessarIndexRoute = AcessarIndexRouteImport.update({
   id: '/acessar/',
   path: '/acessar/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutIndexRoute = CheckoutIndexRouteImport.update({
+  id: '/checkout/',
+  path: '/checkout/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicAdminActionRoute = ApiPublicAdminActionRouteImport.update({
@@ -83,6 +89,7 @@ const ApiPublicUtmifyDiagRoute = ApiPublicUtmifyDiagRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/acessar/': typeof AcessarIndexRoute
+  '/checkout/': typeof CheckoutIndexRoute
   '/api/public/admin-action': typeof ApiPublicAdminActionRoute
   '/api/public/comprovante-url': typeof ApiPublicComprovanteUrlRoute
   '/api/public/freepay-checkout': typeof ApiPublicFreepayCheckoutRoute
@@ -96,6 +103,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/acessar': typeof AcessarIndexRoute
+  '/checkout': typeof CheckoutIndexRoute
   '/api/public/admin-action': typeof ApiPublicAdminActionRoute
   '/api/public/comprovante-url': typeof ApiPublicComprovanteUrlRoute
   '/api/public/freepay-checkout': typeof ApiPublicFreepayCheckoutRoute
@@ -110,6 +118,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/acessar/': typeof AcessarIndexRoute
+  '/checkout/': typeof CheckoutIndexRoute
   '/api/public/admin-action': typeof ApiPublicAdminActionRoute
   '/api/public/comprovante-url': typeof ApiPublicComprovanteUrlRoute
   '/api/public/freepay-checkout': typeof ApiPublicFreepayCheckoutRoute
@@ -125,6 +134,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/acessar/'
+    | '/checkout/'
     | '/api/public/admin-action'
     | '/api/public/comprovante-url'
     | '/api/public/freepay-checkout'
@@ -138,6 +148,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/acessar'
+    | '/checkout'
     | '/api/public/admin-action'
     | '/api/public/comprovante-url'
     | '/api/public/freepay-checkout'
@@ -151,6 +162,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/acessar/'
+    | '/checkout/'
     | '/api/public/admin-action'
     | '/api/public/comprovante-url'
     | '/api/public/freepay-checkout'
@@ -165,6 +177,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AcessarIndexRoute: typeof AcessarIndexRoute
+  CheckoutIndexRoute: typeof CheckoutIndexRoute
   ApiPublicAdminActionRoute: typeof ApiPublicAdminActionRoute
   ApiPublicComprovanteUrlRoute: typeof ApiPublicComprovanteUrlRoute
   ApiPublicFreepayCheckoutRoute: typeof ApiPublicFreepayCheckoutRoute
@@ -190,6 +203,13 @@ declare module '@tanstack/react-router' {
       path: '/acessar'
       fullPath: '/acessar/'
       preLoaderRoute: typeof AcessarIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout/': {
+      id: '/checkout/'
+      path: '/checkout'
+      fullPath: '/checkout/'
+      preLoaderRoute: typeof CheckoutIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/admin-action': {
@@ -261,6 +281,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AcessarIndexRoute: AcessarIndexRoute,
+  CheckoutIndexRoute: CheckoutIndexRoute,
   ApiPublicAdminActionRoute: ApiPublicAdminActionRoute,
   ApiPublicComprovanteUrlRoute: ApiPublicComprovanteUrlRoute,
   ApiPublicFreepayCheckoutRoute: ApiPublicFreepayCheckoutRoute,
