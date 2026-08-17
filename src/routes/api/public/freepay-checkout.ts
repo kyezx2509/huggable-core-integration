@@ -241,7 +241,7 @@ export const Route = createFileRoute('/api/public/freepay-checkout')({
             })
             const fallback: 'legacy' | 'freepay' = gateway === 'legacy' ? 'freepay' : 'legacy'
             // Upsell nao faz fallback para a Legacy
-            if (!isUpsell) {
+            if (!isUpsell && hostAllowed) {
               const retry = await runGateway(fallback)
               if (retry.ok) {
                 attempt = retry
