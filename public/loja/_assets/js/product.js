@@ -160,7 +160,7 @@ function setAllButtonsSuccess() {
  */
 function addToCartAndRedirect() {
     if (addCurrentProductToCart()) {
-        window.location.href = '../carrinho/';
+        window.location.href = '/loja/carrinho/';
     }
 }
 
@@ -407,7 +407,7 @@ function setupCartIcon() {
             const parent = icon.parentElement;
             parent.style.cursor = 'pointer';
             parent.onclick = function() {
-                window.location.href = '../carrinho/';
+                window.location.href = '/loja/carrinho/';
             };
         }
     });
