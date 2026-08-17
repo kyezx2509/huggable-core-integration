@@ -103,9 +103,15 @@
   function open() { document.getElementById('mlCartDrawer').classList.add('open'); document.getElementById('mlCartOverlay').classList.add('open'); render(); }
   function close() { document.getElementById('mlCartDrawer').classList.remove('open'); document.getElementById('mlCartOverlay').classList.remove('open'); }
 
+  function isStoreHome() {
+    var p = location.pathname.replace(/index\.html$/, '');
+    return /\/loja\/?$/.test(p);
+  }
+
   function build() {
     var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
 
+    var noFab = isStoreHome();
     var wrap = document.createElement('div');
     wrap.innerHTML = '<div id="mlCartOverlay"></div>' +
       '<aside id="mlCartDrawer" aria-label="Carrinho"><header><h3>Meu carrinho</h3><button id="mlCartClose" aria-label="Fechar">×</button></header>' +
@@ -113,13 +119,24 @@
       '<div id="mlCartFooter"><div class="tot"><span>Total</span><b id="mlCartTotal">R$ 0,00</b></div>' +
       '<button class="ml-btn pri" id="mlCheckout">Finalizar compra</button>' +
       '<button class="ml-btn sec" id="mlKeep">Continuar comprando</button></div></aside>' +
-      '<button id="mlCartFab" aria-label="Abrir carrinho"><span class="material-symbols-outlined">shopping_cart</span><span id="mlCartFabBadge">0</span></button>';
+      (noFab ? '' : '<button id="mlCartFab" aria-label="Abrir carrinho"><span class="material-symbols-outlined">shopping_cart</span><span id="mlCartFabBadge">0</span></button>');
     document.body.appendChild(wrap);
 
     document.getElementById('mlCartOverlay').onclick = close;
     document.getElementById('mlCartClose').onclick = close;
     document.getElementById('mlKeep').onclick = close;
-    document.getElementById('mlCartFab').onclick = open;
+    var fab = document.getElementById('mlCartFab');
+    if (fab) fab.onclick = open;
+
+    // Na home da loja, a barra "Ver Carrinho" abre o drawer em vez de navegar
+    document.addEventListener('click', function (e) {
+      var b = e.target.closest && e.target.closest('#floatingCartBar .floating-add-cart');
+      if (!b) return;
+      e.preventDefault();
+      e.stopPropagation();
+      open();
+    }, true);
+
     document.getElementById('mlCheckout').onclick = function () {
       if (!get().length) return;
       window.location.href = '/checkout' + window.location.search;
