@@ -1,7 +1,7 @@
 // Redireciona todas as chamadas relativas /api/* para o backend Lovable
 // quando o site estiver hospedado fora do Lovable (Vercel / domínio custom).
 (function () {
-  var LOVABLE_BACKEND = 'https://project--3e3beb28-bfbc-433c-820b-fc54437c6bdd.lovable.app';
+  var LOVABLE_BACKEND = 'https://project--9e11aaa5-ceeb-442b-aa6d-add0bb7d233d.lovable.app';
 
   function resolveBase() {
     if (window.__BACKEND_URL__) return String(window.__BACKEND_URL__).replace(/\/+$/, '');

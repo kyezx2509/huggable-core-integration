@@ -57,7 +57,7 @@ export async function sendFbPurchase(input: FbPurchaseInput): Promise<{ ok: bool
         event_time: Math.floor(Date.now() / 1000),
         event_id: input.eventId,
         action_source: 'website',
-        event_source_url: input.eventSourceUrl || 'https://landing-page-celimax.vercel.app/checkout',
+        event_source_url: input.eventSourceUrl || `${}/checkout`,
         user_data: userData,
         custom_data: {
           currency: input.currency || 'BRL',
