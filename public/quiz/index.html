@@ -381,6 +381,9 @@
     },
   ];
 
+  function preloadQuizImages(){questions.forEach(function(q){var i=new Image();i.decoding="async";i.src=q.image;});}
+  preloadQuizImages();
+
   let currentQuestion = 0;
   let selectedOption = null;
 
@@ -390,7 +393,7 @@
 
     document.getElementById("progress-fill").style.width = `${progress}%`;
     document.getElementById("progress-label").textContent = `${Math.round(progress)} %`;
-    document.getElementById("question-img").src = q.image;
+    (function(){var el=document.getElementById("question-img");var im=new Image();im.src=q.image;if(im.complete){el.src=q.image;}else{im.onload=function(){el.src=q.image;};el.src=q.image;}})();
     document.getElementById("question-text").textContent = q.question;
 
     const grid = document.getElementById("options-grid");
