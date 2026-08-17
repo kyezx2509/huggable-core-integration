@@ -43,8 +43,9 @@
 #mlCartOverlay.open{opacity:1;pointer-events:auto}\
 #mlCartDrawer{position:fixed;top:0;right:0;height:100%;height:100dvh;width:92%;max-width:400px;background:#fff;z-index:99999;transform:translateX(105%);transition:transform .28s ease;display:flex;flex-direction:column;font-family:Arial,Helvetica,sans-serif;box-shadow:-4px 0 18px rgba(0,0,0,.18)}\
 #mlCartDrawer.open{transform:translateX(0)}\
-#mlCartDrawer header{flex:none;display:flex;align-items:center;justify-content:space-between;padding:16px;border-bottom:1px solid #eee}\
-#mlCartDrawer header h3{margin:0;font-size:17px;color:#333;font-weight:600}\
+#mlCartDrawer *{box-sizing:border-box}\
+#mlCartDrawer .ml-head{position:static!important;flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;padding:16px;border-bottom:1px solid #eee;background:#fff;width:auto;height:auto}\
+#mlCartDrawer .ml-head h3{margin:0;font-size:17px;color:#333;font-weight:600;padding:0;line-height:1.2}\
 #mlCartClose{background:none;border:0;font-size:26px;line-height:1;cursor:pointer;color:#888;padding:0 4px}\
 #mlCartItems{flex:1 1 auto;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:10px 14px 16px}\
 .ml-ci{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid #f1f1f1;box-sizing:border-box}\
@@ -120,7 +121,7 @@
     var noFab = isStoreHome();
     var wrap = document.createElement('div');
     wrap.innerHTML = '<div id="mlCartOverlay"></div>' +
-      '<aside id="mlCartDrawer" aria-label="Carrinho"><header><h3>Meu carrinho</h3><button id="mlCartClose" aria-label="Fechar">×</button></header>' +
+      '<aside id="mlCartDrawer" aria-label="Carrinho"><div class="ml-head"><h3>Meu carrinho</h3><button id="mlCartClose" aria-label="Fechar">×</button></div>' +
       '<div id="mlCartItems"></div>' +
       '<div id="mlCartFooter"><div class="tot"><span>Total</span><b id="mlCartTotal">R$ 0,00</b></div>' +
       '<button class="ml-btn pri" id="mlCheckout">Finalizar compra</button>' +
