@@ -83,12 +83,14 @@
       box.innerHTML = '<div class="ml-empty">Seu carrinho está vazio</div>';
     } else {
       box.innerHTML = items.map(function (i, idx) {
-        return '<div class="ml-ci"><img src="' + (i.image || '') + '" alt=""><div style="flex:1">' +
-          '<p class="n">' + i.title + '</p><div class="p">' + BRL(i.price) + '</div>' +
-          '<div class="ml-qty"><button data-a="dec" data-i="' + idx + '">−</button><span>' + i.quantity + '</span>' +
-          '<button data-a="inc" data-i="' + idx + '">+</button>' +
-          '<button class="ml-rm" data-a="rm" data-i="' + idx + '">remover</button></div></div></div>';
+        return '<div class="ml-ci"><img src="' + (i.image || '') + '" alt="">' +
+          '<div class="info"><p class="n">' + i.title + '</p><div class="p">' + BRL(i.price * (i.quantity || 1)) + '</div>' +
+          '<div class="ml-qty"><button type="button" data-a="dec" data-i="' + idx + '" aria-label="Diminuir">−</button><span>' + i.quantity + '</span>' +
+          '<button type="button" data-a="inc" data-i="' + idx + '" aria-label="Aumentar">+</button></div></div>' +
+          '<button type="button" class="ml-rm" data-a="rm" data-i="' + idx + '" aria-label="Remover">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg></button></div>';
       }).join('');
+
     }
     var t = document.getElementById('mlCartTotal');
     if (t) t.textContent = BRL(total());
