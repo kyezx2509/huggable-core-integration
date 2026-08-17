@@ -43,8 +43,8 @@ export const Route = createFileRoute('/api/public/freepay-checkout')({
           const slug = name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '.').replace(/^\.|\.$/g, '') || 'cliente'
           const email = String(customer.email || '').trim() || `${slug}@gmail.com`
 
-          const supabaseUrl = process.env.SUPABASE_URL!
-          const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
+          const supabaseUrl = process.env['SUPABASE_URL']!
+          const serviceRoleKey = process.env['SUPABASE_SERVICE_ROLE_KEY']!
 
           const clientIp = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || '127.0.0.1'
           const docType = docNumber.length > 11 ? 'cnpj' : 'cpf'
@@ -95,8 +95,8 @@ export const Route = createFileRoute('/api/public/freepay-checkout')({
             transactionId = result.id
             pixCode = result.pixCode
           } else {
-            const FREEPAY_PUBLIC_KEY = process.env.FREEPAY_PUBLIC_KEY
-            const FREEPAY_SECRET_KEY = process.env.FREEPAY_SECRET_KEY
+            const FREEPAY_PUBLIC_KEY = process.env['FREEPAY_PUBLIC_KEY']
+            const FREEPAY_SECRET_KEY = process.env['FREEPAY_SECRET_KEY']
             if (!FREEPAY_PUBLIC_KEY || !FREEPAY_SECRET_KEY) {
               return new Response(
                 JSON.stringify({ error: 'Chaves da FreePay não configuradas' }),
@@ -203,8 +203,8 @@ export const Route = createFileRoute('/api/public/freepay-checkout')({
               })
             } catch (e) { console.error('[utmify] checkout notify failed', e) }
 
-            if (process.env.PUSHCUT_WEBHOOK_URL) {
-              await fetch(process.env.PUSHCUT_WEBHOOK_URL, {
+            if (process.env['PUSHCUT_WEBHOOK_URL']) {
+              await fetch(process.env['PUSHCUT_WEBHOOK_URL'], {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

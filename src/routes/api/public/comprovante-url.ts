@@ -21,7 +21,7 @@ export const Route = createFileRoute('/api/public/comprovante-url')({
           if (!path || !token) {
             return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 401, headers: cors })
           }
-          const sb = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
+          const sb = createClient(process.env['SUPABASE_URL']!, process.env['SUPABASE_SERVICE_ROLE_KEY']!)
           const { data: userData } = await sb.auth.getUser(token)
           if (!userData?.user) {
             return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 401, headers: cors })

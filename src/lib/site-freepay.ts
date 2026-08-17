@@ -9,8 +9,8 @@ export const PIX_PAGE_MAP: Record<string, { amount: number; title: string }> = {
 }
 
 export function freepayAuthHeader() {
-  const pub = process.env.FREEPAY_PUBLIC_KEY
-  const sec = process.env.FREEPAY_SECRET_KEY
+  const pub = process.env['FREEPAY_PUBLIC_KEY']
+  const sec = process.env['FREEPAY_SECRET_KEY']
   if (!pub || !sec) throw new Error('FreePay keys not configured')
   return 'Basic ' + Buffer.from(`${pub}:${sec}`).toString('base64')
 }

@@ -64,7 +64,7 @@ async function processWebhook(rawBody: string) {
   const isRefused = ['refused', 'failed', 'canceled', 'cancelled', 'refunded', 'chargedback'].some(s => statusRaw.includes(s))
   const mapped = isPaid ? 'paid' : isRefused ? 'refused' : 'pending'
 
-  const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
+  const supabase = createClient(process.env['SUPABASE_URL']!, process.env['SUPABASE_SERVICE_ROLE_KEY']!)
   const { data: existing } = await supabase
     .from('payment_transactions')
     .select('status, amount, customer_name, customer_email, customer_cpf, customer_phone, customer_ip, items_json, tracking_json')
@@ -135,8 +135,8 @@ async function processWebhook(rawBody: string) {
     } catch (e) { console.error('[fb-capi] webhook notify failed', e) }
 
 
-    if (process.env.PUSHCUT_WEBHOOK_URL) {
-      fetch(process.env.PUSHCUT_WEBHOOK_URL, {
+    if (process.env['PUSHCUT_WEBHOOK_URL']) {
+      fetch(process.env['PUSHCUT_WEBHOOK_URL'], {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

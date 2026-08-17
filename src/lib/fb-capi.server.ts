@@ -24,8 +24,8 @@ export interface FbPurchaseInput {
 }
 
 export async function sendFbPurchase(input: FbPurchaseInput): Promise<{ ok: boolean; status?: number; body?: string }> {
-  const pixelId = process.env.FB_PIXEL_ID
-  const token = process.env.FB_CAPI_TOKEN
+  const pixelId = process.env['FB_PIXEL_ID']
+  const token = process.env['FB_CAPI_TOKEN']
   if (!pixelId || !token) {
     console.warn('[fb-capi] FB_PIXEL_ID / FB_CAPI_TOKEN not configured')
     return { ok: false }

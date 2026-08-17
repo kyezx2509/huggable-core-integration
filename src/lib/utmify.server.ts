@@ -21,7 +21,7 @@ function nowUtcSql(): string {
 }
 
 export async function sendUtmifyOrder(input: UtmifyOrderInput): Promise<{ ok: boolean; status?: number; body?: string }> {
-  const tokens = [process.env.UTMIFY_API_TOKEN, process.env.UTMIFY_API_TOKEN_2]
+  const tokens = [process.env['UTMIFY_API_TOKEN'], process.env['UTMIFY_API_TOKEN_2']]
     .map((t) => (t || '').trim())
     .filter(Boolean) as string[]
   if (tokens.length === 0) {
@@ -56,13 +56,13 @@ export async function sendUtmifyOrder(input: UtmifyOrderInput): Promise<{ ok: bo
       },
     ],
     trackingParameters: {
-      src: input.trackingParameters?.src || null,
-      sck: input.trackingParameters?.sck || null,
-      utm_source: input.trackingParameters?.utm_source || null,
-      utm_campaign: input.trackingParameters?.utm_campaign || null,
-      utm_medium: input.trackingParameters?.utm_medium || null,
-      utm_content: input.trackingParameters?.utm_content || null,
-      utm_term: input.trackingParameters?.utm_term || null,
+      src: input.trackingParameters?.['src'] || null,
+      sck: input.trackingParameters?.['sck'] || null,
+      utm_source: input.trackingParameters?.['utm_source'] || null,
+      utm_campaign: input.trackingParameters?.['utm_campaign'] || null,
+      utm_medium: input.trackingParameters?.['utm_medium'] || null,
+      utm_content: input.trackingParameters?.['utm_content'] || null,
+      utm_term: input.trackingParameters?.['utm_term'] || null,
     },
     commission: {
       totalPriceInCents: input.amountCents,

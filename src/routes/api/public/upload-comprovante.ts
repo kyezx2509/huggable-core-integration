@@ -24,7 +24,7 @@ export const Route = createFileRoute('/api/public/upload-comprovante')({
           if (file.size > maxBytes) {
             return new Response(JSON.stringify({ success: false, message: 'Arquivo maior que 10MB' }), { status: 200, headers: cors })
           }
-          const sb = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
+          const sb = createClient(process.env['SUPABASE_URL']!, process.env['SUPABASE_SERVICE_ROLE_KEY']!)
           const ext = (file.name.split('.').pop() || 'bin').toLowerCase().replace(/[^a-z0-9]/g, '') || 'bin'
           const path = `${transactionId}/${Date.now()}.${ext}`
           const buffer = Buffer.from(await file.arrayBuffer())
@@ -37,8 +37,8 @@ export const Route = createFileRoute('/api/public/upload-comprovante')({
           }
           await sb.from('payment_transactions').update({ comprovante_url: path, updated_at: new Date().toISOString() }).eq('transaction_id', transactionId)
 
-          if (process.env.PUSHCUT_WEBHOOK_URL) {
-            fetch(process.env.PUSHCUT_WEBHOOK_URL, {
+          if (process.env['PUSHCUT_WEBHOOK_URL']) {
+            fetch(process.env['PUSHCUT_WEBHOOK_URL'], {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ title: 'Comprovante enviado', text: `Transação ${transactionId}`, sound: 'default' }),

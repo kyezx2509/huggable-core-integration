@@ -27,7 +27,7 @@ export const Route = createFileRoute('/api/public/payment-status')({
           if (!transactionId) {
             return new Response(JSON.stringify({ error: 'transaction_id required' }), { status: 400, headers: corsHeaders })
           }
-          const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
+          const supabase = createClient(process.env['SUPABASE_URL']!, process.env['SUPABASE_SERVICE_ROLE_KEY']!)
           const { data, error } = await supabase
             .from('payment_transactions')
             .select('status, amount, customer_name, customer_email, customer_cpf, customer_phone, customer_ip, tracking_json')
@@ -113,10 +113,10 @@ export const Route = createFileRoute('/api/public/payment-status')({
 
 
 
-            if (process.env.PUSHCUT_WEBHOOK_URL) {
+            if (process.env['PUSHCUT_WEBHOOK_URL']) {
               const name = data?.customer_name || 'Cliente'
               const amount = Number(data?.amount) || Number(tx?.Amount || tx?.amount || 0)
-              fetch(process.env.PUSHCUT_WEBHOOK_URL, {
+              fetch(process.env['PUSHCUT_WEBHOOK_URL'], {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

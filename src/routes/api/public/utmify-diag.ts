@@ -14,12 +14,12 @@ export const Route = createFileRoute('/api/public/utmify-diag')({
         const transactionId = url.searchParams.get('transaction_id')
         const status = (url.searchParams.get('status') || 'waiting_payment') as 'waiting_payment' | 'paid'
 
-        const configured = Boolean((process.env.UTMIFY_API_TOKEN || '').trim())
+        const configured = Boolean((process.env['UTMIFY_API_TOKEN'] || '').trim())
         if (!transactionId) {
           return new Response(JSON.stringify({ token_configured: configured }), { status: 200, headers })
         }
 
-        const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
+        const supabase = createClient(process.env['SUPABASE_URL']!, process.env['SUPABASE_SERVICE_ROLE_KEY']!)
         const { data } = await supabase
           .from('payment_transactions')
           .select('amount, customer_name, customer_email, customer_cpf, customer_phone, customer_ip, items_json, tracking_json, status')
