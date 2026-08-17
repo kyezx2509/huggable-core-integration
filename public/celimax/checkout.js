@@ -82,8 +82,9 @@
     $$(".js-prod-name").forEach((e) => (e.textContent = product.name));
     $$(".js-prod-img").forEach((e) => (e.src = product.img));
     $$(".js-prod-price").forEach((e) => (e.textContent = money(product.price * state.qty)));
-    $$(".js-qty").forEach((e) => (e.value = state.qty));
-    $$(".js-count").forEach((e) => (e.textContent = state.qty));
+    $$(".js-qty").forEach((e) => (e.value = isCart ? cartCount : state.qty));
+    $$(".js-count").forEach((e) => (e.textContent = isCart ? cartCount : state.qty));
+
     $$(".js-subtotal").forEach((e) => (e.textContent = money(t.sub)));
     $$(".js-total").forEach((e) => (e.textContent = money(t.total)));
     $$(".js-freight").forEach((e) => (e.textContent = t.freight ? money(t.freight) : "Grátis"));
