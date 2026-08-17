@@ -1,1 +1,0 @@
-update public.site_settings set value='freepay' where key='payment_gateway';

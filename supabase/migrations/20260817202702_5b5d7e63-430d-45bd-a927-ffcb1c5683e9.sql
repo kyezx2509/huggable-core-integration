@@ -1,1 +1,0 @@
-update public.payment_transactions set comprovante_url = null where comprovante_url = '352707c21e56404988912ece354e78ad/1786998387013.txt';

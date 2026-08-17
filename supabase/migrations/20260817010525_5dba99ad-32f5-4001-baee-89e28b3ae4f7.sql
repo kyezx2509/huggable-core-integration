@@ -1,1 +1,0 @@
-delete from public.payment_transactions where customer_name like 'Teste Notif%';
