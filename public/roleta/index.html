@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Roleta Mercado Livre</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* ── BACKGROUND ── */
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      background-image: url('../images/bg-roleta.png');
+      background-size: cover;
+      background-position: top center;
+      z-index: 0;
+    }
+
+    /* ── CONFETTI ── */
+    .confetti-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 50;
+      overflow: hidden;
+      display: none;
+    }
+    .confetti-container.visible { display: block; }
+
+    .confetti-piece {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      top: -5%;
+      animation: confetti-fall linear forwards;
+    }
+
+    @keyframes confetti-fall {
+      0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+    }
+
+    /* ── MAIN CONTENT ── */
+    .main-content {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 180px 0 96px;
+    }
+
+    /* ── WHEEL WRAPPER ── */
+    .wheel-wrapper {
+      position: relative;
+      width: calc(100vw - 16px);
+      height: calc(100vw - 16px);
+      max-width: 500px;
+      max-height: 500px;
+      margin-bottom: 16px;
+    }
+
+    .wheel-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Wobble when not spinning */
+    @keyframes wobble {
+      0%, 100% { transform: rotate(-2deg) scale(1.01); }
+      50%       { transform: rotate(2deg)  scale(1.01); }
+    }
+
+    .wheel-inner.pulsing { animation: wobble 1.5s ease-in-out infinite; }
+
+    .wheel-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      transition: transform 10s cubic-bezier(0.15, 0.85, 0.20, 1.00);
+    }
+
+    /* Disable transition when not spinning (for snap-reset) */
+    .wheel-img.no-transition { transition: none; }
+
+    /* Center GIRE button */
+    .gire-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 22%;
+      height: 22%;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      padding: 0;
+      z-index: 20;
+    }
+
+    .gire-btn img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 3px 6px rgba(0,0,0,.4));
+    }
+
+    .gire-btn:disabled { cursor: not-allowed; }
+
+    @keyframes pulse-scale {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50%       { transform: translate(-50%, -50%) scale(1.08); }
+    }
+
+    .gire-btn.pulsing { animation: pulse-scale 1.2s ease-in-out infinite; }
+
+    /* ── SPIN BUTTON ── */
+    .spin-btn-wrapper {
+      width: 100%;
+      padding: 0 16px;
+    }
+
+    .btn-spin {
+      display: block;
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 16px;
+      border-radius: 50px;
+      border: none;
+      background: #3A3897;
+      color: #fff;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: .5px;
+      cursor: pointer;
+      box-shadow: 0 6px 0 #2a2870, 0 8px 15px rgba(0,0,0,.30);
+      transition: background .2s, box-shadow .2s;
+    }
+
+    .btn-spin:hover:not(:disabled) { background: #2d2c75; }
+
+    .btn-spin:disabled {
+      background: #9e9e9e;
+      color: #ccc;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    @keyframes pulse-btn {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.03); }
+    }
+
+    .btn-spin.pulsing { animation: pulse-btn 1.2s ease-in-out infinite; }
+
+    /* ── NOTIFICATION BAR ── */
+    .notification-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #333;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 40;
+      transform: translateY(100%);
+      transition: transform .4s ease;
+    }
+
+    .notification-bar.visible { transform: translateY(0); }
+
+    .notif-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+      background: #555;
+    }
+
+    .notif-text {
+      color: #fff;
+      font-size: 14px;
+    }
+
+    .notif-text strong { color: #FFE600; }
+
+    /* ── MODAL OVERLAY ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.6);
+      z-index: 60;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      display: none;
+    }
+
+    .modal-overlay.visible { display: flex; }
+
+    .modal-box {
+      background: #fff;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 320px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,.3);
+      animation: modal-in .3s ease forwards;
+    }
+
+    @keyframes modal-in {
+      from { transform: scale(.85); opacity: 0; }
+      to   { transform: scale(1);   opacity: 1; }
+    }
+
+    .modal-inner {
+      padding: 24px;
+      text-align: center;
+    }
+
+    .modal-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 16px;
+    }
+
+    .modal-emoji {
+      width: 112px;
+      height: 112px;
+      object-fit: contain;
+      margin: 0 auto 16px;
+      display: block;
+    }
+
+    .modal-msg {
+      color: #333;
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .modal-msg .highlight-red   { color: #E74C3C; font-weight: 700; }
+    .modal-msg .highlight-green { color: #00a650; font-weight: 700; }
+
+    .btn-modal {
+      width: 100%;
+      padding: 14px;
+      border-radius: 50px;
+      border: none;
+      background: #3A3897;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #2a2870;
+      transition: background .2s;
+    }
+
+    .btn-modal:hover { background: #2d2c75; }
+  </style>
+</head>
+<body>
+
+<!-- BACKGROUND -->
+<div class="bg-layer"></div>
+
+<!-- CONFETTI -->
+<div class="confetti-container" id="confetti-container"></div>
+
+<!-- MAIN -->
+<div class="main-content">
+
+  <!-- RODA -->
+  <div class="wheel-wrapper">
+    <div class="wheel-inner pulsing" id="wheel-inner">
+      <img class="wheel-img" id="wheel-img"
+           src="../images/roleta.png"
+           alt="Roleta">
+      <button class="gire-btn pulsing" id="gire-btn" onclick="spinWheel()" aria-label="Girar roleta">
+        <img src="../images/botao-gire.png" alt="Gire">
+      </button>
+    </div>
+  </div>
+
+  <!-- BOTÃO GIRE PARA GANHAR -->
+  <div class="spin-btn-wrapper">
+    <button class="btn-spin pulsing" id="btn-spin" onclick="spinWheel()">
+      GIRE PARA GANHAR
+    </button>
+  </div>
+
+</div>
+
+<!-- NOTIFICATION BAR -->
+<div class="notification-bar" id="notification-bar">
+  <img class="notif-avatar" id="notif-avatar" src="" alt="">
+  <p class="notif-text" id="notif-text"></p>
+</div>
+
+<!-- MODAL: UMA PENA -->
+<div class="modal-overlay" id="modal-retry">
+  <div class="modal-box">
+    <div class="modal-inner">
+      <h2 class="modal-title">Uma pena!</h2>
+      <img class="modal-emoji"
+           src="../images/emoji-sweat.png"
+           alt="Emoji triste">
+      <p class="modal-msg">
+        Você foi o grande selecionado e<br>ganhou <span class="highlight-red">01</span> chance extra. Boa sorte!
+      </p>
+      <button class="btn-modal" onclick="closeRetryModal()">Tentar Novamente</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: PARABÉNS -->
+<div class="modal-overlay" id="modal-win">
+  <div class="modal-box">
+    <div class="modal-inner">
+      <h2 class="modal-title">Parabéns!</h2>
+      <img class="modal-emoji"
+           src="../images/emoji-star.png"
+           alt="Emoji estrelas">
+      <p class="modal-msg">
+        Você acaba de ganhar o<br>
+        <span class="highlight-green">Mega Desconto de 95%</span>
+      </p>
+      <button class="btn-modal" onclick="goToLoja()">Resgatar seu Prêmio</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ─── NOTIFICAÇÕES ─── */
+  const notifications = [
+    { name: "Amanda Santos",   photo: "https://i.postimg.cc/tssLM1hF/1.jpg" },
+    { name: "Carlos Oliveira", photo: "https://i.postimg.cc/DJx5rTxB/2.jpg" },
+    { name: "Juliano Costa",   photo: "https://i.postimg.cc/Bjr8kK1F/3.jpg" },
+    { name: "Rafael Almeida", photo: "https://i.postimg.cc/qzf5BkCd/4.jpg" },
+    { name: "Fernanda Lima",   photo: "https://i.postimg.cc/tYqb2CSz/5.jpg" },
+    { name: "Thiago Martins",  photo: "https://i.postimg.cc/x8Wj92sv/11.jpg" },
+    { name: "Gabriela Vieira", photo: "https://i.postimg.cc/njQDM1b0/6.jpg" },
+    { name: "Pedro Henrique",  photo: "https://i.postimg.cc/CR5h7LPq/7.jpg" },
+    { name: "Lucas Ferreira",  photo: "https://i.postimg.cc/GBXBX5rM/8.jpg" },
+    { name: "Maria Silva",     photo: "https://i.postimg.cc/QBgpqbnC/9.jpg" },
+  ];
+
+  const discounts = ["5%", "75%", "50%", "95%"];
+  let notifIndex = 0;
+  let notifTimeout = null;
+  let notifInterval = null;
+
+  function showNotification() {
+    const item = notifications[notifIndex];
+    const discount = discounts[Math.floor(Math.random() * discounts.length)];
+    notifIndex = (notifIndex + 1) % notifications.length;
+
+    const bar  = document.getElementById("notification-bar");
+    const img  = document.getElementById("notif-avatar");
+    const text = document.getElementById("notif-text");
+
+    img.src = item.photo;
+    text.innerHTML = `${item.name} acabou de ganhar <strong>${discount} de desconto!</strong>`;
+    bar.classList.add("visible");
+
+    clearTimeout(notifTimeout);
+    notifTimeout = setTimeout(() => bar.classList.remove("visible"), 4000);
+  }
+
+  setTimeout(() => {
+    showNotification();
+    notifInterval = setInterval(showNotification, 8000);
+  }, 2000);
+
+  /* ─── ÁUDIO ─── */
+  let spinAudio = null;
+  let winAudio  = null;
+  let audioReady = false;
+
+  function initAudio() {
+    if (audioReady) return;
+    try {
+      spinAudio = new Audio("../images/roleta.mp3");
+      spinAudio.loop   = true;
+      spinAudio.volume = 1;
+      spinAudio.preload = "auto";
+
+      winAudio = new Audio("../images/ml.mp3");
+      winAudio.volume  = 1;
+      winAudio.preload = "auto";
+
+      audioReady = true;
+    } catch (e) {
+      console.log("Erro ao inicializar áudio:", e);
+    }
+  }
+
+  /* ─── ROLETA ─── */
+  let totalRotation = 0;
+  let isSpinning = false;
+  let spinCount  = 0;
+
+  // Referências DOM
+  const wheelImg = document.getElementById("wheel-img");
+  const gireBtn  = document.getElementById("gire-btn");
+  const spinBtn  = document.getElementById("btn-spin");
+  const wheelInner = document.getElementById("wheel-inner");
+
+  function setPulsing(active) {
+    if (active) {
+      wheelInner.classList.add("pulsing");
+      gireBtn.classList.add("pulsing");
+      spinBtn.classList.add("pulsing");
+    } else {
+      wheelInner.classList.remove("pulsing");
+      gireBtn.classList.remove("pulsing");
+      spinBtn.classList.remove("pulsing");
+    }
+  }
+
+  function spinWheel() {
+    if (isSpinning || spinCount >= 2) return;
+
+    initAudio();
+    isSpinning = true;
+    setPulsing(false);
+
+    spinBtn.disabled = true;
+    gireBtn.disabled = true;
+    spinBtn.textContent = "GIRANDO...";
+
+    // Som de giro
+    if (spinAudio) {
+      spinAudio.currentTime = 0;
+      spinAudio.play().catch(() => {});
+    }
+
+    const currentSpin = ++spinCount;
+    const fullRotations = 8 * 360; // 2880°
+
+    // 1º giro → cair em "Tente outra vez" (45°)
+    // 2º giro → cair em "95%" (90°) → adicionar 8×360 + 315 = 3195
+    const extra = currentSpin === 1 ? 45 : 315;
+    const target = fullRotations + extra;
+
+    // Habilitar transição e girar
+    wheelImg.classList.remove("no-transition");
+    totalRotation += target;
+    wheelImg.style.transform = `rotate(${totalRotation}deg)`;
+
+    setTimeout(() => {
+      isSpinning = false;
+
+      if (spinAudio) { spinAudio.pause(); spinAudio.currentTime = 0; }
+
+      if (currentSpin === 1) {
+        // Primeiro giro: tente outra vez
+        document.getElementById("modal-retry").classList.add("visible");
+      } else {
+        // Segundo giro: ganhou!
+        if (winAudio) { winAudio.currentTime = 0; winAudio.play().catch(() => {}); }
+        spawnConfetti();
+        setTimeout(() => document.getElementById("modal-win").classList.add("visible"), 500);
+        spinBtn.textContent = "GIRAR";
+      }
+    }, 10000);
+  }
+
+  function closeRetryModal() {
+    document.getElementById("modal-retry").classList.remove("visible");
+    // Libera o segundo giro
+    spinBtn.disabled   = false;
+    gireBtn.disabled   = false;
+    spinBtn.textContent = "GIRE PARA GANHAR";
+    setPulsing(true);
+  }
+
+  function goToLoja() {
+    window.location.href = "../loja/";
+  }
+
+  /* ─── CONFETTI ─── */
+  function spawnConfetti() {
+    const container = document.getElementById("confetti-container");
+    container.classList.add("visible");
+    const colors = ["#FFE600","#3483FA","#00a650","#ff6b6b","#ff9500","#9b59b6","#E91E8C","#00BCD4"];
+    for (let i = 0; i < 100; i++) {
+      const piece = document.createElement("div");
+      piece.className = "confetti-piece";
+      piece.style.left            = `${Math.random() * 100}%`;
+      piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      piece.style.transform       = `rotate(${Math.random() * 360}deg)`;
+      piece.style.animationDuration = `${3 + Math.random() * 2}s`;
+      piece.style.animationDelay    = `${Math.random() * 2}s`;
+      container.appendChild(piece);
+    }
+  }
+</script>
+</body>
+</html>

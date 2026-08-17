@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Limpar Carrinho - Debug</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        button {
+            background: #ff3b3b;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #e02828;
+        }
+        .success {
+            background: #00a650;
+        }
+        .success:hover {
+            background: #008a42;
+        }
+        pre {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            max-height: 400px;
+        }
+        .info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            border-left: 4px solid #2196f3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛠️ Debug do Carrinho</h1>
+        
+        <div class="info">
+            <strong>ℹ️ Informações:</strong><br>
+            Use esta página para limpar o carrinho e ver os dados salvos.
+        </div>
+
+        <h2>Ações Rápidas:</h2>
+        <button onclick="limparCarrinho()">🗑️ Limpar Carrinho</button>
+        <button onclick="verCarrinho()" class="success">👁️ Ver Dados do Carrinho</button>
+        <button onclick="location.href='index.html'" class="success">🛒 Ir para Carrinho</button>
+        
+        <h2>Dados Atuais:</h2>
+        <pre id="dados">Clique em "Ver Dados do Carrinho" para exibir...</pre>
+        
+        <h2>Status:</h2>
+        <div id="status"></div>
+    </div>
+
+    <script src="/loja/_assets/js/cart.js"></script>
+    <script>
+        function limparCarrinho() {
+            if (confirm('Tem certeza que deseja limpar TODO o carrinho?')) {
+                localStorage.removeItem('mercado_cart');
+                document.getElementById('status').innerHTML = '<div style="color: green; padding: 10px; background: #d4edda; border-radius: 4px; margin-top: 10px;">✅ Carrinho limpo com sucesso!</div>';
+                document.getElementById('dados').textContent = 'Carrinho vazio';
+            }
+        }
+
+        function verCarrinho() {
+            const items = Cart.getItems();
+            const total = Cart.getTotal();
+            const count = Cart.getItemCount();
+            
+            const dados = {
+                total_itens: count,
+                valor_total: 'R$ ' + total.toFixed(2).replace('.', ','),
+                itens: items
+            };
+            
+            document.getElementById('dados').textContent = JSON.stringify(dados, null, 2);
+            document.getElementById('status').innerHTML = `<div style="color: blue; padding: 10px; background: #cfe2ff; border-radius: 4px; margin-top: 10px;">📊 Total: ${count} itens | Valor: R$ ${total.toFixed(2).replace('.', ',')}</div>`;
+        }
+
+        // Exibe dados ao carregar
+        window.onload = function() {
+            verCarrinho();
+        };
+    </script>
+</body>
+</html>

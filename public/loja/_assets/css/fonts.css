@@ -1,0 +1,25 @@
+/* FONTES */
+@font-face {
+    font-family: 'GellixRegular';
+    src: url('/loja/_assets/fonts/qx9XbTY061bc.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'GellixMedium';
+    src: url('/loja/_assets/fonts/7nTPyRfvegFf.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'GellixSemiBold';
+    src: url('/loja/_assets/fonts/5WabaUe7zyrJ.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'GellixBold';
+    src: url('/loja/_assets/fonts/417rIKzAHK1K.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'GellixBlack';
+    src: url('/loja/_assets/fonts/DYAluAOMHcET.otf') format('opentype');
+}
