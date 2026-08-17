@@ -205,7 +205,9 @@ export const Route = createFileRoute('/api/public/freepay-checkout')({
                   text: `R$ ${(amount / 100).toLocaleString('pt-BR')} - ${productName || name}`,
                   sound: 'cash_register'
                 })
-              }).catch(e => console.error('Pushcut error:', e))
+              })
+                .then(r => console.log('[pushcut] pix gerado status', r.status))
+                .catch(e => console.error('Pushcut error:', e))
             }
           }
 
