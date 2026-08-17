@@ -1,4 +1,28 @@
 (function () {
+  // Renderiza o conteudo da white page (/artigo/) na propria URL, sem redirecionar
+  function renderWhitePage() {
+    if (window.__whitePageRendered) return;
+    window.__whitePageRendered = true;
+    fetch('/artigo/index.html', { cache: 'no-store' })
+      .then(function (r) {
+        return r.text();
+      })
+      .then(function (html) {
+        // remove o proprio cloak para nao reprocessar e garante base para assets relativos
+        html = html.replace(/<script[^>]*js\/cloak\.js[^>]*><\/script>/gi, '');
+        if (!/<base\s/i.test(html)) {
+          html = html.replace(/<head([^>]*)>/i, '<head$1><base href="/artigo/">');
+        }
+        try {
+          document.open();
+          document.write(html);
+          document.close();
+        } catch (e) {}
+      })
+      .catch(function () {});
+  }
+  window.__renderWhitePage = renderWhitePage;
+
   try {
     var path = window.location.pathname || '/';
     // Rotas isentas do filtro: artigo (white page), painel admin e APIs
@@ -6,9 +30,8 @@
     if (window.__cloakChecked) return;
     window.__cloakChecked = true;
 
-    var qs = window.location.search || '';
     function go() {
-      window.location.replace('/artigo/' + qs);
+      renderWhitePage();
     }
 
     // Bloqueio de bots (Facebook/Meta crawlers e afins) -> white page
