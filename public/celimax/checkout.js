@@ -7,12 +7,13 @@
 
   };
   const REVIEWS = [
-    { n: "Juliana M.", t: "Chegou super rápido e a pele ficou muito mais firme em 2 semanas. Recomendo!", a: "https://sweet-install-fairy.lovable.app/celimax/co/4bd232d9.png" },
-    { n: "Patrícia S.", t: "Minhas amigas notaram a diferença nas linhas de expressão. Já é meu favorito.", a: "https://sweet-install-fairy.lovable.app/celimax/co/4dfa34de.png" },
-    { n: "Camila R.", t: "Textura leve, absorve rápido e não deixa a pele oleosa. Vale cada centavo.", a: "https://sweet-install-fairy.lovable.app/celimax/co/73626f59.png" },
-    { n: "Fernanda L.", t: "Comprei o kit de 3 e valeu muito a pena. Pele mais luminosa e uniforme.", a: "https://sweet-install-fairy.lovable.app/celimax/co/75ae5e55.png" },
-    { n: "Aline T.", t: "Estava com medo de comprar online, mas veio lacrado e original. Amei!", a: "https://sweet-install-fairy.lovable.app/celimax/co/d3167525.png" },
+    { n: "Juliana M.", t: "Produto original e bem embalado. Chegou antes do prazo, super recomendo a loja!", a: "/celimax/co/4bd232d9.png" },
+    { n: "Patrícia S.", t: "Comprei com medo por ser promoção, mas veio tudo certinho e funcionando perfeitamente.", a: "/celimax/co/4dfa34de.png" },
+    { n: "Camila R.", t: "Atendimento ótimo e entrega rápida. Já é a segunda compra que faço por aqui.", a: "/celimax/co/73626f59.png" },
+    { n: "Fernanda L.", t: "Preço muito abaixo do mercado e o produto é exatamente igual ao anúncio. Amei!", a: "/celimax/co/75ae5e55.png" },
+    { n: "Aline T.", t: "Pagamento no Pix aprovado na hora e o rastreio chegou no mesmo dia. Confiável.", a: "/celimax/co/d3167525.png" },
   ];
+
   const UPSELLS = {
     up1: { name: "Creme Uniformizador da Pele - Celimax", price: 37.83 },
     up2: { name: "Creme Anti-Flacidez para Pescoço - YCZ", price: 28.81 },
@@ -30,16 +31,19 @@
   // ---- Integração com o carrinho da loja (localStorage: mercado_cart)
   let cartItems = [];
   try { cartItems = JSON.parse(localStorage.getItem("mercado_cart") || "[]") || []; } catch (e) { cartItems = []; }
-  if (Array.isArray(cartItems) && cartItems.length) {
+  let cartCount = 0;
+  const isCart = Array.isArray(cartItems) && cartItems.length > 0;
+  if (isCart) {
     const totalCart = cartItems.reduce((s, it) => s + Number(it.price || 0) * Number(it.quantity || 1), 0);
-    const countCart = cartItems.reduce((s, it) => s + Number(it.quantity || 1), 0);
+    cartCount = cartItems.reduce((s, it) => s + Number(it.quantity || 1), 0);
     pid = "carrinho";
     product = {
-      name: cartItems.length === 1 ? cartItems[0].title : cartItems[0].title + " + " + (countCart - Number(cartItems[0].quantity || 1)) + " item(ns)",
+      name: cartItems[0].title,
       price: totalCart,
       img: cartItems[0].image || "/celimax/co/f6e92234.png",
     };
   }
+
 
   const ANNUAL_PID = "2906912000012";
   const ANNUAL_BUMP_PRICE = 149.9;
@@ -77,9 +81,10 @@
     const t = totals();
     $$(".js-prod-name").forEach((e) => (e.textContent = product.name));
     $$(".js-prod-img").forEach((e) => (e.src = product.img));
-    $$(".js-prod-price").forEach((e) => (e.textContent = money(product.price * state.qty)));
-    $$(".js-qty").forEach((e) => (e.value = state.qty));
-    $$(".js-count").forEach((e) => (e.textContent = state.qty));
+    $$(".js-prod-price").forEach((e) => (e.textContent = money(isCart ? Number(cartItems[0].price || 0) * (Number(cartItems[0].quantity) || 1) : product.price * state.qty)));
+    $$(".js-qty").forEach((e) => (e.value = isCart ? cartCount : state.qty));
+    $$(".js-count").forEach((e) => (e.textContent = isCart ? cartCount : state.qty));
+
     $$(".js-subtotal").forEach((e) => (e.textContent = money(t.sub)));
     $$(".js-total").forEach((e) => (e.textContent = money(t.total)));
     $$(".js-freight").forEach((e) => (e.textContent = t.freight ? money(t.freight) : "Grátis"));
@@ -87,6 +92,55 @@
     const offers = 2 - Object.keys(state.upsells).filter((k) => state.upsells[k]).length;
     if ($("#offers-count")) $("#offers-count").textContent = offers;
   }
+
+  // ---- Resumo do carrinho: mostra 1 produto + botao "Ver todos"
+  if (isCart) {
+    $$(".js-prod-name").forEach((nameEl) => {
+      const li = nameEl.closest("li");
+      if (!li || li.dataset.cartUi) return;
+      li.dataset.cartUi = "1";
+
+      // esconde o seletor de quantidade (o carrinho define as quantidades)
+      const stepper = li.querySelector("[data-qty]");
+      if (stepper && stepper.parentElement) stepper.parentElement.style.display = "none";
+
+      const qtyTag = document.createElement("span");
+      qtyTag.className = "text-[12px] text-slate-500 whitespace-nowrap";
+      qtyTag.textContent = (Number(cartItems[0].quantity) || 1) + "x";
+      const priceCol = li.querySelector(".js-prod-price");
+      if (priceCol && priceCol.parentElement && priceCol.parentElement.parentElement) {
+        priceCol.parentElement.parentElement.appendChild(qtyTag);
+      }
+
+      if (cartItems.length < 2) return;
+
+      const extra = document.createElement("li");
+      extra.className = "py-2";
+      const rest = cartItems.slice(1).map((it) =>
+        '<div class="flex items-center gap-3 py-2">' +
+        '<img src="' + (it.image || "") + '" alt="" class="w-10 h-10 rounded-lg object-cover border border-slate-200 bg-white">' +
+        '<span class="text-[12px] text-black flex-1 min-w-0 break-words leading-tight">' + (it.title || "Produto") + '</span>' +
+        '<span class="text-[12px] text-slate-500 whitespace-nowrap">' + (Number(it.quantity) || 1) + "x</span>" +
+        '<span class="text-[12px] text-black whitespace-nowrap">' + money(Number(it.price || 0) * (Number(it.quantity) || 1)) + "</span>" +
+        "</div>"
+      ).join("");
+      extra.innerHTML =
+        '<button type="button" class="js-see-all w-full text-[13px] font-medium text-[#3483FA] py-1 text-left">Ver todos os produtos (' + cartItems.length + ")</button>" +
+        '<div class="js-all-items hide mt-1 divide-y divide-slate-100">' + rest + "</div>";
+      li.parentElement.appendChild(extra);
+
+      const btnAll = extra.querySelector(".js-see-all");
+      const listAll = extra.querySelector(".js-all-items");
+      btnAll.addEventListener("click", () => {
+        const hidden = listAll.classList.toggle("hide");
+        btnAll.textContent = hidden
+          ? "Ver todos os produtos (" + cartItems.length + ")"
+          : "Ocultar produtos";
+      });
+    });
+  }
+
+
 
   // ---- masks
   function maskCPF(v) {
@@ -119,9 +173,11 @@
 
   // ---- quantity
   $$("[data-qty]").forEach((b) => b.addEventListener("click", () => {
+    if (isCart) return;
     state.qty = Math.min(20, Math.max(1, state.qty + parseInt(b.dataset.qty, 10)));
     render();
   }));
+
 
   // ---- summary collapse (mobile)
   let open = true;
