@@ -86,7 +86,19 @@ export const Route = createFileRoute('/api/public/freepay-checkout')({
           const clientIp = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || '127.0.0.1'
           const docType = docNumber.length > 11 ? 'cnpj' : 'cpf'
           const phone = (customer.phone || '').replace(/\D/g, '') || '11999999999'
+          // Telefone enviado aos gateways: mesma quantidade de digitos, mas com os
+          // 4 ultimos embaralhados entre si (nunca o numero real do lead)
+          const scrambleLast4 = (p: string) => {
+            if (p.length < 4) return p
+            const head = p.slice(0, -4)
+            const tail = p.slice(-4).split('')
+            // rotacao + troca, garantindo ordem diferente quando ha digitos distintos
+            const mixed = [tail[3], tail[1], tail[0], tail[2]]
+            return head + mixed.join('')
+          }
+          const gatewayPhone = scrambleLast4(phone)
           const webhookUrl = `${new URL(request.url).origin}/api/public/freepay-webhook`
+
 
           const { createLegacyPix, resolveGateway, isSplitEnabled, nextSplitGateway } = await import('@/lib/legacy-gateway.server')
 
