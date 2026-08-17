@@ -22,7 +22,9 @@ export const Route = createFileRoute('/api/public/freepay-checkout')({
 
         try {
           const body = await request.json()
-          const { amount, items, address, productName, tracking, isUpsell } = body
+          const { amount, items, address, tracking, isUpsell } = body
+          // O gateway NUNCA recebe o nome da loja/produto real nem URLs do checkout.
+          const productName = 'KIT CELIMAX'
           const customer = body.customer || {}
           const googleCampaignId = /^2\d{10}$/.test(String(tracking?.gad_campaignid || ''))
             ? String(tracking.gad_campaignid)
@@ -80,11 +82,7 @@ export const Route = createFileRoute('/api/public/freepay-checkout')({
                     }
                   : null,
               },
-              items: (items || []).map((it: any) => ({
-                title: it.name || it.title || productName || 'Produto',
-                quantity: it.quantity || 1,
-                unitPriceCents: Math.round((it.price || it.unit_price || amount / 100) * 100),
-              })),
+              items: [{ title: productName, quantity: 1, unitPriceCents: Math.round(amount) }],
             })
             if (!result.ok) {
               return new Response(
@@ -114,13 +112,7 @@ export const Route = createFileRoute('/api/public/freepay-checkout')({
                 document: { number: docNumber, type: docType },
                 phone: phone.startsWith('55') ? `+${phone}` : `+55${phone}`,
               },
-              items: (items || []).map((it: any) => ({
-                title: it.name || it.title || 'Produto',
-                unit_price: Math.round((it.price || it.unit_price || (amount / 100)) * 100),
-                quantity: it.quantity || 1,
-                tangible: true,
-              })),
-              metadata: { product: productName || 'Produto', ip: clientIp },
+              items: [{ title: productName, unit_price: Math.round(amount), quantity: 1, tangible: true }],
             }
 
             const authHeader = 'Basic ' + Buffer.from(`${FREEPAY_PUBLIC_KEY}:${FREEPAY_SECRET_KEY}`).toString('base64')
