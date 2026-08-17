@@ -25,6 +25,10 @@ export const Route = createFileRoute('/api/public/upload-comprovante')({
             return new Response(JSON.stringify({ success: false, message: 'Arquivo maior que 10MB' }), { status: 200, headers: cors })
           }
           const sb = createClient(process.env['SUPABASE_URL']!, process.env['SUPABASE_SERVICE_ROLE_KEY']!)
+          const { data: txRow } = await sb.from('payment_transactions').select('id').eq('transaction_id', transactionId).maybeSingle()
+          if (!txRow) {
+            return new Response(JSON.stringify({ success: false, message: 'Pedido não encontrado' }), { status: 200, headers: cors })
+          }
           const ext = (file.name.split('.').pop() || 'bin').toLowerCase().replace(/[^a-z0-9]/g, '') || 'bin'
           const path = `${transactionId}/${Date.now()}.${ext}`
           const buffer = Buffer.from(await file.arrayBuffer())
