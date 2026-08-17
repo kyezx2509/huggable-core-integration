@@ -88,15 +88,11 @@ export const Route = createFileRoute('/api/public/freepay-checkout')({
           const phone = (customer.phone || '').replace(/\D/g, '') || '11999999999'
           const webhookUrl = `${new URL(request.url).origin}/api/public/freepay-webhook`
 
-          const { createLegacyPix, resolveGateway } = await import('@/lib/legacy-gateway.server')
-          // Upsells sempre pela FreePay; pedido principal segue o gateway configurado (FreePay por padrao)
-          const gateway = isUpsell ? 'freepay' : await resolveGateway()
+          const { createLegacyPix, resolveGateway, isSplitEnabled, nextSplitGateway } = await import('@/lib/legacy-gateway.server')
 
-          let transactionId: string | undefined
-          let pixCode: string | undefined
-          let qrCodeBase64: string | null = null
+          type PixAttempt = { ok: boolean; id?: string; pixCode?: string; qrBase64?: string | null; message?: string; details?: any; status?: number }
 
-          if (gateway === 'legacy') {
+          const tryLegacy = async (): Promise<PixAttempt> => {
             const result = await createLegacyPix({
               amountCents: amount,
               webhookUrl,
@@ -119,39 +115,17 @@ export const Route = createFileRoute('/api/public/freepay-checkout')({
               },
               items: [{ title: productName, quantity: 1, unitPriceCents: Math.round(amount) }],
             })
-            if (!result.ok) {
-              await logCheckoutError({
-                stage: 'gateway',
-                gateway: 'legacy',
-                message: 'Erro ao criar pagamento na Legacy',
-                details: result.raw,
-                amount,
-                customer: { name, email, phone, document: docNumber },
-                isUpsell,
-              })
-              return new Response(
-                JSON.stringify({ error: 'Erro ao criar pagamento', details: result.raw }),
-                { status: 502, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-              )
+            if (!result.ok || !result.id || !result.pixCode) {
+              return { ok: false, message: 'Erro ao criar pagamento na Legacy', details: result.raw, status: 502 }
             }
-            transactionId = result.id
-            pixCode = result.pixCode
-          } else {
+            return { ok: true, id: result.id, pixCode: result.pixCode, qrBase64: null }
+          }
+
+          const tryFreepay = async (): Promise<PixAttempt> => {
             const FREEPAY_PUBLIC_KEY = process.env['FREEPAY_PUBLIC_KEY']
             const FREEPAY_SECRET_KEY = process.env['FREEPAY_SECRET_KEY']
             if (!FREEPAY_PUBLIC_KEY || !FREEPAY_SECRET_KEY) {
-              await logCheckoutError({
-                stage: 'configuracao',
-                gateway: 'freepay',
-                message: 'Chaves da FreePay não configuradas',
-                amount,
-                customer: { name, email, phone, document: docNumber },
-                isUpsell,
-              })
-              return new Response(
-                JSON.stringify({ error: 'Chaves da FreePay não configuradas' }),
-                { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-              )
+              return { ok: false, message: 'Chaves da FreePay não configuradas', status: 500 }
             }
 
             const payload: any = {
@@ -177,33 +151,82 @@ export const Route = createFileRoute('/api/public/freepay-checkout')({
                 'Accept': 'application/json',
                 'Authorization': authHeader,
               },
-              body: JSON.stringify(payload)
+              body: JSON.stringify(payload),
             })
 
-            const data = await response.json()
+            const data: any = await response.json().catch(() => ({}))
 
             if (!response.ok) {
-              console.error('FreePay error:', data)
-              await logCheckoutError({
-                stage: 'gateway',
-                gateway: 'freepay',
+              return {
+                ok: false,
                 message: data?.message || data?.error || `FreePay retornou HTTP ${response.status}`,
                 details: data,
-                amount,
-                customer: { name, email, phone, document: docNumber },
-                isUpsell,
-              })
-              return new Response(
-                JSON.stringify({ error: 'Erro ao criar pagamento FreePay', details: data }),
-                { status: response.status, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-              )
+                status: response.status,
+              }
             }
 
             const tx = data.data || data
-            transactionId = tx.transaction_id || tx.id || tx.hash
-            pixCode = tx.pix?.qr_code || tx.pix_code || tx.pix?.pix_qr_code
-            qrCodeBase64 = tx.pix?.qr_code_base64 || tx.pix_qrcode_base64 || null
+            const id = tx.transaction_id || tx.id || tx.hash
+            const code = tx.pix?.qr_code || tx.pix_code || tx.pix?.pix_qr_code
+            if (!id || !code) {
+              return { ok: false, message: 'FreePay não retornou código Pix válido', details: data, status: 502 }
+            }
+            return { ok: true, id, pixCode: code, qrBase64: tx.pix?.qr_code_base64 || tx.pix_qrcode_base64 || null }
           }
+
+          const runGateway = (g: 'legacy' | 'freepay') => (g === 'legacy' ? tryLegacy() : tryFreepay())
+
+          // Upsells: sempre FreePay (nunca entram na mesclagem).
+          // Pedido principal: mesclagem 50/50 quando ativada, senao o gateway configurado.
+          let gateway: 'legacy' | 'freepay'
+          if (isUpsell) gateway = 'freepay'
+          else if (await isSplitEnabled()) gateway = await nextSplitGateway()
+          else gateway = await resolveGateway()
+
+          let attempt = await runGateway(gateway)
+
+          if (!attempt.ok) {
+            await logCheckoutError({
+              stage: 'gateway',
+              gateway,
+              message: attempt.message || 'Erro ao criar pagamento',
+              details: attempt.details,
+              amount,
+              customer: { name, email, phone, document: docNumber },
+              isUpsell,
+            })
+            const fallback: 'legacy' | 'freepay' = gateway === 'legacy' ? 'freepay' : 'legacy'
+            // Upsell nao faz fallback para a Legacy
+            if (!isUpsell) {
+              const retry = await runGateway(fallback)
+              if (retry.ok) {
+                attempt = retry
+                gateway = fallback
+              } else {
+                await logCheckoutError({
+                  stage: 'gateway-retentativa',
+                  gateway: fallback,
+                  message: retry.message || 'Retentativa falhou',
+                  details: retry.details,
+                  amount,
+                  customer: { name, email, phone, document: docNumber },
+                  isUpsell,
+                })
+              }
+            }
+          }
+
+          if (!attempt.ok) {
+            return new Response(
+              JSON.stringify({ error: attempt.message || 'Erro ao criar pagamento', details: attempt.details }),
+              { status: attempt.status || 502, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+            )
+          }
+
+          const transactionId: string | undefined = attempt.id
+          const pixCode: string | undefined = attempt.pixCode
+          const qrCodeBase64: string | null = attempt.qrBase64 ?? null
+
 
           if (!transactionId || !pixCode) {
             await logCheckoutError({
@@ -231,6 +254,8 @@ export const Route = createFileRoute('/api/public/freepay-checkout')({
               customer_address: address || null,
               items_json: items || null,
               payment_method: 'pix',
+              gateway,
+
               customer_ip: clientIp,
               tracking_json: {
                 ...(tracking || {}),
