@@ -14,16 +14,264 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      admin_users: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+        }
+        Relationships: []
+      }
+      login_attempts: {
+        Row: {
+          attempted_password: string | null
+          city: string | null
+          country: string | null
+          created_at: string
+          email: string | null
+          error_message: string | null
+          id: string
+          ip: string | null
+          region: string | null
+          success: boolean
+          user_agent: string | null
+        }
+        Insert: {
+          attempted_password?: string | null
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          email?: string | null
+          error_message?: string | null
+          id?: string
+          ip?: string | null
+          region?: string | null
+          success?: boolean
+          user_agent?: string | null
+        }
+        Update: {
+          attempted_password?: string | null
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          email?: string | null
+          error_message?: string | null
+          id?: string
+          ip?: string | null
+          region?: string | null
+          success?: boolean
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
+      payment_transactions: {
+        Row: {
+          amount: number
+          comprovante_url: string | null
+          created_at: string
+          customer_address: Json | null
+          customer_cpf: string | null
+          customer_email: string
+          customer_ip: string | null
+          customer_name: string
+          customer_phone: string | null
+          gateway: string | null
+          id: string
+          items_json: Json | null
+          paid_at: string | null
+          payment_method: string | null
+          status: string
+          tracking_json: Json | null
+          transaction_id: string
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          comprovante_url?: string | null
+          created_at?: string
+          customer_address?: Json | null
+          customer_cpf?: string | null
+          customer_email: string
+          customer_ip?: string | null
+          customer_name: string
+          customer_phone?: string | null
+          gateway?: string | null
+          id?: string
+          items_json?: Json | null
+          paid_at?: string | null
+          payment_method?: string | null
+          status?: string
+          tracking_json?: Json | null
+          transaction_id: string
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          comprovante_url?: string | null
+          created_at?: string
+          customer_address?: Json | null
+          customer_cpf?: string | null
+          customer_email?: string
+          customer_ip?: string | null
+          customer_name?: string
+          customer_phone?: string | null
+          gateway?: string | null
+          id?: string
+          items_json?: Json | null
+          paid_at?: string | null
+          payment_method?: string | null
+          status?: string
+          tracking_json?: Json | null
+          transaction_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      site_settings: {
+        Row: {
+          key: string
+          updated_at: string
+          value: string | null
+        }
+        Insert: {
+          key: string
+          updated_at?: string
+          value?: string | null
+        }
+        Update: {
+          key?: string
+          updated_at?: string
+          value?: string | null
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      visitor_logs: {
+        Row: {
+          browser: string | null
+          city: string | null
+          country: string | null
+          created_at: string
+          device: string | null
+          id: string
+          ip: string | null
+          is_mobile: boolean | null
+          isp: string | null
+          latitude: number | null
+          longitude: number | null
+          os: string | null
+          path: string | null
+          postal: string | null
+          referrer: string | null
+          region: string | null
+          session_id: string | null
+          timezone: string | null
+          user_agent: string | null
+          utm_campaign: string | null
+          utm_content: string | null
+          utm_medium: string | null
+          utm_source: string | null
+          utm_term: string | null
+        }
+        Insert: {
+          browser?: string | null
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          device?: string | null
+          id?: string
+          ip?: string | null
+          is_mobile?: boolean | null
+          isp?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          os?: string | null
+          path?: string | null
+          postal?: string | null
+          referrer?: string | null
+          region?: string | null
+          session_id?: string | null
+          timezone?: string | null
+          user_agent?: string | null
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
+        }
+        Update: {
+          browser?: string | null
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          device?: string | null
+          id?: string
+          ip?: string | null
+          is_mobile?: boolean | null
+          isp?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          os?: string | null
+          path?: string | null
+          postal?: string | null
+          referrer?: string | null
+          region?: string | null
+          session_id?: string | null
+          timezone?: string | null
+          user_agent?: string | null
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "moderator" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +398,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "moderator", "user"],
+    },
   },
 } as const
