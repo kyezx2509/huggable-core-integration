@@ -154,3 +154,44 @@ export async function getLegacyStatus(id: string): Promise<'APPROVED' | 'PENDING
   if (['REFUSED', 'FAILED', 'CANCELED', 'CANCELLED', 'REFUNDED', 'CHARGEDBACK', 'EXPIRED'].includes(raw)) return 'REFUSED'
   return 'PENDING'
 }
+
+// ---------- Mesclagem (split) de gateways ----------
+function sbHeaders() {
+  const key = process.env['SUPABASE_SERVICE_ROLE_KEY'] || process.env['SUPABASE_ANON_KEY'] || ''
+  return { apikey: key, Authorization: `Bearer ${key}`, 'Content-Type': 'application/json', Accept: 'application/json' }
+}
+
+async function getSetting(key: string): Promise<string | null> {
+  const url = process.env['SUPABASE_URL']
+  if (!url) return null
+  try {
+    const r = await fetch(`${url}/rest/v1/site_settings?key=eq.${key}&select=value`, { headers: sbHeaders() })
+    const rows: any = await r.json().catch(() => [])
+    return rows?.[0]?.value ?? null
+  } catch { return null }
+}
+
+async function setSetting(key: string, value: string) {
+  const url = process.env['SUPABASE_URL']
+  if (!url) return
+  try {
+    await fetch(`${url}/rest/v1/site_settings?on_conflict=key`, {
+      method: 'POST',
+      headers: { ...sbHeaders(), Prefer: 'resolution=merge-duplicates' },
+      body: JSON.stringify({ key, value, updated_at: new Date().toISOString() }),
+    })
+  } catch { /* ignora */ }
+}
+
+export async function isSplitEnabled(): Promise<boolean> {
+  const v = String((await getSetting('gateway_split')) || '').toLowerCase()
+  return v === 'on' || v === 'true' || v === '1'
+}
+
+// Alterna 50/50 entre freepay e legacy usando um contador persistido.
+export async function nextSplitGateway(): Promise<'legacy' | 'freepay'> {
+  const raw = await getSetting('gateway_split_counter')
+  const n = Number.isFinite(Number(raw)) ? Number(raw) : 0
+  await setSetting('gateway_split_counter', String((n + 1) % 1000000))
+  return n % 2 === 0 ? 'freepay' : 'legacy'
+}
