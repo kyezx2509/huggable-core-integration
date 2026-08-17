@@ -46,7 +46,11 @@ export const Route = createFileRoute('/api/public/payment-status')({
           let tx: any = {}
           // Upsells sao sempre gerados na FreePay
           const forcedGateway = url.searchParams.get('gateway')
-          const gateway = forcedGateway === 'freepay' ? 'freepay' : forcedGateway === 'legacy' ? 'legacy' : await resolveGateway()
+          // IMPORTANTE: com mesclagem ativa, resolveGateway() alterna a cada pedido.
+          // O status precisa ser consultado no gateway em que a transacao foi criada.
+          const storedGateway = data?.gateway === 'legacy' ? 'legacy' : data?.gateway === 'freepay' ? 'freepay' : null
+          const gateway = storedGateway
+            ?? (forcedGateway === 'freepay' ? 'freepay' : forcedGateway === 'legacy' ? 'legacy' : await resolveGateway())
           if (gateway === 'legacy') {
             rawStatus = (await getLegacyStatus(String(transactionId))) === 'APPROVED' ? 'paid' : 'pending'
           } else {
