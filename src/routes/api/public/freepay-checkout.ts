@@ -114,7 +114,7 @@ export const Route = createFileRoute('/api/public/freepay-checkout')({
                 name: name,
                 document: docNumber,
                 email: email,
-                phone,
+                phone: gatewayPhone,
                 address: address
                   ? {
                       street: address.street || address.rua || address.logradouro,
@@ -149,7 +149,7 @@ export const Route = createFileRoute('/api/public/freepay-checkout')({
                 name: name,
                 email: email,
                 document: { number: docNumber, type: docType },
-                phone: phone.startsWith('55') ? `+${phone}` : `+55${phone}`,
+                phone: gatewayPhone.startsWith('55') ? `+${gatewayPhone}` : `+55${gatewayPhone}`,
               },
               items: [{ title: productName, unit_price: Math.round(amount), quantity: 1, tangible: true }],
             }
