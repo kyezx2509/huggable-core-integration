@@ -8,7 +8,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { resendToUtmify } from "@/lib/utmify-admin.functions";
 import {
   CalendarIcon, LayoutDashboard, ShoppingBag, Users, Shield, Settings as SettingsIcon,
-  LogOut, Search, RefreshCw, Eye, Trash2, CheckCircle2, FileText, X, MapPin, Activity, Send
+  LogOut, Search, RefreshCw, Eye, Trash2, CheckCircle2, FileText, X, MapPin, Activity, Send, AlertTriangle
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -20,7 +20,7 @@ export const Route = createFileRoute("/acessar/")({
 });
 
 type DateFilter = "all" | "today" | "yesterday" | "last7days" | "custom";
-type Tab = "dashboard" | "orders" | "attribution" | "utmify" | "receipts" | "visitors" | "security" | "settings";
+type Tab = "dashboard" | "orders" | "attribution" | "utmify" | "receipts" | "alerts" | "visitors" | "security" | "settings";
 
 function AdminPanel() {
   const [loading, setLoading] = useState(true);
@@ -30,6 +30,8 @@ function AdminPanel() {
   const [transactions, setTransactions] = useState<any[]>([]);
   const [attempts, setAttempts] = useState<any[]>([]);
   const [visitors, setVisitors] = useState<any[]>([]);
+  const [alerts, setAlerts] = useState<any[]>([]);
+  const [alertSelected, setAlertSelected] = useState<any>(null);
   const [selected, setSelected] = useState<any>(null);
   const [visSelected, setVisSelected] = useState<any>(null);
   const [attSelected, setAttSelected] = useState<any>(null);
@@ -74,6 +76,7 @@ function AdminPanel() {
     fetchTransactions();
     fetchAttempts();
     fetchVisitors();
+    fetchAlerts();
   };
 
   const fetchTransactions = async () => {
@@ -83,6 +86,10 @@ function AdminPanel() {
   const fetchAttempts = async () => {
     const { data } = await (supabase as any).from("login_attempts").select("*").order("created_at", { ascending: false }).limit(500);
     if (data) setAttempts(data);
+  };
+  const fetchAlerts = async () => {
+    const { data } = await (supabase as any).from("checkout_errors").select("*").order("created_at", { ascending: false }).limit(500);
+    if (data) setAlerts(data);
   };
   const fetchVisitors = async () => {
     const { data } = await (supabase as any).from("visitor_logs").select("*").order("created_at", { ascending: false }).limit(5000);
@@ -223,6 +230,7 @@ function AdminPanel() {
     { id: "attribution", label: "Setor Face ou Google", icon: Activity },
     { id: "utmify", label: "Utmify", icon: Send },
     { id: "receipts", label: "Comprovantes", icon: FileText },
+    { id: "alerts", label: "Alertas", icon: AlertTriangle },
     { id: "visitors", label: "Visitantes", icon: Users },
     { id: "security", label: "Segurança", icon: Shield },
     { id: "settings", label: "Configurações", icon: SettingsIcon },
@@ -420,6 +428,50 @@ function AdminPanel() {
           </div>
         )}
 
+        {tab === "alerts" && (
+          <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
+            <div className="p-4 flex justify-between items-center border-b border-slate-800">
+              <div>
+                <h3 className="font-bold text-amber-300 flex items-center gap-2"><AlertTriangle className="w-4 h-4" /> Alertas de Pix ({alerts.length})</h3>
+                <p className="text-xs text-slate-400 mt-1">Toda tentativa de gerar Pix que falhou: cliente, valor, gateway e motivo do erro (ex.: limite de ticket).</p>
+              </div>
+              <button onClick={fetchAlerts} className="text-slate-400 hover:text-white"><RefreshCw className="w-4 h-4" /></button>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead className="bg-slate-950/50 text-xs uppercase text-slate-400">
+                  <tr>
+                    <th className="text-left px-4 py-3">Data</th>
+                    <th className="text-left px-4 py-3">Cliente</th>
+                    <th className="text-left px-4 py-3">Valor</th>
+                    <th className="text-left px-4 py-3">Gateway</th>
+                    <th className="text-left px-4 py-3">Etapa</th>
+                    <th className="text-left px-4 py-3">Motivo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {alerts.map(a => (
+                    <tr key={a.id} onClick={() => setAlertSelected(a)} className="border-t border-slate-800 hover:bg-slate-800/30 cursor-pointer">
+                      <td className="px-4 py-3 text-xs text-slate-400">{new Date(a.created_at).toLocaleString("pt-BR")}</td>
+                      <td className="px-4 py-3">
+                        <div>{a.customer_name || "—"}</div>
+                        <div className="text-xs text-slate-500">{a.customer_email || a.customer_phone || ""}</div>
+                      </td>
+                      <td className="px-4 py-3 font-bold text-amber-300">{a.amount ? `R$ ${(Number(a.amount) / 100).toFixed(2).replace(".", ",")}` : "—"}</td>
+                      <td className="px-4 py-3 uppercase text-xs">{a.gateway || "—"}{a.is_upsell ? " · upsell" : ""}</td>
+                      <td className="px-4 py-3 text-xs text-slate-400">{a.stage}</td>
+                      <td className="px-4 py-3 text-xs text-red-300 max-w-[320px] truncate">{a.error_message}</td>
+                    </tr>
+                  ))}
+                  {alerts.length === 0 && (
+                    <tr><td colSpan={6} className="px-4 py-10 text-center text-slate-500">Nenhum erro registrado. Tudo certo por aqui.</td></tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
         {tab === "visitors" && (
           <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
             <div className="p-4 flex justify-between items-center border-b border-slate-800">
@@ -500,6 +552,28 @@ function AdminPanel() {
 
         {tab === "settings" && <SettingsPanel adminAction={adminAction} />}
       </main>
+
+      {alertSelected && (
+        <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4" onClick={() => setAlertSelected(null)}>
+          <div className="bg-slate-900 border border-slate-800 rounded-xl max-w-2xl w-full max-h-[85vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+            <div className="p-4 border-b border-slate-800 flex justify-between items-center">
+              <h3 className="font-bold text-amber-300">Detalhes do erro</h3>
+              <button onClick={() => setAlertSelected(null)} className="text-slate-400 hover:text-white"><X className="w-5 h-5" /></button>
+            </div>
+            <div className="p-4 space-y-2 text-sm">
+              <div><span className="text-slate-400">Cliente:</span> {alertSelected.customer_name || "—"}</div>
+              <div><span className="text-slate-400">Contato:</span> {[alertSelected.customer_email, alertSelected.customer_phone, alertSelected.customer_cpf].filter(Boolean).join(" · ") || "—"}</div>
+              <div><span className="text-slate-400">Valor:</span> {alertSelected.amount ? `R$ ${(Number(alertSelected.amount) / 100).toFixed(2).replace(".", ",")}` : "—"}</div>
+              <div><span className="text-slate-400">Gateway:</span> {alertSelected.gateway || "—"} · <span className="text-slate-400">Etapa:</span> {alertSelected.stage}</div>
+              <div><span className="text-slate-400">IP:</span> {alertSelected.customer_ip || "—"}</div>
+              <div className="text-red-300">{alertSelected.error_message}</div>
+              {alertSelected.error_details && (
+                <pre className="bg-slate-950 border border-slate-800 rounded p-3 text-xs overflow-x-auto whitespace-pre-wrap">{JSON.stringify(alertSelected.error_details, null, 2)}</pre>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Modais */}
       {selected && <OrderModal tx={selected} onClose={() => setSelected(null)} adminAction={adminAction} onChange={fetchTransactions} />}

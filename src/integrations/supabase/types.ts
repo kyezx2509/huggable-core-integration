@@ -32,6 +32,57 @@ export type Database = {
         }
         Relationships: []
       }
+      checkout_errors: {
+        Row: {
+          amount: number | null
+          created_at: string
+          customer_cpf: string | null
+          customer_email: string | null
+          customer_ip: string | null
+          customer_name: string | null
+          customer_phone: string | null
+          error_details: Json | null
+          error_message: string | null
+          gateway: string | null
+          id: string
+          is_upsell: boolean
+          stage: string | null
+          user_agent: string | null
+        }
+        Insert: {
+          amount?: number | null
+          created_at?: string
+          customer_cpf?: string | null
+          customer_email?: string | null
+          customer_ip?: string | null
+          customer_name?: string | null
+          customer_phone?: string | null
+          error_details?: Json | null
+          error_message?: string | null
+          gateway?: string | null
+          id?: string
+          is_upsell?: boolean
+          stage?: string | null
+          user_agent?: string | null
+        }
+        Update: {
+          amount?: number | null
+          created_at?: string
+          customer_cpf?: string | null
+          customer_email?: string | null
+          customer_ip?: string | null
+          customer_name?: string | null
+          customer_phone?: string | null
+          error_details?: Json | null
+          error_message?: string | null
+          gateway?: string | null
+          id?: string
+          is_upsell?: boolean
+          stage?: string | null
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
       login_attempts: {
         Row: {
           attempted_password: string | null

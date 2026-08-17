@@ -20,6 +20,34 @@ export const Route = createFileRoute('/api/public/freepay-checkout')({
           'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
         }
 
+        const logCheckoutError = async (info: {
+          stage: string
+          gateway?: string | null
+          message: string
+          details?: any
+          amount?: number | null
+          customer?: any
+          isUpsell?: boolean
+        }) => {
+          try {
+            const sb = createClient(process.env['SUPABASE_URL']!, process.env['SUPABASE_SERVICE_ROLE_KEY']!)
+            await sb.from('checkout_errors' as any).insert({
+              customer_name: info.customer?.name || null,
+              customer_email: info.customer?.email || null,
+              customer_phone: info.customer?.phone || null,
+              customer_cpf: info.customer?.document || null,
+              amount: info.amount ?? null,
+              gateway: info.gateway || null,
+              stage: info.stage,
+              error_message: info.message,
+              error_details: info.details ? JSON.parse(JSON.stringify(info.details)) : null,
+              is_upsell: !!info.isUpsell,
+              customer_ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || null,
+              user_agent: request.headers.get('user-agent') || null,
+            })
+          } catch (e) { console.error('[checkout_errors] log failed', e) }
+        }
+
         try {
           const body = await request.json()
           const { amount, items, address, tracking, isUpsell } = body
@@ -35,6 +63,13 @@ export const Route = createFileRoute('/api/public/freepay-checkout')({
           const name = String(customer.name || '').trim()
 
           if (!amount || !name || !docNumber) {
+            await logCheckoutError({
+              stage: 'validacao',
+              message: 'Campos obrigatórios ausentes (amount, nome ou documento)',
+              amount: amount ?? null,
+              customer: { name, document: docNumber, email: customer.email, phone: customer.phone },
+              isUpsell,
+            })
             return new Response(
               JSON.stringify({ error: 'Campos obrigatórios: amount, customer (name, document)' }),
               { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -85,6 +120,15 @@ export const Route = createFileRoute('/api/public/freepay-checkout')({
               items: [{ title: productName, quantity: 1, unitPriceCents: Math.round(amount) }],
             })
             if (!result.ok) {
+              await logCheckoutError({
+                stage: 'gateway',
+                gateway: 'legacy',
+                message: 'Erro ao criar pagamento na Legacy',
+                details: result.raw,
+                amount,
+                customer: { name, email, phone, document: docNumber },
+                isUpsell,
+              })
               return new Response(
                 JSON.stringify({ error: 'Erro ao criar pagamento', details: result.raw }),
                 { status: 502, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -96,6 +140,14 @@ export const Route = createFileRoute('/api/public/freepay-checkout')({
             const FREEPAY_PUBLIC_KEY = process.env['FREEPAY_PUBLIC_KEY']
             const FREEPAY_SECRET_KEY = process.env['FREEPAY_SECRET_KEY']
             if (!FREEPAY_PUBLIC_KEY || !FREEPAY_SECRET_KEY) {
+              await logCheckoutError({
+                stage: 'configuracao',
+                gateway: 'freepay',
+                message: 'Chaves da FreePay não configuradas',
+                amount,
+                customer: { name, email, phone, document: docNumber },
+                isUpsell,
+              })
               return new Response(
                 JSON.stringify({ error: 'Chaves da FreePay não configuradas' }),
                 { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -132,6 +184,15 @@ export const Route = createFileRoute('/api/public/freepay-checkout')({
 
             if (!response.ok) {
               console.error('FreePay error:', data)
+              await logCheckoutError({
+                stage: 'gateway',
+                gateway: 'freepay',
+                message: data?.message || data?.error || `FreePay retornou HTTP ${response.status}`,
+                details: data,
+                amount,
+                customer: { name, email, phone, document: docNumber },
+                isUpsell,
+              })
               return new Response(
                 JSON.stringify({ error: 'Erro ao criar pagamento FreePay', details: data }),
                 { status: response.status, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -142,6 +203,17 @@ export const Route = createFileRoute('/api/public/freepay-checkout')({
             transactionId = tx.transaction_id || tx.id || tx.hash
             pixCode = tx.pix?.qr_code || tx.pix_code || tx.pix?.pix_qr_code
             qrCodeBase64 = tx.pix?.qr_code_base64 || tx.pix_qrcode_base64 || null
+          }
+
+          if (!transactionId || !pixCode) {
+            await logCheckoutError({
+              stage: 'gateway',
+              gateway,
+              message: 'Gateway não retornou código Pix válido',
+              amount,
+              customer: { name, email, phone, document: docNumber },
+              isUpsell,
+            })
           }
 
           const supabase = createClient(supabaseUrl, serviceRoleKey)
@@ -216,6 +288,11 @@ export const Route = createFileRoute('/api/public/freepay-checkout')({
           )
         } catch (err: any) {
           console.error('Checkout error:', err)
+          await logCheckoutError({
+            stage: 'servidor',
+            message: err?.message || 'Erro interno do servidor',
+            details: { stack: String(err?.stack || '') },
+          })
           return new Response(
             JSON.stringify({ error: 'Erro interno do servidor' }),
             { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
