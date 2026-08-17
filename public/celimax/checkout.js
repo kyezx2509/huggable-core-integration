@@ -511,13 +511,66 @@
     });
   }
 
-  $("#pix-copy").addEventListener("click", () => {
-    const inp = $("#pix-code");
-    inp.select();
-    navigator.clipboard ? navigator.clipboard.writeText(inp.value) : document.execCommand("copy");
-    $("#pix-copy").innerHTML = "Código copiado!";
-    setTimeout(() => ($("#pix-copy").innerHTML = "Copiar código"), 2000);
+  function legacyCopy(text) {
+    try {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.top = "0";
+      ta.style.left = "0";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      var sel = document.getSelection();
+      var saved = sel && sel.rangeCount > 0 ? sel.getRangeAt(0) : null;
+      ta.focus();
+      ta.select();
+      ta.setSelectionRange(0, text.length); // iOS
+      var ok = false;
+      try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+      document.body.removeChild(ta);
+      if (saved && sel) { sel.removeAllRanges(); sel.addRange(saved); }
+      return ok;
+    } catch (e) { return false; }
+  }
+
+  function copyFeedback(ok, text) {
+    var btn = $("#pix-copy");
+    if (!btn) return;
+    if (ok) {
+      btn.innerHTML = "Código copiado!";
+      setTimeout(function () { btn.innerHTML = "Copiar código"; }, 2000);
+    } else {
+      btn.innerHTML = "Selecione e copie o código acima";
+      var inp = $("#pix-code");
+      if (inp) {
+        inp.removeAttribute("readonly");
+        inp.focus();
+        try { inp.setSelectionRange(0, String(text).length); } catch (e) {}
+        inp.select();
+      }
+      setTimeout(function () { btn.innerHTML = "Copiar código"; }, 4000);
+    }
+  }
+
+  $("#pix-copy").addEventListener("click", function () {
+    var inp = $("#pix-code");
+    var text = (inp && inp.value) || "";
+    if (!text) return;
+    // 1) fallback sincrono primeiro (funciona em WebViews do Facebook/Instagram)
+    var ok = legacyCopy(text);
+    if (ok) { copyFeedback(true, text); return; }
+    // 2) Clipboard API moderna (precisa de contexto seguro)
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(
+        function () { copyFeedback(true, text); },
+        function () { copyFeedback(false, text); }
+      );
+    } else {
+      copyFeedback(false, text);
+    }
   });
+
 
   render();
 })();
