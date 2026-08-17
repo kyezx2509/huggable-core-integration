@@ -22,7 +22,7 @@ export const Route = createFileRoute('/api/public/utmify-diag')({
         const supabase = createClient(process.env['SUPABASE_URL']!, process.env['SUPABASE_SERVICE_ROLE_KEY']!)
         const { data } = await supabase
           .from('payment_transactions')
-          .select('amount, customer_name, customer_email, customer_cpf, customer_phone, customer_ip, items_json, tracking_json, status')
+          .select('gateway, amount, customer_name, customer_email, customer_cpf, customer_phone, customer_ip, items_json, tracking_json, status')
           .eq('transaction_id', transactionId)
           .maybeSingle()
 
@@ -37,6 +37,7 @@ export const Route = createFileRoute('/api/public/utmify-diag')({
           orderId: String(transactionId),
           status,
           amountCents,
+          platform: (data as any).gateway === 'legacy' ? 'Legacy' : 'FreePay',
           customer: {
             name: data.customer_name || 'Cliente',
             email: data.customer_email || 'cliente@gmail.com',

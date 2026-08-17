@@ -30,7 +30,7 @@ export const Route = createFileRoute('/api/public/payment-status')({
           const supabase = createClient(process.env['SUPABASE_URL']!, process.env['SUPABASE_SERVICE_ROLE_KEY']!)
           const { data, error } = await supabase
             .from('payment_transactions')
-            .select('status, amount, customer_name, customer_email, customer_cpf, customer_phone, customer_ip, tracking_json')
+            .select('status, amount, customer_name, customer_email, customer_cpf, customer_phone, customer_ip, tracking_json, items_json, gateway')
             .eq('transaction_id', String(transactionId))
             .maybeSingle()
           if (error) {
@@ -46,7 +46,11 @@ export const Route = createFileRoute('/api/public/payment-status')({
           let tx: any = {}
           // Upsells sao sempre gerados na FreePay
           const forcedGateway = url.searchParams.get('gateway')
-          const gateway = forcedGateway === 'freepay' ? 'freepay' : forcedGateway === 'legacy' ? 'legacy' : await resolveGateway()
+          // IMPORTANTE: com mesclagem ativa, resolveGateway() alterna a cada pedido.
+          // O status precisa ser consultado no gateway em que a transacao foi criada.
+          const storedGateway = data?.gateway === 'legacy' ? 'legacy' : data?.gateway === 'freepay' ? 'freepay' : null
+          const gateway = storedGateway
+            ?? (forcedGateway === 'freepay' ? 'freepay' : forcedGateway === 'legacy' ? 'legacy' : await resolveGateway())
           if (gateway === 'legacy') {
             rawStatus = (await getLegacyStatus(String(transactionId))) === 'APPROVED' ? 'paid' : 'pending'
           } else {
@@ -106,7 +110,15 @@ export const Route = createFileRoute('/api/public/payment-status')({
                   phone: data?.customer_phone || undefined,
                   ip: data?.customer_ip || undefined,
                 },
-                product: { id: 'produto', name: 'Produto', quantity: 1, priceCents: amountCents },
+                product: (() => {
+                  const item = Array.isArray(data?.items_json) ? (data?.items_json as any[])[0] : null
+                  return {
+                    id: item?.name || 'produto',
+                    name: item?.name || 'Produto',
+                    quantity: item?.quantity || 1,
+                    priceCents: amountCents,
+                  }
+                })(),
                 trackingParameters: tracking,
               })
             } catch (e) { console.error('[utmify] status notify failed', e) }
