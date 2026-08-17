@@ -772,44 +772,63 @@ function Info({ label, value, mono }: { label: string; value: any; mono?: boolea
 }
 
 function SettingsPanel({ adminAction }: any) {
-  const [gateway, setGateway] = useState("legacy");
+  const [gateway, setGateway] = useState("freepay");
+  const [split, setSplit] = useState(false);
   const [saving, setSaving] = useState(false);
   useEffect(() => {
     (async () => {
-      const { data } = await (supabase as any).from("site_settings").select("value").eq("key", "payment_gateway").maybeSingle();
-      if (data?.value) setGateway(data.value);
+      const { data } = await (supabase as any).from("site_settings").select("key,value").in("key", ["payment_gateway", "gateway_split"]);
+      const map: any = Object.fromEntries((data || []).map((r: any) => [r.key, r.value]));
+      if (map.payment_gateway) setGateway(map.payment_gateway);
+      setSplit(["on", "true", "1"].includes(String(map.gateway_split || "").toLowerCase()));
     })();
   }, []);
-  const save = async () => {
-    setSaving(true);
-    // Grava direto pelo cliente autenticado (RLS de admin) e confirma o valor salvo
+  const saveSetting = async (key: string, value: string) => {
     const { error } = await (supabase as any)
       .from("site_settings")
-      .upsert({ key: "payment_gateway", value: gateway, updated_at: new Date().toISOString() }, { onConflict: "key" });
-    if (error) {
-      // fallback pelo backend admin
-      try {
-        await adminAction({ action: "set_setting", key: "payment_gateway", value: gateway });
-      } catch (e: any) {
-        setSaving(false);
-        toast.error("Erro ao salvar: " + (error.message || e?.message));
-        return;
-      }
-    }
+      .upsert({ key, value, updated_at: new Date().toISOString() }, { onConflict: "key" });
+    if (error) await adminAction({ action: "set_setting", key, value });
     const { data: check } = await (supabase as any)
-      .from("site_settings").select("value").eq("key", "payment_gateway").maybeSingle();
+      .from("site_settings").select("value").eq("key", key).maybeSingle();
+    return check?.value === value;
+  };
+  const save = async () => {
+    setSaving(true);
+    try {
+      const okGateway = await saveSetting("payment_gateway", gateway);
+      const okSplit = await saveSetting("gateway_split", split ? "on" : "off");
+      if (okGateway && okSplit) toast.success(split ? "Mesclagem ativada (50/50)" : `Gateway salvo: ${gateway}`);
+      else toast.error("Não foi possível salvar as configurações");
+    } catch (e: any) {
+      toast.error("Erro ao salvar: " + (e?.message || ""));
+    }
     setSaving(false);
-    if (check?.value === gateway) toast.success(`Gateway salvo: ${gateway}`);
-    else toast.error("Não foi possível salvar o gateway");
   };
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 max-w-xl">
-      <h3 className="font-bold mb-4">Gateway de pagamento</h3>
-      <select value={gateway} onChange={e => setGateway(e.target.value)}
-        className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm mb-4">
-        <option value="legacy">Legacy (padrão)</option>
-        <option value="freepay">FreePay</option>
-      </select>
+    <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 max-w-xl space-y-5">
+      <div>
+        <h3 className="font-bold mb-4">Gateway de pagamento</h3>
+        <select value={gateway} onChange={e => setGateway(e.target.value)} disabled={split}
+          className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm disabled:opacity-50">
+          <option value="freepay">FreePay (padrão)</option>
+          <option value="legacy">Legacy</option>
+        </select>
+      </div>
+
+      <div className="border-t border-slate-800 pt-4">
+        <label className="flex items-start gap-3 cursor-pointer">
+          <input type="checkbox" checked={split} onChange={e => setSplit(e.target.checked)}
+            className="mt-1 h-4 w-4 accent-emerald-500" />
+          <span>
+            <span className="font-bold block">Ativar mesclagem de gateways</span>
+            <span className="text-xs text-slate-400">
+              Alterna os pedidos 50/50: pedido 1 FreePay, pedido 2 Legacy, pedido 3 FreePay… Se um gateway falhar,
+              o Pix é gerado automaticamente no outro. Upsells continuam sempre na FreePay.
+            </span>
+          </span>
+        </label>
+      </div>
+
       <button onClick={save} disabled={saving}
         className="bg-emerald-500 text-slate-950 font-bold px-4 py-2 rounded-lg disabled:opacity-50">
         {saving ? "Salvando..." : "Salvar"}
@@ -817,6 +836,7 @@ function SettingsPanel({ adminAction }: any) {
     </div>
   );
 }
+
 
 function AttributionPanel({ transactions, visitors, setSelected, adminAction, fetchTransactions }: any) {
   const [sourceFilter, setSourceFilter] = useState<"all" | "google" | "facebook">("all");
