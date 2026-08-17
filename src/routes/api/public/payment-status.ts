@@ -30,7 +30,7 @@ export const Route = createFileRoute('/api/public/payment-status')({
           const supabase = createClient(process.env['SUPABASE_URL']!, process.env['SUPABASE_SERVICE_ROLE_KEY']!)
           const { data, error } = await supabase
             .from('payment_transactions')
-            .select('status, amount, customer_name, customer_email, customer_cpf, customer_phone, customer_ip, tracking_json')
+            .select('status, amount, customer_name, customer_email, customer_cpf, customer_phone, customer_ip, tracking_json, items_json, gateway')
             .eq('transaction_id', String(transactionId))
             .maybeSingle()
           if (error) {
