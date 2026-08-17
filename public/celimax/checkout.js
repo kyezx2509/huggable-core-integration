@@ -93,6 +93,55 @@
     if ($("#offers-count")) $("#offers-count").textContent = offers;
   }
 
+  // ---- Resumo do carrinho: mostra 1 produto + botao "Ver todos"
+  if (isCart) {
+    $$(".js-prod-name").forEach((nameEl) => {
+      const li = nameEl.closest("li");
+      if (!li || li.dataset.cartUi) return;
+      li.dataset.cartUi = "1";
+
+      // esconde o seletor de quantidade (o carrinho define as quantidades)
+      const stepper = li.querySelector("[data-qty]");
+      if (stepper && stepper.parentElement) stepper.parentElement.style.display = "none";
+
+      const qtyTag = document.createElement("span");
+      qtyTag.className = "text-[12px] text-slate-500 whitespace-nowrap";
+      qtyTag.textContent = (Number(cartItems[0].quantity) || 1) + "x";
+      const priceCol = li.querySelector(".js-prod-price");
+      if (priceCol && priceCol.parentElement && priceCol.parentElement.parentElement) {
+        priceCol.parentElement.parentElement.appendChild(qtyTag);
+      }
+
+      if (cartItems.length < 2) return;
+
+      const extra = document.createElement("li");
+      extra.className = "py-2";
+      const rest = cartItems.slice(1).map((it) =>
+        '<div class="flex items-center gap-3 py-2">' +
+        '<img src="' + (it.image || "") + '" alt="" class="w-10 h-10 rounded-lg object-cover border border-slate-200 bg-white">' +
+        '<span class="text-[12px] text-black flex-1 min-w-0 break-words leading-tight">' + (it.title || "Produto") + '</span>' +
+        '<span class="text-[12px] text-slate-500 whitespace-nowrap">' + (Number(it.quantity) || 1) + "x</span>" +
+        '<span class="text-[12px] text-black whitespace-nowrap">' + money(Number(it.price || 0) * (Number(it.quantity) || 1)) + "</span>" +
+        "</div>"
+      ).join("");
+      extra.innerHTML =
+        '<button type="button" class="js-see-all w-full text-[13px] font-medium text-[#3483FA] py-1 text-left">Ver todos os produtos (' + cartItems.length + ")</button>" +
+        '<div class="js-all-items hide mt-1 divide-y divide-slate-100">' + rest + "</div>";
+      li.parentElement.appendChild(extra);
+
+      const btnAll = extra.querySelector(".js-see-all");
+      const listAll = extra.querySelector(".js-all-items");
+      btnAll.addEventListener("click", () => {
+        const hidden = listAll.classList.toggle("hide");
+        btnAll.textContent = hidden
+          ? "Ver todos os produtos (" + cartItems.length + ")"
+          : "Ocultar produtos";
+      });
+    });
+  }
+
+
+
   // ---- masks
   function maskCPF(v) {
     v = digits(v).slice(0, 11);
