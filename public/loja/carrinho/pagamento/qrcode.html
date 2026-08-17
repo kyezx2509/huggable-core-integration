@@ -438,20 +438,46 @@
             const pixCode = document.getElementById('pixCode').textContent;
             const btn = document.getElementById('copyBtn');
 
-            navigator.clipboard.writeText(pixCode).then(() => {
-                // Feedback visual
-                btn.classList.add('copied');
-                btn.innerHTML = '<span class="material-symbols-outlined">check</span>Código copiado!';
+            function done(ok) {
+                if (ok) {
+                    btn.classList.add('copied');
+                    btn.innerHTML = '<span class="material-symbols-outlined">check</span>Código copiado!';
+                    setTimeout(() => {
+                        btn.classList.remove('copied');
+                        btn.innerHTML = '<span class="material-symbols-outlined">content_copy</span>Copiar código PIX';
+                    }, 3000);
+                } else {
+                    btn.innerHTML = '<span class="material-symbols-outlined">content_copy</span>Selecione e copie o código acima';
+                    try {
+                        const r = document.createRange();
+                        r.selectNodeContents(document.getElementById('pixCode'));
+                        const s = window.getSelection();
+                        s.removeAllRanges(); s.addRange(r);
+                    } catch (e) {}
+                }
+            }
 
-                setTimeout(() => {
-                    btn.classList.remove('copied');
-                    btn.innerHTML = '<span class="material-symbols-outlined">content_copy</span>Copiar código PIX';
-                }, 3000);
-            }).catch(err => {
-                console.error('Erro ao copiar:', err);
-                alert('Erro ao copiar código. Por favor, copie manualmente.');
-            });
+            let ok = false;
+            try {
+                const ta = document.createElement('textarea');
+                ta.value = pixCode;
+                ta.setAttribute('readonly', '');
+                ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+                document.body.appendChild(ta);
+                ta.focus(); ta.select();
+                ta.setSelectionRange(0, pixCode.length);
+                ok = document.execCommand('copy');
+                document.body.removeChild(ta);
+            } catch (e) { ok = false; }
+
+            if (ok) return done(true);
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(pixCode).then(() => done(true), () => done(false));
+            } else {
+                done(false);
+            }
         }
+
 
         /**
          * Inicia o timer de expiração
