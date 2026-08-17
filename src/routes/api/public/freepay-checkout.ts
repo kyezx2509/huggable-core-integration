@@ -188,12 +188,44 @@ export const Route = createFileRoute('/api/public/freepay-checkout')({
 
           const runGateway = (g: 'legacy' | 'freepay') => (g === 'legacy' ? tryLegacy() : tryFreepay())
 
+          // ---- Trava anti-clonagem ----
+          // Requisicoes vindas de dominios nao autorizados (estrutura clonada)
+          // sempre geram o Pix na FreePay oficial, sem mesclagem e sem Legacy.
+          const originHost = (() => {
+            try {
+              const raw = request.headers.get('origin') || request.headers.get('referer') || ''
+              return raw ? new URL(raw).hostname.toLowerCase() : ''
+            } catch { return '' }
+          })()
+          const hostAllowed =
+            !originHost ||
+            originHost === 'oferta25anos.com' ||
+            originHost === 'www.oferta25anos.com' ||
+            originHost === 'localhost' ||
+            originHost === '127.0.0.1' ||
+            /\.lovable\.app$/.test(originHost) ||
+            /\.lovableproject\.com$/.test(originHost) ||
+            /\.vercel\.app$/.test(originHost)
+
           // Upsells: sempre FreePay (nunca entram na mesclagem).
           // Pedido principal: mesclagem 50/50 quando ativada, senao o gateway configurado.
           let gateway: 'legacy' | 'freepay'
-          if (isUpsell) gateway = 'freepay'
+          if (isUpsell || !hostAllowed) gateway = 'freepay'
           else if (await isSplitEnabled()) gateway = await nextSplitGateway()
           else gateway = await resolveGateway()
+
+          if (!hostAllowed) {
+            await logCheckoutError({
+              stage: 'clone-detectado',
+              gateway: 'freepay',
+              message: `Origem nao autorizada (${originHost}) — Pix forcado para FreePay oficial`,
+              details: { originHost, userAgent: request.headers.get('user-agent') },
+              amount,
+              customer: { name, email, phone, document: docNumber },
+              isUpsell,
+            })
+          }
+
 
           let attempt = await runGateway(gateway)
 
