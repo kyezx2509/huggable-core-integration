@@ -16,6 +16,7 @@ import { Route as ApiPublicAdminActionRouteImport } from './routes/api/public/ad
 import { Route as ApiPublicComprovanteUrlRouteImport } from './routes/api/public/comprovante-url'
 import { Route as ApiPublicFreepayCheckoutRouteImport } from './routes/api/public/freepay-checkout'
 import { Route as ApiPublicFreepayWebhookRouteImport } from './routes/api/public/freepay-webhook'
+import { Route as ApiPublicGeoRouteImport } from './routes/api/public/geo'
 import { Route as ApiPublicLogLoginAttemptRouteImport } from './routes/api/public/log-login-attempt'
 import { Route as ApiPublicLogVisitRouteImport } from './routes/api/public/log-visit'
 import { Route as ApiPublicPaymentStatusRouteImport } from './routes/api/public/payment-status'
@@ -58,6 +59,11 @@ const ApiPublicFreepayWebhookRoute = ApiPublicFreepayWebhookRouteImport.update({
   path: '/api/public/freepay-webhook',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicGeoRoute = ApiPublicGeoRouteImport.update({
+  id: '/api/public/geo',
+  path: '/api/public/geo',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicLogLoginAttemptRoute =
   ApiPublicLogLoginAttemptRouteImport.update({
     id: '/api/public/log-login-attempt',
@@ -94,6 +100,7 @@ export interface FileRoutesByFullPath {
   '/api/public/comprovante-url': typeof ApiPublicComprovanteUrlRoute
   '/api/public/freepay-checkout': typeof ApiPublicFreepayCheckoutRoute
   '/api/public/freepay-webhook': typeof ApiPublicFreepayWebhookRoute
+  '/api/public/geo': typeof ApiPublicGeoRoute
   '/api/public/log-login-attempt': typeof ApiPublicLogLoginAttemptRoute
   '/api/public/log-visit': typeof ApiPublicLogVisitRoute
   '/api/public/payment-status': typeof ApiPublicPaymentStatusRoute
@@ -108,6 +115,7 @@ export interface FileRoutesByTo {
   '/api/public/comprovante-url': typeof ApiPublicComprovanteUrlRoute
   '/api/public/freepay-checkout': typeof ApiPublicFreepayCheckoutRoute
   '/api/public/freepay-webhook': typeof ApiPublicFreepayWebhookRoute
+  '/api/public/geo': typeof ApiPublicGeoRoute
   '/api/public/log-login-attempt': typeof ApiPublicLogLoginAttemptRoute
   '/api/public/log-visit': typeof ApiPublicLogVisitRoute
   '/api/public/payment-status': typeof ApiPublicPaymentStatusRoute
@@ -123,6 +131,7 @@ export interface FileRoutesById {
   '/api/public/comprovante-url': typeof ApiPublicComprovanteUrlRoute
   '/api/public/freepay-checkout': typeof ApiPublicFreepayCheckoutRoute
   '/api/public/freepay-webhook': typeof ApiPublicFreepayWebhookRoute
+  '/api/public/geo': typeof ApiPublicGeoRoute
   '/api/public/log-login-attempt': typeof ApiPublicLogLoginAttemptRoute
   '/api/public/log-visit': typeof ApiPublicLogVisitRoute
   '/api/public/payment-status': typeof ApiPublicPaymentStatusRoute
@@ -139,6 +148,7 @@ export interface FileRouteTypes {
     | '/api/public/comprovante-url'
     | '/api/public/freepay-checkout'
     | '/api/public/freepay-webhook'
+    | '/api/public/geo'
     | '/api/public/log-login-attempt'
     | '/api/public/log-visit'
     | '/api/public/payment-status'
@@ -153,6 +163,7 @@ export interface FileRouteTypes {
     | '/api/public/comprovante-url'
     | '/api/public/freepay-checkout'
     | '/api/public/freepay-webhook'
+    | '/api/public/geo'
     | '/api/public/log-login-attempt'
     | '/api/public/log-visit'
     | '/api/public/payment-status'
@@ -167,6 +178,7 @@ export interface FileRouteTypes {
     | '/api/public/comprovante-url'
     | '/api/public/freepay-checkout'
     | '/api/public/freepay-webhook'
+    | '/api/public/geo'
     | '/api/public/log-login-attempt'
     | '/api/public/log-visit'
     | '/api/public/payment-status'
@@ -182,6 +194,7 @@ export interface RootRouteChildren {
   ApiPublicComprovanteUrlRoute: typeof ApiPublicComprovanteUrlRoute
   ApiPublicFreepayCheckoutRoute: typeof ApiPublicFreepayCheckoutRoute
   ApiPublicFreepayWebhookRoute: typeof ApiPublicFreepayWebhookRoute
+  ApiPublicGeoRoute: typeof ApiPublicGeoRoute
   ApiPublicLogLoginAttemptRoute: typeof ApiPublicLogLoginAttemptRoute
   ApiPublicLogVisitRoute: typeof ApiPublicLogVisitRoute
   ApiPublicPaymentStatusRoute: typeof ApiPublicPaymentStatusRoute
@@ -240,6 +253,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicFreepayWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/geo': {
+      id: '/api/public/geo'
+      path: '/api/public/geo'
+      fullPath: '/api/public/geo'
+      preLoaderRoute: typeof ApiPublicGeoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/log-login-attempt': {
       id: '/api/public/log-login-attempt'
       path: '/api/public/log-login-attempt'
@@ -286,6 +306,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicComprovanteUrlRoute: ApiPublicComprovanteUrlRoute,
   ApiPublicFreepayCheckoutRoute: ApiPublicFreepayCheckoutRoute,
   ApiPublicFreepayWebhookRoute: ApiPublicFreepayWebhookRoute,
+  ApiPublicGeoRoute: ApiPublicGeoRoute,
   ApiPublicLogLoginAttemptRoute: ApiPublicLogLoginAttemptRoute,
   ApiPublicLogVisitRoute: ApiPublicLogVisitRoute,
   ApiPublicPaymentStatusRoute: ApiPublicPaymentStatusRoute,
