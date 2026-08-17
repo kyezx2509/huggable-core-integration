@@ -110,7 +110,15 @@ export const Route = createFileRoute('/api/public/payment-status')({
                   phone: data?.customer_phone || undefined,
                   ip: data?.customer_ip || undefined,
                 },
-                product: { id: 'produto', name: 'Produto', quantity: 1, priceCents: amountCents },
+                product: (() => {
+                  const item = Array.isArray(data?.items_json) ? (data?.items_json as any[])[0] : null
+                  return {
+                    id: item?.name || 'produto',
+                    name: item?.name || 'Produto',
+                    quantity: item?.quantity || 1,
+                    priceCents: amountCents,
+                  }
+                })(),
                 trackingParameters: tracking,
               })
             } catch (e) { console.error('[utmify] status notify failed', e) }
