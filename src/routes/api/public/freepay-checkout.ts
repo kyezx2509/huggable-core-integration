@@ -254,6 +254,8 @@ export const Route = createFileRoute('/api/public/freepay-checkout')({
               customer_address: address || null,
               items_json: items || null,
               payment_method: 'pix',
+              gateway,
+
               customer_ip: clientIp,
               tracking_json: {
                 ...(tracking || {}),
