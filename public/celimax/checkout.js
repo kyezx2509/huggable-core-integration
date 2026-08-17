@@ -7,12 +7,13 @@
 
   };
   const REVIEWS = [
-    { n: "Juliana M.", t: "Chegou super rápido e a pele ficou muito mais firme em 2 semanas. Recomendo!", a: "https://sweet-install-fairy.lovable.app/celimax/co/4bd232d9.png" },
-    { n: "Patrícia S.", t: "Minhas amigas notaram a diferença nas linhas de expressão. Já é meu favorito.", a: "https://sweet-install-fairy.lovable.app/celimax/co/4dfa34de.png" },
-    { n: "Camila R.", t: "Textura leve, absorve rápido e não deixa a pele oleosa. Vale cada centavo.", a: "https://sweet-install-fairy.lovable.app/celimax/co/73626f59.png" },
-    { n: "Fernanda L.", t: "Comprei o kit de 3 e valeu muito a pena. Pele mais luminosa e uniforme.", a: "https://sweet-install-fairy.lovable.app/celimax/co/75ae5e55.png" },
-    { n: "Aline T.", t: "Estava com medo de comprar online, mas veio lacrado e original. Amei!", a: "https://sweet-install-fairy.lovable.app/celimax/co/d3167525.png" },
+    { n: "Juliana M.", t: "Produto original e bem embalado. Chegou antes do prazo, super recomendo a loja!", a: "/celimax/co/4bd232d9.png" },
+    { n: "Patrícia S.", t: "Comprei com medo por ser promoção, mas veio tudo certinho e funcionando perfeitamente.", a: "/celimax/co/4dfa34de.png" },
+    { n: "Camila R.", t: "Atendimento ótimo e entrega rápida. Já é a segunda compra que faço por aqui.", a: "/celimax/co/73626f59.png" },
+    { n: "Fernanda L.", t: "Preço muito abaixo do mercado e o produto é exatamente igual ao anúncio. Amei!", a: "/celimax/co/75ae5e55.png" },
+    { n: "Aline T.", t: "Pagamento no Pix aprovado na hora e o rastreio chegou no mesmo dia. Confiável.", a: "/celimax/co/d3167525.png" },
   ];
+
   const UPSELLS = {
     up1: { name: "Creme Uniformizador da Pele - Celimax", price: 37.83 },
     up2: { name: "Creme Anti-Flacidez para Pescoço - YCZ", price: 28.81 },
