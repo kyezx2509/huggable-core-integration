@@ -173,9 +173,11 @@
 
   // ---- quantity
   $$("[data-qty]").forEach((b) => b.addEventListener("click", () => {
+    if (isCart) return;
     state.qty = Math.min(20, Math.max(1, state.qty + parseInt(b.dataset.qty, 10)));
     render();
   }));
+
 
   // ---- summary collapse (mobile)
   let open = true;
