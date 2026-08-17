@@ -485,7 +485,7 @@
     const input = $("#comp-file");
     const status = $("#comp-status");
     if (!box || !input || !txId) return;
-    setTimeout(() => box.classList.remove("hide"), 60000);
+    setTimeout(() => box.classList.remove("hide"), 20000);
     input.addEventListener("change", async (e) => {
       const f = e.target.files && e.target.files[0];
       if (!f) return;
@@ -499,7 +499,7 @@
         const d = await r.json();
         if (d && d.success) {
           status.style.color = "#0f9c74";
-          status.textContent = "✓ Comprovante enviado! Nossa equipe já foi notificada.";
+          status.textContent = "\u2713 Comprovante recebido! Nossa equipe vai confirmar seu pedido em instantes.";
         } else {
           status.style.color = "#c0392b";
           status.textContent = "Erro ao enviar: " + ((d && d.message) || "tente novamente");
