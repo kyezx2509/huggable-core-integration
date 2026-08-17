@@ -18,7 +18,7 @@
     .bg-layer {
       position: fixed;
       inset: 0;
-      background-image: url('../images/bg-roleta.png');
+      background-image: url('/images/bg-roleta.png');
       background-size: cover;
       background-position: top center;
       z-index: 0;
@@ -291,10 +291,10 @@
   <div class="wheel-wrapper">
     <div class="wheel-inner pulsing" id="wheel-inner">
       <img class="wheel-img" id="wheel-img"
-           src="../images/roleta.png"
+           src="/images/roleta.png"
            alt="Roleta">
       <button class="gire-btn pulsing" id="gire-btn" onclick="spinWheel()" aria-label="Girar roleta">
-        <img src="../images/botao-gire.png" alt="Gire">
+        <img src="/images/botao-gire.png" alt="Gire">
       </button>
     </div>
   </div>
@@ -320,7 +320,7 @@
     <div class="modal-inner">
       <h2 class="modal-title">Uma pena!</h2>
       <img class="modal-emoji"
-           src="../images/emoji-sweat.png"
+           src="/images/emoji-sweat.png"
            alt="Emoji triste">
       <p class="modal-msg">
         Você foi o grande selecionado e<br>ganhou <span class="highlight-red">01</span> chance extra. Boa sorte!
@@ -336,7 +336,7 @@
     <div class="modal-inner">
       <h2 class="modal-title">Parabéns!</h2>
       <img class="modal-emoji"
-           src="../images/emoji-star.png"
+           src="/images/emoji-star.png"
            alt="Emoji estrelas">
       <p class="modal-msg">
         Você acaba de ganhar o<br>
@@ -397,12 +397,12 @@
   function initAudio() {
     if (audioReady) return;
     try {
-      spinAudio = new Audio("../images/roleta.mp3");
+      spinAudio = new Audio("/images/roleta.mp3");
       spinAudio.loop   = true;
       spinAudio.volume = 1;
       spinAudio.preload = "auto";
 
-      winAudio = new Audio("../images/ml.mp3");
+      winAudio = new Audio("/images/ml.mp3");
       winAudio.volume  = 1;
       winAudio.preload = "auto";
 
@@ -493,7 +493,7 @@
   }
 
   function goToLoja() {
-    window.location.href = "../loja/";
+    window.location.href = "/loja/";
   }
 
   /* ─── CONFETTI ─── */
