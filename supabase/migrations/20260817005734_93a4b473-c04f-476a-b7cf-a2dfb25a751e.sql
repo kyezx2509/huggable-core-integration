@@ -1,0 +1,1 @@
+update public.site_settings set value='legacy' where key='payment_gateway';
