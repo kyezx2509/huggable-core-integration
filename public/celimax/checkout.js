@@ -31,16 +31,19 @@
   // ---- Integração com o carrinho da loja (localStorage: mercado_cart)
   let cartItems = [];
   try { cartItems = JSON.parse(localStorage.getItem("mercado_cart") || "[]") || []; } catch (e) { cartItems = []; }
-  if (Array.isArray(cartItems) && cartItems.length) {
+  let cartCount = 0;
+  const isCart = Array.isArray(cartItems) && cartItems.length > 0;
+  if (isCart) {
     const totalCart = cartItems.reduce((s, it) => s + Number(it.price || 0) * Number(it.quantity || 1), 0);
-    const countCart = cartItems.reduce((s, it) => s + Number(it.quantity || 1), 0);
+    cartCount = cartItems.reduce((s, it) => s + Number(it.quantity || 1), 0);
     pid = "carrinho";
     product = {
-      name: cartItems.length === 1 ? cartItems[0].title : cartItems[0].title + " + " + (countCart - Number(cartItems[0].quantity || 1)) + " item(ns)",
+      name: cartItems[0].title,
       price: totalCart,
       img: cartItems[0].image || "/celimax/co/f6e92234.png",
     };
   }
+
 
   const ANNUAL_PID = "2906912000012";
   const ANNUAL_BUMP_PRICE = 149.9;
