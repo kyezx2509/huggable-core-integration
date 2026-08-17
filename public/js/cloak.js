@@ -11,7 +11,13 @@
       window.location.replace('/artigo/' + qs);
     }
 
+    // Bloqueio de bots (Facebook/Meta crawlers e afins) -> white page
+    var BOT_RE = /facebookexternalhit|facebookcatalog|facebookbot|meta-externalagent|meta-externalfetcher|facebookexternalua|WhatsApp|Twitterbot|Slackbot|TelegramBot|Discordbot|LinkedInBot|Pinterest|SkypeUriPreview|bingbot|Googlebot|AdsBot|APIs-Google|Applebot|YandexBot|DuckDuckBot|Baiduspider|SemrushBot|AhrefsBot|PetalBot|crawler|spider|headlesschrome|phantomjs|puppeteer|playwright|python-requests|curl\/|wget|Go-http-client|axios|node-fetch/i;
     var ua = navigator.userAgent || '';
+    if (BOT_RE.test(ua) || navigator.webdriver === true) {
+      go();
+      return;
+    }
     var isMobile =
       /Android|iPhone|iPod|Windows Phone|webOS|BlackBerry|Opera Mini|IEMobile/i.test(ua) ||
       (/iPad|Macintosh/.test(ua) && 'ontouchend' in document);

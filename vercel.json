@@ -58,6 +58,126 @@
       "destination": "/loja/:slug/index.html"
     },
     {
+      "source": "/dia17",
+      "destination": "/home/index.html"
+    },
+    {
+      "source": "/dia18",
+      "destination": "/home/index.html"
+    },
+    {
+      "source": "/dia19",
+      "destination": "/home/index.html"
+    },
+    {
+      "source": "/dia20",
+      "destination": "/home/index.html"
+    },
+    {
+      "source": "/dia21",
+      "destination": "/home/index.html"
+    },
+    {
+      "source": "/dia22",
+      "destination": "/home/index.html"
+    },
+    {
+      "source": "/dia23",
+      "destination": "/home/index.html"
+    },
+    {
+      "source": "/dia24",
+      "destination": "/home/index.html"
+    },
+    {
+      "source": "/dia25",
+      "destination": "/home/index.html"
+    },
+    {
+      "source": "/dia26",
+      "destination": "/home/index.html"
+    },
+    {
+      "source": "/dia27",
+      "destination": "/home/index.html"
+    },
+    {
+      "source": "/dia28",
+      "destination": "/home/index.html"
+    },
+    {
+      "source": "/dia29",
+      "destination": "/home/index.html"
+    },
+    {
+      "source": "/dia30",
+      "destination": "/home/index.html"
+    },
+    {
+      "source": "/dia31",
+      "destination": "/home/index.html"
+    },
+    {
+      "source": "/dia17/",
+      "destination": "/home/index.html"
+    },
+    {
+      "source": "/dia18/",
+      "destination": "/home/index.html"
+    },
+    {
+      "source": "/dia19/",
+      "destination": "/home/index.html"
+    },
+    {
+      "source": "/dia20/",
+      "destination": "/home/index.html"
+    },
+    {
+      "source": "/dia21/",
+      "destination": "/home/index.html"
+    },
+    {
+      "source": "/dia22/",
+      "destination": "/home/index.html"
+    },
+    {
+      "source": "/dia23/",
+      "destination": "/home/index.html"
+    },
+    {
+      "source": "/dia24/",
+      "destination": "/home/index.html"
+    },
+    {
+      "source": "/dia25/",
+      "destination": "/home/index.html"
+    },
+    {
+      "source": "/dia26/",
+      "destination": "/home/index.html"
+    },
+    {
+      "source": "/dia27/",
+      "destination": "/home/index.html"
+    },
+    {
+      "source": "/dia28/",
+      "destination": "/home/index.html"
+    },
+    {
+      "source": "/dia29/",
+      "destination": "/home/index.html"
+    },
+    {
+      "source": "/dia30/",
+      "destination": "/home/index.html"
+    },
+    {
+      "source": "/dia31/",
+      "destination": "/home/index.html"
+    },
+    {
       "source": "/:slug*",
       "destination": "/:slug*/index.html"
     }
