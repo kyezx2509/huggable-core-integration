@@ -41,11 +41,27 @@
     };
   };
 
-  // InitiateCheckout - quando o lead entra no checkout (dispara uma vez por sessao de pagina)
+  // InitiateCheckout - uma unica vez por lead (persistido 24h), nao por page view.
+  // Antes disparava a cada carregamento/reload/volta do checkout e tambem nos
+  // upsells, inflando o evento acima do numero de cliques.
+  var IC_KEY = '_ic_sent_at';
+  var IC_WINDOW = 24 * 60 * 60 * 1000;
   var _icSent = false;
-  window.fbInitiateCheckout = function (value, product) {
-    if (_icSent) return;
+  function icAlreadySent() {
+    if (_icSent) return true;
+    try {
+      var t = Number(localStorage.getItem(IC_KEY) || 0);
+      return !!t && Date.now() - t < IC_WINDOW;
+    } catch (e) { return false; }
+  }
+  function icMark() {
     _icSent = true;
+    try { localStorage.setItem(IC_KEY, String(Date.now())); } catch (e) {}
+  }
+  window.fbInitiateCheckout = function (value, product) {
+    if (icAlreadySent()) return;
+    icMark();
+    var eventId = 'ic_' + Date.now() + '_' + Math.random().toString(36).slice(2, 10);
     try {
       fbq('track', 'InitiateCheckout', {
         value: Number(value) || 0,
@@ -55,9 +71,11 @@
         content_ids: product && product.id ? [String(product.id)] : undefined,
         content_name: (product && product.name) || undefined,
         num_items: (product && Number(product.qty)) || 1,
-      });
+      }, { eventID: eventId });
     } catch (e) {}
   };
+  window.fbInitiateCheckoutSent = icAlreadySent;
+
 
   // Purchase somente para pedidos pagos
 

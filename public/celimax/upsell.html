@@ -168,11 +168,9 @@ function renderIntro(){
   document.getElementById('btn-go').addEventListener('click', gerarPix);
   const sk = document.getElementById('btn-skip');
   if (sk) sk.addEventListener('click', avancar);
-  try {
-    if (window.fbInitiateCheckout) window.fbInitiateCheckout(cfg.amount/100, { id: cfg.key, name: cfg.titulo, qty: 1 });
-    else if (window.fbq) window.fbq('track','InitiateCheckout',{value:cfg.amount/100,currency:'BRL',content_name:cfg.titulo,content_ids:[cfg.key],num_items:1});
-    if (window.utmifyTrack) window.utmifyTrack('InitiateCheckout', { value: cfg.amount/100, currency:'BRL', product: cfg.titulo });
-  } catch(e){}
+  // Upsell nao dispara InitiateCheckout: e etapa pos-compra e inflava o evento
+  // (ate 3 eventos extras por comprador) acima do numero de cliques do anuncio.
+
 }
 
 function avancar(){

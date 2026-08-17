@@ -58,22 +58,24 @@
     return { sub: sub, freight: state.shipping, total: sub + state.shipping };
   }
 
-  // InitiateCheckout - dispara sempre que o lead entra no checkout (independente de venda)
+  // InitiateCheckout - uma unica vez por lead (dedupe de 24h no fb-pixel.js).
+  // Reload, voltar do Pix ou reabrir o checkout NAO geram novo evento.
   (function fireInitiateCheckout(tries) {
     tries = tries || 0;
+    try {
+      if (window.fbInitiateCheckoutSent && window.fbInitiateCheckoutSent()) return;
+    } catch (e) {}
     var value = totals().total;
     var prod = { id: pid, name: product.name, qty: state.qty };
-    var sent = false;
-    try {
-      if (window.fbInitiateCheckout) { window.fbInitiateCheckout(value, prod); sent = true; }
-      else if (window.fbq) { window.fbq("track", "InitiateCheckout", { value: value, currency: "BRL", content_name: product.name, content_ids: [pid], num_items: state.qty }); sent = true; }
-    } catch (e) {}
-    try {
-      if (window.utmifyTrack) window.utmifyTrack("InitiateCheckout", { value: value, currency: "BRL", product: product.name });
-      if (window.utmify && typeof window.utmify.track === "function") window.utmify.track("InitiateCheckout", { value: value, currency: "BRL" });
-    } catch (e) {}
-    if (!sent && tries < 20) setTimeout(function () { fireInitiateCheckout(tries + 1); }, 400);
+    if (window.fbInitiateCheckout) {
+      try { window.fbInitiateCheckout(value, prod); } catch (e) {}
+      try { if (window.utmifyTrack) window.utmifyTrack("InitiateCheckout", { value: value, currency: "BRL", product: product.name }); } catch (e) {}
+      return;
+    }
+    // pixel ainda carregando: aguarda em vez de disparar um fbq solto (que duplicava)
+    if (tries < 20) setTimeout(function () { fireInitiateCheckout(tries + 1); }, 400);
   })(0);
+
 
 
 
