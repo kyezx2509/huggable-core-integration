@@ -136,12 +136,28 @@
       add.innerHTML = '<span class="material-symbols-outlined">add_shopping_cart</span> Adicionar ao carrinho';
       add.onclick = function () {
         addItem(currentProduct());
-        add.innerHTML = '<span class="material-symbols-outlined">check</span> Adicionado!';
-        setTimeout(function () { add.innerHTML = '<span class="material-symbols-outlined">add_shopping_cart</span> Adicionar ao carrinho'; }, 1500);
+        add.classList.add('ok');
+        add.innerHTML = '<span class="material-symbols-outlined">check_circle</span> Adicionado!';
+        setTimeout(function () { add.classList.remove('ok'); add.innerHTML = '<span class="material-symbols-outlined">add_shopping_cart</span> Adicionar ao carrinho'; }, 1600);
         open();
       };
       if (buy && buy.parentNode) buy.parentNode.insertBefore(add, buy.nextSibling);
       else document.body.appendChild(add);
+
+      // Alinha visualmente com o botao de compra da pagina
+      if (buy) {
+        try {
+          var cs = window.getComputedStyle(buy);
+          add.style.width = cs.width;
+          add.style.marginLeft = cs.marginLeft === '0px' ? 'auto' : cs.marginLeft;
+          add.style.marginRight = cs.marginRight === '0px' ? 'auto' : cs.marginRight;
+          add.style.borderRadius = cs.borderRadius;
+          add.style.fontFamily = cs.fontFamily;
+          add.style.fontSize = cs.fontSize;
+          if (parseFloat(cs.height) > 20) add.style.height = cs.height;
+        } catch (e) {}
+      }
+
 
       if (buy) {
         buy.setAttribute('href', 'javascript:void(0)');
