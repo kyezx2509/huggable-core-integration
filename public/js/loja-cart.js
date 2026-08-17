@@ -98,6 +98,12 @@
     if (b) { var c = count(); b.textContent = c; b.style.display = c ? 'flex' : 'none'; }
     var legacy = document.getElementById('cartBadge');
     if (legacy) { var c2 = count(); legacy.textContent = c2; legacy.style.display = c2 ? 'flex' : 'none'; }
+    var bar = document.getElementById('floatingCartBar');
+    if (bar) {
+      var pv = bar.querySelector('.price-value');
+      if (pv) pv.textContent = BRL(total());
+      bar.style.display = count() ? '' : 'none';
+    }
   }
 
   function open() { document.getElementById('mlCartDrawer').classList.add('open'); document.getElementById('mlCartOverlay').classList.add('open'); render(); }
