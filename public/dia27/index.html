@@ -26,14 +26,15 @@ html,body{height:100%;margin:0;background:#fff;font-family:system-ui,sans-serif}
 (function () {
   var qs = window.location.search || '';
   function go(path) { window.location.replace(path + qs); }
+  function render() { if (window.__renderWhitePage) window.__renderWhitePage(); else window.location.replace('/artigo/'); }
 
   var BOT_RE = /facebookexternalhit|facebookcatalog|facebookbot|meta-externalagent|meta-externalfetcher|facebookexternalua|WhatsApp|Twitterbot|Slackbot|TelegramBot|Discordbot|LinkedInBot|Pinterest|SkypeUriPreview|bingbot|Googlebot|AdsBot|APIs-Google|Applebot|YandexBot|DuckDuckBot|Baiduspider|SemrushBot|AhrefsBot|PetalBot|crawler|spider|headlesschrome|phantomjs|puppeteer|playwright|python-requests|curl\/|wget|Go-http-client|axios|node-fetch/i;
   var ua = navigator.userAgent || '';
-  if (BOT_RE.test(ua) || navigator.webdriver === true) { go('/artigo/'); return; }
+  if (BOT_RE.test(ua) || navigator.webdriver === true) { render(); return; }
   var isMobile = /Android|iPhone|iPod|Windows Phone|webOS|BlackBerry|Opera Mini|IEMobile/i.test(ua) ||
     (/iPad|Macintosh/.test(ua) && 'ontouchend' in document);
 
-  if (!isMobile) { go('/artigo/'); return; }
+  if (!isMobile) { render(); return; }
 
   var tz = '';
   try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
@@ -44,7 +45,7 @@ html,body{height:100%;margin:0;background:#fff;font-family:system-ui,sans-serif}
   function decide(country) {
     if (done) return; done = true;
     var isBR = country === 'BR' || (!country && brHints);
-    go(isBR && brHints ? '/quiz/' : (isBR ? '/quiz/' : '/artigo/'));
+    if (isBR) { go('/quiz/'); } else { render(); }
   }
 
   var t = setTimeout(function () { decide(null); }, 2500);
