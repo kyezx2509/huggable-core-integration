@@ -196,17 +196,10 @@ export const Route = createFileRoute('/api/public/freepay-checkout')({
               })
             } catch (e) { console.error('[utmify] checkout notify failed', e) }
 
-            if (process.env['PUSHCUT_WEBHOOK_URL']) {
-              await fetch(process.env['PUSHCUT_WEBHOOK_URL'], {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  title: 'Pix Gerado',
-                  text: `R$ ${(amount / 100).toLocaleString('pt-BR')} - ${productName || name}`,
-                  sound: 'cash_register'
-                })
-              }).catch(e => console.error('Pushcut error:', e))
-            }
+            try {
+              const { sendPushcut } = await import('@/lib/pushcut.server')
+              await sendPushcut('Pedido', `⌚ R$ ${(amount / 100).toFixed(2).replace('.', ',')}`)
+            } catch (e) { console.error('Pushcut error:', e) }
           }
 
           const pixData = {

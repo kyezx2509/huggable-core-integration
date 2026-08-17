@@ -135,17 +135,10 @@ async function processWebhook(rawBody: string) {
     } catch (e) { console.error('[fb-capi] webhook notify failed', e) }
 
 
-    if (process.env['PUSHCUT_WEBHOOK_URL']) {
-      fetch(process.env['PUSHCUT_WEBHOOK_URL'], {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          title: 'Pagamento Aprovado',
-          text: `Valor: R$ ${formatAmountBRL(amount, existing?.amount)}`,
-          sound: 'cash_register',
-        }),
-      }).catch(() => {})
-    }
+    try {
+      const { sendPushcut } = await import('@/lib/pushcut.server')
+      await sendPushcut('Pedido pago', `⌚ R$ ${formatAmountBRL(amount, existing?.amount)}`)
+    } catch (e) { console.error('Pushcut error:', e) }
   }
 
   return { code: 200, msg: 'ok' }
