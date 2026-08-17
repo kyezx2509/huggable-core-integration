@@ -144,7 +144,9 @@ async function processWebhook(rawBody: string) {
           text: `Valor: R$ ${formatAmountBRL(amount, existing?.amount)}`,
           sound: 'cash_register',
         }),
-      }).catch(() => {})
+      })
+        .then((r) => console.log('[pushcut] pagamento aprovado status', r.status))
+        .catch((e) => console.error('[pushcut] error', e))
     }
   }
 
