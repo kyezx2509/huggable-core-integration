@@ -12,7 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AcessarIndexRouteImport } from './routes/acessar/index'
 import { Route as ApiPublicAdminActionRouteImport } from './routes/api/public/admin-action'
-import { Route as ApiPublicApiStatusRouteImport } from './routes/api/public/api-status'
 import { Route as ApiPublicComprovanteUrlRouteImport } from './routes/api/public/comprovante-url'
 import { Route as ApiPublicFreepayCheckoutRouteImport } from './routes/api/public/freepay-checkout'
 import { Route as ApiPublicFreepayWebhookRouteImport } from './routes/api/public/freepay-webhook'
@@ -35,11 +34,6 @@ const AcessarIndexRoute = AcessarIndexRouteImport.update({
 const ApiPublicAdminActionRoute = ApiPublicAdminActionRouteImport.update({
   id: '/api/public/admin-action',
   path: '/api/public/admin-action',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiPublicApiStatusRoute = ApiPublicApiStatusRouteImport.update({
-  id: '/api/public/api-status',
-  path: '/api/public/api-status',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicComprovanteUrlRoute = ApiPublicComprovanteUrlRouteImport.update({
@@ -90,7 +84,6 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/acessar/': typeof AcessarIndexRoute
   '/api/public/admin-action': typeof ApiPublicAdminActionRoute
-  '/api/public/api-status': typeof ApiPublicApiStatusRoute
   '/api/public/comprovante-url': typeof ApiPublicComprovanteUrlRoute
   '/api/public/freepay-checkout': typeof ApiPublicFreepayCheckoutRoute
   '/api/public/freepay-webhook': typeof ApiPublicFreepayWebhookRoute
@@ -104,7 +97,6 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/acessar': typeof AcessarIndexRoute
   '/api/public/admin-action': typeof ApiPublicAdminActionRoute
-  '/api/public/api-status': typeof ApiPublicApiStatusRoute
   '/api/public/comprovante-url': typeof ApiPublicComprovanteUrlRoute
   '/api/public/freepay-checkout': typeof ApiPublicFreepayCheckoutRoute
   '/api/public/freepay-webhook': typeof ApiPublicFreepayWebhookRoute
@@ -119,7 +111,6 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/acessar/': typeof AcessarIndexRoute
   '/api/public/admin-action': typeof ApiPublicAdminActionRoute
-  '/api/public/api-status': typeof ApiPublicApiStatusRoute
   '/api/public/comprovante-url': typeof ApiPublicComprovanteUrlRoute
   '/api/public/freepay-checkout': typeof ApiPublicFreepayCheckoutRoute
   '/api/public/freepay-webhook': typeof ApiPublicFreepayWebhookRoute
@@ -135,7 +126,6 @@ export interface FileRouteTypes {
     | '/'
     | '/acessar/'
     | '/api/public/admin-action'
-    | '/api/public/api-status'
     | '/api/public/comprovante-url'
     | '/api/public/freepay-checkout'
     | '/api/public/freepay-webhook'
@@ -149,7 +139,6 @@ export interface FileRouteTypes {
     | '/'
     | '/acessar'
     | '/api/public/admin-action'
-    | '/api/public/api-status'
     | '/api/public/comprovante-url'
     | '/api/public/freepay-checkout'
     | '/api/public/freepay-webhook'
@@ -163,7 +152,6 @@ export interface FileRouteTypes {
     | '/'
     | '/acessar/'
     | '/api/public/admin-action'
-    | '/api/public/api-status'
     | '/api/public/comprovante-url'
     | '/api/public/freepay-checkout'
     | '/api/public/freepay-webhook'
@@ -178,7 +166,6 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AcessarIndexRoute: typeof AcessarIndexRoute
   ApiPublicAdminActionRoute: typeof ApiPublicAdminActionRoute
-  ApiPublicApiStatusRoute: typeof ApiPublicApiStatusRoute
   ApiPublicComprovanteUrlRoute: typeof ApiPublicComprovanteUrlRoute
   ApiPublicFreepayCheckoutRoute: typeof ApiPublicFreepayCheckoutRoute
   ApiPublicFreepayWebhookRoute: typeof ApiPublicFreepayWebhookRoute
@@ -210,13 +197,6 @@ declare module '@tanstack/react-router' {
       path: '/api/public/admin-action'
       fullPath: '/api/public/admin-action'
       preLoaderRoute: typeof ApiPublicAdminActionRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/public/api-status': {
-      id: '/api/public/api-status'
-      path: '/api/public/api-status'
-      fullPath: '/api/public/api-status'
-      preLoaderRoute: typeof ApiPublicApiStatusRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/comprovante-url': {
@@ -282,7 +262,6 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AcessarIndexRoute: AcessarIndexRoute,
   ApiPublicAdminActionRoute: ApiPublicAdminActionRoute,
-  ApiPublicApiStatusRoute: ApiPublicApiStatusRoute,
   ApiPublicComprovanteUrlRoute: ApiPublicComprovanteUrlRoute,
   ApiPublicFreepayCheckoutRoute: ApiPublicFreepayCheckoutRoute,
   ApiPublicFreepayWebhookRoute: ApiPublicFreepayWebhookRoute,

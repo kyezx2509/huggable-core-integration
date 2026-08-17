@@ -20,7 +20,7 @@ export const Route = createFileRoute("/acessar/")({
 });
 
 type DateFilter = "all" | "today" | "yesterday" | "last7days" | "custom";
-type Tab = "dashboard" | "orders" | "attribution" | "utmify" | "receipts" | "visitors" | "security" | "apis" | "settings";
+type Tab = "dashboard" | "orders" | "attribution" | "utmify" | "receipts" | "visitors" | "security" | "settings";
 
 function AdminPanel() {
   const [loading, setLoading] = useState(true);
@@ -225,7 +225,6 @@ function AdminPanel() {
     { id: "receipts", label: "Comprovantes", icon: FileText },
     { id: "visitors", label: "Visitantes", icon: Users },
     { id: "security", label: "Segurança", icon: Shield },
-    { id: "apis", label: "APIs CPF", icon: Activity },
     { id: "settings", label: "Configurações", icon: SettingsIcon },
   ];
 
@@ -238,7 +237,7 @@ function AdminPanel() {
               <Shield className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h1 className="text-lg font-bold">Celimax · Painel Admin</h1>
+              <h1 className="text-lg font-bold">Painel Admin</h1>
               <p className="text-xs text-slate-400">{session.user.email}</p>
             </div>
           </div>
@@ -498,7 +497,6 @@ function AdminPanel() {
           </div>
         )}
 
-        {tab === "apis" && <ApiStatusPanel />}
 
         {tab === "settings" && <SettingsPanel adminAction={adminAction} />}
       </main>
