@@ -67,7 +67,7 @@ async function processWebhook(rawBody: string) {
   const supabase = createClient(process.env['SUPABASE_URL']!, process.env['SUPABASE_SERVICE_ROLE_KEY']!)
   const { data: existing } = await supabase
     .from('payment_transactions')
-    .select('status, amount, customer_name, customer_email, customer_cpf, customer_phone, customer_ip, items_json, tracking_json')
+    .select('status, amount, customer_name, customer_email, customer_cpf, customer_phone, customer_ip, items_json, tracking_json, gateway')
     .eq('transaction_id', transactionId)
     .maybeSingle()
 
@@ -87,8 +87,9 @@ async function processWebhook(rawBody: string) {
     try {
       const { sendUtmifyOrder } = await import('@/lib/utmify.server')
       const item = Array.isArray(existing?.items_json) ? (existing?.items_json as any[])[0] : null
-      const { resolveGateway } = await import('@/lib/legacy-gateway.server')
-      const gateway = await resolveGateway()
+      // Usa o gateway gravado na transacao (com mesclagem ativa, resolveGateway alterna
+      // a cada pedido e mandaria a plataforma errada para a Utmify).
+      const gateway = existing?.gateway === 'legacy' ? 'legacy' : 'freepay'
       await sendUtmifyOrder({
         orderId: String(transactionId),
         status: 'paid',
