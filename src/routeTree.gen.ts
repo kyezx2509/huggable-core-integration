@@ -10,33 +10,183 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AcessarIndexRouteImport } from './routes/acessar/index'
+import { Route as CheckoutIndexRouteImport } from './routes/checkout/index'
+import { Route as ApiPublicAdminActionRouteImport } from './routes/api/public/admin-action'
+import { Route as ApiPublicComprovanteUrlRouteImport } from './routes/api/public/comprovante-url'
+import { Route as ApiPublicFreepayCheckoutRouteImport } from './routes/api/public/freepay-checkout'
+import { Route as ApiPublicFreepayWebhookRouteImport } from './routes/api/public/freepay-webhook'
+import { Route as ApiPublicLogLoginAttemptRouteImport } from './routes/api/public/log-login-attempt'
+import { Route as ApiPublicLogVisitRouteImport } from './routes/api/public/log-visit'
+import { Route as ApiPublicPaymentStatusRouteImport } from './routes/api/public/payment-status'
+import { Route as ApiPublicUploadComprovanteRouteImport } from './routes/api/public/upload-comprovante'
+import { Route as ApiPublicUtmifyDiagRouteImport } from './routes/api/public/utmify-diag'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AcessarIndexRoute = AcessarIndexRouteImport.update({
+  id: '/acessar/',
+  path: '/acessar/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutIndexRoute = CheckoutIndexRouteImport.update({
+  id: '/checkout/',
+  path: '/checkout/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicAdminActionRoute = ApiPublicAdminActionRouteImport.update({
+  id: '/api/public/admin-action',
+  path: '/api/public/admin-action',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicComprovanteUrlRoute = ApiPublicComprovanteUrlRouteImport.update({
+  id: '/api/public/comprovante-url',
+  path: '/api/public/comprovante-url',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicFreepayCheckoutRoute =
+  ApiPublicFreepayCheckoutRouteImport.update({
+    id: '/api/public/freepay-checkout',
+    path: '/api/public/freepay-checkout',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicFreepayWebhookRoute = ApiPublicFreepayWebhookRouteImport.update({
+  id: '/api/public/freepay-webhook',
+  path: '/api/public/freepay-webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicLogLoginAttemptRoute =
+  ApiPublicLogLoginAttemptRouteImport.update({
+    id: '/api/public/log-login-attempt',
+    path: '/api/public/log-login-attempt',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicLogVisitRoute = ApiPublicLogVisitRouteImport.update({
+  id: '/api/public/log-visit',
+  path: '/api/public/log-visit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicPaymentStatusRoute = ApiPublicPaymentStatusRouteImport.update({
+  id: '/api/public/payment-status',
+  path: '/api/public/payment-status',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicUploadComprovanteRoute =
+  ApiPublicUploadComprovanteRouteImport.update({
+    id: '/api/public/upload-comprovante',
+    path: '/api/public/upload-comprovante',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicUtmifyDiagRoute = ApiPublicUtmifyDiagRouteImport.update({
+  id: '/api/public/utmify-diag',
+  path: '/api/public/utmify-diag',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/acessar/': typeof AcessarIndexRoute
+  '/checkout/': typeof CheckoutIndexRoute
+  '/api/public/admin-action': typeof ApiPublicAdminActionRoute
+  '/api/public/comprovante-url': typeof ApiPublicComprovanteUrlRoute
+  '/api/public/freepay-checkout': typeof ApiPublicFreepayCheckoutRoute
+  '/api/public/freepay-webhook': typeof ApiPublicFreepayWebhookRoute
+  '/api/public/log-login-attempt': typeof ApiPublicLogLoginAttemptRoute
+  '/api/public/log-visit': typeof ApiPublicLogVisitRoute
+  '/api/public/payment-status': typeof ApiPublicPaymentStatusRoute
+  '/api/public/upload-comprovante': typeof ApiPublicUploadComprovanteRoute
+  '/api/public/utmify-diag': typeof ApiPublicUtmifyDiagRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/acessar': typeof AcessarIndexRoute
+  '/checkout': typeof CheckoutIndexRoute
+  '/api/public/admin-action': typeof ApiPublicAdminActionRoute
+  '/api/public/comprovante-url': typeof ApiPublicComprovanteUrlRoute
+  '/api/public/freepay-checkout': typeof ApiPublicFreepayCheckoutRoute
+  '/api/public/freepay-webhook': typeof ApiPublicFreepayWebhookRoute
+  '/api/public/log-login-attempt': typeof ApiPublicLogLoginAttemptRoute
+  '/api/public/log-visit': typeof ApiPublicLogVisitRoute
+  '/api/public/payment-status': typeof ApiPublicPaymentStatusRoute
+  '/api/public/upload-comprovante': typeof ApiPublicUploadComprovanteRoute
+  '/api/public/utmify-diag': typeof ApiPublicUtmifyDiagRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/acessar/': typeof AcessarIndexRoute
+  '/checkout/': typeof CheckoutIndexRoute
+  '/api/public/admin-action': typeof ApiPublicAdminActionRoute
+  '/api/public/comprovante-url': typeof ApiPublicComprovanteUrlRoute
+  '/api/public/freepay-checkout': typeof ApiPublicFreepayCheckoutRoute
+  '/api/public/freepay-webhook': typeof ApiPublicFreepayWebhookRoute
+  '/api/public/log-login-attempt': typeof ApiPublicLogLoginAttemptRoute
+  '/api/public/log-visit': typeof ApiPublicLogVisitRoute
+  '/api/public/payment-status': typeof ApiPublicPaymentStatusRoute
+  '/api/public/upload-comprovante': typeof ApiPublicUploadComprovanteRoute
+  '/api/public/utmify-diag': typeof ApiPublicUtmifyDiagRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/acessar/'
+    | '/checkout/'
+    | '/api/public/admin-action'
+    | '/api/public/comprovante-url'
+    | '/api/public/freepay-checkout'
+    | '/api/public/freepay-webhook'
+    | '/api/public/log-login-attempt'
+    | '/api/public/log-visit'
+    | '/api/public/payment-status'
+    | '/api/public/upload-comprovante'
+    | '/api/public/utmify-diag'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/acessar'
+    | '/checkout'
+    | '/api/public/admin-action'
+    | '/api/public/comprovante-url'
+    | '/api/public/freepay-checkout'
+    | '/api/public/freepay-webhook'
+    | '/api/public/log-login-attempt'
+    | '/api/public/log-visit'
+    | '/api/public/payment-status'
+    | '/api/public/upload-comprovante'
+    | '/api/public/utmify-diag'
+  id:
+    | '__root__'
+    | '/'
+    | '/acessar/'
+    | '/checkout/'
+    | '/api/public/admin-action'
+    | '/api/public/comprovante-url'
+    | '/api/public/freepay-checkout'
+    | '/api/public/freepay-webhook'
+    | '/api/public/log-login-attempt'
+    | '/api/public/log-visit'
+    | '/api/public/payment-status'
+    | '/api/public/upload-comprovante'
+    | '/api/public/utmify-diag'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AcessarIndexRoute: typeof AcessarIndexRoute
+  CheckoutIndexRoute: typeof CheckoutIndexRoute
+  ApiPublicAdminActionRoute: typeof ApiPublicAdminActionRoute
+  ApiPublicComprovanteUrlRoute: typeof ApiPublicComprovanteUrlRoute
+  ApiPublicFreepayCheckoutRoute: typeof ApiPublicFreepayCheckoutRoute
+  ApiPublicFreepayWebhookRoute: typeof ApiPublicFreepayWebhookRoute
+  ApiPublicLogLoginAttemptRoute: typeof ApiPublicLogLoginAttemptRoute
+  ApiPublicLogVisitRoute: typeof ApiPublicLogVisitRoute
+  ApiPublicPaymentStatusRoute: typeof ApiPublicPaymentStatusRoute
+  ApiPublicUploadComprovanteRoute: typeof ApiPublicUploadComprovanteRoute
+  ApiPublicUtmifyDiagRoute: typeof ApiPublicUtmifyDiagRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +198,99 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/acessar/': {
+      id: '/acessar/'
+      path: '/acessar'
+      fullPath: '/acessar/'
+      preLoaderRoute: typeof AcessarIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout/': {
+      id: '/checkout/'
+      path: '/checkout'
+      fullPath: '/checkout/'
+      preLoaderRoute: typeof CheckoutIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/admin-action': {
+      id: '/api/public/admin-action'
+      path: '/api/public/admin-action'
+      fullPath: '/api/public/admin-action'
+      preLoaderRoute: typeof ApiPublicAdminActionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/comprovante-url': {
+      id: '/api/public/comprovante-url'
+      path: '/api/public/comprovante-url'
+      fullPath: '/api/public/comprovante-url'
+      preLoaderRoute: typeof ApiPublicComprovanteUrlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/freepay-checkout': {
+      id: '/api/public/freepay-checkout'
+      path: '/api/public/freepay-checkout'
+      fullPath: '/api/public/freepay-checkout'
+      preLoaderRoute: typeof ApiPublicFreepayCheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/freepay-webhook': {
+      id: '/api/public/freepay-webhook'
+      path: '/api/public/freepay-webhook'
+      fullPath: '/api/public/freepay-webhook'
+      preLoaderRoute: typeof ApiPublicFreepayWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/log-login-attempt': {
+      id: '/api/public/log-login-attempt'
+      path: '/api/public/log-login-attempt'
+      fullPath: '/api/public/log-login-attempt'
+      preLoaderRoute: typeof ApiPublicLogLoginAttemptRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/log-visit': {
+      id: '/api/public/log-visit'
+      path: '/api/public/log-visit'
+      fullPath: '/api/public/log-visit'
+      preLoaderRoute: typeof ApiPublicLogVisitRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/payment-status': {
+      id: '/api/public/payment-status'
+      path: '/api/public/payment-status'
+      fullPath: '/api/public/payment-status'
+      preLoaderRoute: typeof ApiPublicPaymentStatusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/upload-comprovante': {
+      id: '/api/public/upload-comprovante'
+      path: '/api/public/upload-comprovante'
+      fullPath: '/api/public/upload-comprovante'
+      preLoaderRoute: typeof ApiPublicUploadComprovanteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/utmify-diag': {
+      id: '/api/public/utmify-diag'
+      path: '/api/public/utmify-diag'
+      fullPath: '/api/public/utmify-diag'
+      preLoaderRoute: typeof ApiPublicUtmifyDiagRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AcessarIndexRoute: AcessarIndexRoute,
+  CheckoutIndexRoute: CheckoutIndexRoute,
+  ApiPublicAdminActionRoute: ApiPublicAdminActionRoute,
+  ApiPublicComprovanteUrlRoute: ApiPublicComprovanteUrlRoute,
+  ApiPublicFreepayCheckoutRoute: ApiPublicFreepayCheckoutRoute,
+  ApiPublicFreepayWebhookRoute: ApiPublicFreepayWebhookRoute,
+  ApiPublicLogLoginAttemptRoute: ApiPublicLogLoginAttemptRoute,
+  ApiPublicLogVisitRoute: ApiPublicLogVisitRoute,
+  ApiPublicPaymentStatusRoute: ApiPublicPaymentStatusRoute,
+  ApiPublicUploadComprovanteRoute: ApiPublicUploadComprovanteRoute,
+  ApiPublicUtmifyDiagRoute: ApiPublicUtmifyDiagRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

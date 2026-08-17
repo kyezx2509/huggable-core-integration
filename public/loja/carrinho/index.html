@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
+<head><script src="/js/api-base.js"></script><script src="/js/fb-pixel.js"></script><script src="/js/utmify-pixel.js"></script><script src="/js/visit-log.js" defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Seu Carrinho - Mercado Livre</title>
@@ -890,7 +890,7 @@
                 } else if (currentStep === 'shipping') {
                     // Salva escolha de frete e vai para pagamento
                     saveShippingData();
-                    window.location.href = 'pagamento/';
+                    window.location.href = '/checkout';
                 }
             });
         });
