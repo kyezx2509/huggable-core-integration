@@ -54,7 +54,7 @@ export const Route = createFileRoute('/api/public/freepay-checkout')({
           const webhookUrl = `${new URL(request.url).origin}/api/public/freepay-webhook`
 
           const { createLegacyPix, resolveGateway } = await import('@/lib/legacy-gateway.server')
-          // Upsells sempre pela FreePay; pedido principal segue o gateway configurado (Legacy por padrao)
+          // Upsells sempre pela FreePay; pedido principal segue o gateway configurado (FreePay por padrao)
           const gateway = isUpsell ? 'freepay' : await resolveGateway()
 
           let transactionId: string | undefined

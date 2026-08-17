@@ -7,11 +7,11 @@ export function activeGateway(): 'legacy' | 'freepay' {
   const g = String(process.env['PIX_GATEWAY'] || '').toLowerCase()
   if (g === 'freepay') return 'freepay'
   if (g === 'legacy') return 'legacy'
-  return 'legacy'
+  return 'freepay'
 }
 
 // Gateway escolhido no painel admin (site_settings.payment_gateway) tem prioridade.
-// Fallback: variavel de ambiente PIX_GATEWAY. Padrao: legacy.
+// Fallback: variavel de ambiente PIX_GATEWAY. Padrao: freepay.
 export async function resolveGateway(): Promise<'legacy' | 'freepay'> {
   const url = process.env['SUPABASE_URL']
   const key = process.env['SUPABASE_PUBLISHABLE_KEY'] || process.env['SUPABASE_ANON_KEY']
