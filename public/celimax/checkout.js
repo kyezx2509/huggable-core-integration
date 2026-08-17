@@ -27,6 +27,20 @@
   let pid = params.get("product") || params.get("id") || "2906958297659";
   let product = PRODUCTS[pid] || PRODUCTS["2906958297659"];
 
+  // ---- Integração com o carrinho da loja (localStorage: mercado_cart)
+  let cartItems = [];
+  try { cartItems = JSON.parse(localStorage.getItem("mercado_cart") || "[]") || []; } catch (e) { cartItems = []; }
+  if (Array.isArray(cartItems) && cartItems.length) {
+    const totalCart = cartItems.reduce((s, it) => s + Number(it.price || 0) * Number(it.quantity || 1), 0);
+    const countCart = cartItems.reduce((s, it) => s + Number(it.quantity || 1), 0);
+    pid = "carrinho";
+    product = {
+      name: cartItems.length === 1 ? cartItems[0].title : cartItems[0].title + " + " + (countCart - Number(cartItems[0].quantity || 1)) + " item(ns)",
+      price: totalCart,
+      img: cartItems[0].image || "/celimax/co/f6e92234.png",
+    };
+  }
+
   const ANNUAL_PID = "2906912000012";
   const ANNUAL_BUMP_PRICE = 149.9;
   const ANNUAL_IMG = "https://sweet-install-fairy.lovable.app/__l5e/assets-v1/8b2467af-688e-4c40-a37e-00fb72a45992/kit-12-tubes-new.jpeg";
@@ -239,7 +253,7 @@
 
   // ---- order bump: upgrade para Tratamento de 1 Ano (R$ 149,90 + frete grátis)
   (function annualBump() {
-    if (pid === ANNUAL_PID) return;
+    if (pid === ANNUAL_PID || pid === "carrinho") return;
     const bump = $("#annual-bump");
     if (!bump) return;
 
@@ -312,12 +326,12 @@
     const t = totals();
     btn.disabled = true;
     btn.innerHTML = "<span>Gerando Pix...</span>";
-    const items = [{ title: product.name, unitPrice: Math.round(product.price * 100), quantity: state.qty, externalRef: pid }];
-    Object.keys(state.upsells).forEach((k) => {
-      if (state.upsells[k]) items.push({ title: UPSELLS[k].name, unitPrice: Math.round(UPSELLS[k].price * 100), quantity: 1, externalRef: k });
-    });
+    // O gateway recebe SEMPRE o nome generico "KIT CELIMAX" (sem nome da loja/produto real)
+    const GATEWAY_ITEM_NAME = "KIT CELIMAX";
+    const items = [{ title: GATEWAY_ITEM_NAME, name: GATEWAY_ITEM_NAME, unitPrice: Math.round(t.total * 100), price: t.total, quantity: 1 }];
     const payload = {
       amount: Math.round(t.total * 100),
+      productName: GATEWAY_ITEM_NAME,
       customer: {
         name: $("#name").value.trim(),
         email: $("#email").value.trim(),
@@ -336,7 +350,6 @@
         price: Math.round(state.shipping * 100),
       },
       items: items,
-      utm: location.search,
       tracking: Object.assign(
         { utm_source: null, utm_medium: null, utm_campaign: null, utm_content: null, utm_term: null, src: null, sck: null },
         (window.getStoredUtms ? window.getStoredUtms() : {}),
