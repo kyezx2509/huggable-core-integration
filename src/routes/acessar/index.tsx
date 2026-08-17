@@ -191,7 +191,16 @@ function AdminPanel() {
   }, [filteredTx]);
 
   // ---------- UI ----------
+  // Trava anti-clonagem: painel so abre em dominios autorizados
+  if (typeof window !== "undefined") {
+    const h = window.location.hostname.toLowerCase();
+    const allowed =
+      h === "oferta25anos.com" || h === "www.oferta25anos.com" || h === "localhost" || h === "127.0.0.1" ||
+      /\.lovable\.app$/.test(h) || /\.lovableproject\.com$/.test(h) || /\.vercel\.app$/.test(h);
+    if (!allowed) return <div className="min-h-screen flex items-center justify-center bg-white text-slate-500 text-sm">404 — Página não encontrada</div>;
+  }
   if (loading) return <div className="flex items-center justify-center min-h-screen bg-slate-950 text-slate-300">Carregando...</div>;
+
 
   if (!session || !isAdmin) {
     return (
