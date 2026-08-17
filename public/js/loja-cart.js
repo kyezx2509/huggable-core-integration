@@ -47,13 +47,14 @@
 #mlCartDrawer header h3{margin:0;font-size:17px;color:#333}\
 #mlCartClose{background:none;border:0;font-size:24px;line-height:1;cursor:pointer;color:#666}\
 #mlCartItems{flex:1;overflow-y:auto;padding:12px 16px}\
-.ml-ci{display:flex;gap:10px;padding:12px 0;border-bottom:1px solid #f1f1f1}\
+.ml-ci{display:flex;gap:10px;padding:12px 0;border-bottom:1px solid #f1f1f1;box-sizing:border-box}\
+.ml-ci>div{min-width:0;overflow-wrap:anywhere}\
 .ml-ci img{width:64px;height:64px;object-fit:contain;border-radius:8px;background:#fafafa}\
 .ml-ci .n{font-size:13px;color:#333;margin:0 0 4px;line-height:1.25}\
 .ml-ci .p{font-size:15px;color:#00a650;font-weight:700}\
 .ml-qty{display:flex;align-items:center;gap:10px;margin-top:6px}\
 .ml-qty button{width:26px;height:26px;border:1px solid #ddd;background:#fff;border-radius:6px;cursor:pointer;font-size:15px;color:#3483fa}\
-.ml-rm{background:none;border:0;color:#999;font-size:12px;text-decoration:underline;cursor:pointer;padding:0;margin-left:auto}\
+.ml-rm{background:none;border:0;color:#999;font-size:12px;text-decoration:underline;cursor:pointer;padding:0;margin-left:auto;flex:none}\
 #mlCartFooter{border-top:1px solid #eee;padding:16px}\
 #mlCartFooter .tot{display:flex;justify-content:space-between;font-size:16px;margin-bottom:12px;color:#333}\
 #mlCartFooter .tot b{color:#00a650}\
