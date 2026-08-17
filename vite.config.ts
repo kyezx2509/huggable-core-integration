@@ -18,7 +18,7 @@ function staticSitePlugin(): Plugin {
   const publicDir = path.resolve(process.cwd(), "public");
 
   const resolveFile = (urlPath: string): string | null => {
-    const clean = decodeURIComponent(urlPath.split("?")[0].split("#")[0]);
+    const clean = decodeURIComponent((urlPath.split("?")[0] ?? "").split("#")[0] ?? "");
     if (clean.includes("..")) return null;
     const base = path.join(publicDir, clean);
     const candidates = clean.endsWith("/")
