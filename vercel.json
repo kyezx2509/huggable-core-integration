@@ -4,8 +4,6 @@
   "installCommand": null,
   "framework": null,
   "outputDirectory": "public",
-  "cleanUrls": false,
-  "trailingSlash": false,
   "rewrites": [
     { "source": "/", "destination": "/quiz/index.html" },
     { "source": "/checkout", "destination": "/celimax/checkout.html" },
@@ -22,6 +20,12 @@
     {
       "source": "/acessar/:path*",
       "destination": "https://project--9e11aaa5-ceeb-442b-aa6d-add0bb7d233d.lovable.app/acessar/:path*"
-    }
+    },
+    { "source": "/quiz", "destination": "/quiz/index.html" },
+    { "source": "/roleta", "destination": "/roleta/index.html" },
+    { "source": "/loja", "destination": "/loja/index.html" },
+    { "source": "/loja/carrinho/pagamento", "destination": "/loja/carrinho/pagamento/index.html" },
+    { "source": "/loja/:slug", "destination": "/loja/:slug/index.html" },
+    { "source": "/:slug*", "destination": "/:slug*/index.html" }
   ]
 }
