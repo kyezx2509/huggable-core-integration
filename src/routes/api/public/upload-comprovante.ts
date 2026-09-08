@@ -41,13 +41,11 @@ export const Route = createFileRoute('/api/public/upload-comprovante')({
           }
           await sb.from('payment_transactions').update({ comprovante_url: path, updated_at: new Date().toISOString() }).eq('transaction_id', transactionId)
 
-          if (process.env['PUSHCUT_WEBHOOK_URL']) {
-            fetch(process.env['PUSHCUT_WEBHOOK_URL'], {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ title: 'Comprovante enviado', text: `Transação ${transactionId}`, sound: 'default' }),
-            }).catch(() => {})
-          }
+          try {
+            const { sendPushcut } = await import('@/lib/pushcut.server')
+            await sendPushcut('Comprovante enviado', `Transação ${transactionId}`)
+          } catch {}
+
 
           return new Response(JSON.stringify({ success: true }), { status: 200, headers: cors })
         } catch (err: any) {
