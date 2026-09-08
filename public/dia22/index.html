@@ -1,20 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head><script src="/js/api-base.js"></script><script src="/js/cloak.js"></script>
+<head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CV5GQ7D48S"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-CV5GQ7D48S');
 </script>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Carregando…</title>
-<meta name="robots" content="noindex">
 <style>
 html,body{height:100%;margin:0;background:#fff;font-family:system-ui,sans-serif}
 .wrap{height:100%;display:flex;align-items:center;justify-content:center;color:#888;font-size:14px}
@@ -23,37 +20,7 @@ html,body{height:100%;margin:0;background:#fff;font-family:system-ui,sans-serif}
 <body>
 <div class="wrap">Carregando…</div>
 <script>
-(function () {
-  var qs = window.location.search || '';
-  function go(path) { window.location.replace(path + qs); }
-  function render() { if (window.__renderWhitePage) window.__renderWhitePage(); else window.location.replace('/artigo/'); }
-
-  var BOT_RE = /facebookexternalhit|facebookcatalog|facebookbot|meta-externalagent|meta-externalfetcher|facebookexternalua|WhatsApp|Twitterbot|Slackbot|TelegramBot|Discordbot|LinkedInBot|Pinterest|SkypeUriPreview|bingbot|Googlebot|AdsBot|APIs-Google|Applebot|YandexBot|DuckDuckBot|Baiduspider|SemrushBot|AhrefsBot|PetalBot|crawler|spider|headlesschrome|phantomjs|puppeteer|playwright|python-requests|curl\/|wget|Go-http-client|axios|node-fetch/i;
-  var ua = navigator.userAgent || '';
-  if (BOT_RE.test(ua) || navigator.webdriver === true) { render(); return; }
-  var isMobile = /Android|iPhone|iPod|Windows Phone|webOS|BlackBerry|Opera Mini|IEMobile/i.test(ua) ||
-    (/iPad|Macintosh/.test(ua) && 'ontouchend' in document);
-
-  if (!isMobile) { render(); return; }
-
-  var tz = '';
-  try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
-  var lang = (navigator.language || '').toLowerCase();
-  var brHints = /America\/(Sao_Paulo|Bahia|Fortaleza|Recife|Belem|Manaus|Cuiaba|Campo_Grande|Porto_Velho|Boa_Vista|Rio_Branco|Maceio|Araguaina|Santarem|Noronha|Eirunepe)/.test(tz) || lang.indexOf('pt') === 0;
-
-  var done = false;
-  function decide(country) {
-    if (done) return; done = true;
-    var isBR = country === 'BR' || (!country && brHints);
-    if (isBR) { go('/quiz/'); } else { render(); }
-  }
-
-  var t = setTimeout(function () { decide(null); }, 2500);
-  fetch('/api/public/geo', { cache: 'no-store' })
-    .then(function (r) { return r.json(); })
-    .then(function (d) { clearTimeout(t); decide(d && d.country ? String(d.country).toUpperCase() : null); })
-    .catch(function () { clearTimeout(t); decide(null); });
-})();
+window.location.replace('/quiz/' + (window.location.search || ''));
 </script>
 </body>
 </html>
