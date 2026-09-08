@@ -125,19 +125,12 @@ export const Route = createFileRoute('/api/public/payment-status')({
 
 
 
-            if (process.env['PUSHCUT_WEBHOOK_URL']) {
-              const name = data?.customer_name || 'Cliente'
+            try {
               const amount = Number(data?.amount) || Number(tx?.Amount || tx?.amount || 0)
-              fetch(process.env['PUSHCUT_WEBHOOK_URL'], {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  title: 'Pagamento Aprovado',
-                  text: `Valor: R$ ${(amount / 100).toFixed(2).replace('.', ',')}`,
-                  sound: 'cash_register',
-                }),
-              }).catch(() => {})
-            }
+              const { sendPushcut } = await import('@/lib/pushcut.server')
+              await sendPushcut('Pedido pago', `✅ R$ ${(amount / 100).toFixed(2).replace('.', ',')}`)
+            } catch (e) { console.error('[pushcut] status notify failed', e) }
+
 
             return new Response(JSON.stringify({ status: 'paid' }), { status: 200, headers: corsHeaders })
           }
