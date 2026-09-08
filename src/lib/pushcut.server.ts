@@ -9,7 +9,7 @@ function resolveUrl(notification: string): string | null {
   const raw = (process.env['PUSHCUT_WEBHOOK_URL'] || '').trim()
   if (!raw) return null
   try {
-    const u = new URL(raw.split('?')[0])
+    const u = new URL(raw.split('?')[0] as string)
     const parts = u.pathname.split('/').filter(Boolean)
     if (parts.includes('notifications')) {
       // URL completa configurada: mantem o nome da notificacao existente
