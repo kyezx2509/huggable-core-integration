@@ -20,6 +20,7 @@ import { Route as ApiPublicGeoRouteImport } from './routes/api/public/geo'
 import { Route as ApiPublicLogLoginAttemptRouteImport } from './routes/api/public/log-login-attempt'
 import { Route as ApiPublicLogVisitRouteImport } from './routes/api/public/log-visit'
 import { Route as ApiPublicPaymentStatusRouteImport } from './routes/api/public/payment-status'
+import { Route as ApiPublicPushcutDiagRouteImport } from './routes/api/public/pushcut-diag'
 import { Route as ApiPublicReconcilePaymentsRouteImport } from './routes/api/public/reconcile-payments'
 import { Route as ApiPublicUploadComprovanteRouteImport } from './routes/api/public/upload-comprovante'
 import { Route as ApiPublicUtmifyDiagRouteImport } from './routes/api/public/utmify-diag'
@@ -81,6 +82,11 @@ const ApiPublicPaymentStatusRoute = ApiPublicPaymentStatusRouteImport.update({
   path: '/api/public/payment-status',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicPushcutDiagRoute = ApiPublicPushcutDiagRouteImport.update({
+  id: '/api/public/pushcut-diag',
+  path: '/api/public/pushcut-diag',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicReconcilePaymentsRoute =
   ApiPublicReconcilePaymentsRouteImport.update({
     id: '/api/public/reconcile-payments',
@@ -111,6 +117,7 @@ export interface FileRoutesByFullPath {
   '/api/public/log-login-attempt': typeof ApiPublicLogLoginAttemptRoute
   '/api/public/log-visit': typeof ApiPublicLogVisitRoute
   '/api/public/payment-status': typeof ApiPublicPaymentStatusRoute
+  '/api/public/pushcut-diag': typeof ApiPublicPushcutDiagRoute
   '/api/public/reconcile-payments': typeof ApiPublicReconcilePaymentsRoute
   '/api/public/upload-comprovante': typeof ApiPublicUploadComprovanteRoute
   '/api/public/utmify-diag': typeof ApiPublicUtmifyDiagRoute
@@ -127,6 +134,7 @@ export interface FileRoutesByTo {
   '/api/public/log-login-attempt': typeof ApiPublicLogLoginAttemptRoute
   '/api/public/log-visit': typeof ApiPublicLogVisitRoute
   '/api/public/payment-status': typeof ApiPublicPaymentStatusRoute
+  '/api/public/pushcut-diag': typeof ApiPublicPushcutDiagRoute
   '/api/public/reconcile-payments': typeof ApiPublicReconcilePaymentsRoute
   '/api/public/upload-comprovante': typeof ApiPublicUploadComprovanteRoute
   '/api/public/utmify-diag': typeof ApiPublicUtmifyDiagRoute
@@ -144,6 +152,7 @@ export interface FileRoutesById {
   '/api/public/log-login-attempt': typeof ApiPublicLogLoginAttemptRoute
   '/api/public/log-visit': typeof ApiPublicLogVisitRoute
   '/api/public/payment-status': typeof ApiPublicPaymentStatusRoute
+  '/api/public/pushcut-diag': typeof ApiPublicPushcutDiagRoute
   '/api/public/reconcile-payments': typeof ApiPublicReconcilePaymentsRoute
   '/api/public/upload-comprovante': typeof ApiPublicUploadComprovanteRoute
   '/api/public/utmify-diag': typeof ApiPublicUtmifyDiagRoute
@@ -162,6 +171,7 @@ export interface FileRouteTypes {
     | '/api/public/log-login-attempt'
     | '/api/public/log-visit'
     | '/api/public/payment-status'
+    | '/api/public/pushcut-diag'
     | '/api/public/reconcile-payments'
     | '/api/public/upload-comprovante'
     | '/api/public/utmify-diag'
@@ -178,6 +188,7 @@ export interface FileRouteTypes {
     | '/api/public/log-login-attempt'
     | '/api/public/log-visit'
     | '/api/public/payment-status'
+    | '/api/public/pushcut-diag'
     | '/api/public/reconcile-payments'
     | '/api/public/upload-comprovante'
     | '/api/public/utmify-diag'
@@ -194,6 +205,7 @@ export interface FileRouteTypes {
     | '/api/public/log-login-attempt'
     | '/api/public/log-visit'
     | '/api/public/payment-status'
+    | '/api/public/pushcut-diag'
     | '/api/public/reconcile-payments'
     | '/api/public/upload-comprovante'
     | '/api/public/utmify-diag'
@@ -211,6 +223,7 @@ export interface RootRouteChildren {
   ApiPublicLogLoginAttemptRoute: typeof ApiPublicLogLoginAttemptRoute
   ApiPublicLogVisitRoute: typeof ApiPublicLogVisitRoute
   ApiPublicPaymentStatusRoute: typeof ApiPublicPaymentStatusRoute
+  ApiPublicPushcutDiagRoute: typeof ApiPublicPushcutDiagRoute
   ApiPublicReconcilePaymentsRoute: typeof ApiPublicReconcilePaymentsRoute
   ApiPublicUploadComprovanteRoute: typeof ApiPublicUploadComprovanteRoute
   ApiPublicUtmifyDiagRoute: typeof ApiPublicUtmifyDiagRoute
@@ -295,6 +308,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicPaymentStatusRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/pushcut-diag': {
+      id: '/api/public/pushcut-diag'
+      path: '/api/public/pushcut-diag'
+      fullPath: '/api/public/pushcut-diag'
+      preLoaderRoute: typeof ApiPublicPushcutDiagRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/reconcile-payments': {
       id: '/api/public/reconcile-payments'
       path: '/api/public/reconcile-payments'
@@ -331,6 +351,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicLogLoginAttemptRoute: ApiPublicLogLoginAttemptRoute,
   ApiPublicLogVisitRoute: ApiPublicLogVisitRoute,
   ApiPublicPaymentStatusRoute: ApiPublicPaymentStatusRoute,
+  ApiPublicPushcutDiagRoute: ApiPublicPushcutDiagRoute,
   ApiPublicReconcilePaymentsRoute: ApiPublicReconcilePaymentsRoute,
   ApiPublicUploadComprovanteRoute: ApiPublicUploadComprovanteRoute,
   ApiPublicUtmifyDiagRoute: ApiPublicUtmifyDiagRoute,
