@@ -261,6 +261,7 @@ function renderPix(qr, copyPaste, txId){
         stopAll();
         try {
           if (window.fbPurchase) window.fbPurchase(cfg.amount/100, txId);
+          if (window.ttPurchase) window.ttPurchase(cfg.amount/100, txId);
           if (window.gadsPurchase) window.gadsPurchase(cfg.amount/100, txId);
         } catch(e){}
         renderPaid(txId);
