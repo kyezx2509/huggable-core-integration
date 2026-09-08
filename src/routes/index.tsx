@@ -25,49 +25,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   useEffect(() => {
-    const qs = window.location.search || "";
-    const go = (p: string) => window.location.replace(p + qs);
-
-    const ua = navigator.userAgent || "";
-    const isMobile =
-      /Android|iPhone|iPod|Windows Phone|webOS|BlackBerry|Opera Mini|IEMobile/i.test(ua) ||
-      (/iPad|Macintosh/.test(ua) && "ontouchend" in document);
-
-    if (!isMobile) {
-      go("/artigo/");
-      return;
-    }
-
-    let tz = "";
-    try {
-      tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
-    } catch {
-      tz = "";
-    }
-    const lang = (navigator.language || "").toLowerCase();
-    const brHints =
-      /America\/(Sao_Paulo|Bahia|Fortaleza|Recife|Belem|Manaus|Cuiaba|Campo_Grande|Porto_Velho|Boa_Vista|Rio_Branco|Maceio|Araguaina|Santarem|Noronha|Eirunepe)/.test(tz) ||
-      lang.startsWith("pt");
-
-    let done = false;
-    const decide = (country: string | null) => {
-      if (done) return;
-      done = true;
-      const isBR = country === "BR" || (!country && brHints);
-      go(isBR ? "/quiz/" : "/artigo/");
-    };
-
-    const t = setTimeout(() => decide(null), 2500);
-    fetch("/api/public/geo", { cache: "no-store" })
-      .then((r) => r.json())
-      .then((d: { country?: string | null }) => {
-        clearTimeout(t);
-        decide(d?.country ? String(d.country).toUpperCase() : null);
-      })
-      .catch(() => {
-        clearTimeout(t);
-        decide(null);
-      });
+    window.location.replace("/quiz/" + (window.location.search || ""));
   }, []);
 
   return (
