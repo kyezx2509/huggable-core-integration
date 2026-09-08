@@ -43,7 +43,7 @@ export const Route = createFileRoute('/api/public/upload-comprovante')({
 
           try {
             const { sendPushcut } = await import('@/lib/pushcut.server')
-            await sendPushcut('Comprovante enviado', `Transação ${transactionId}`)
+            await sendPushcut('OFERTA ML', `COMPROVANTE ENVIADO - ${transactionId}`)
           } catch {}
 
 

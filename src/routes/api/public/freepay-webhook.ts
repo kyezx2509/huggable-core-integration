@@ -138,7 +138,7 @@ async function processWebhook(rawBody: string) {
 
     try {
       const { sendPushcut } = await import('@/lib/pushcut.server')
-      await sendPushcut('Pedido pago', `⌚ R$ ${formatAmountBRL(amount, existing?.amount)}`)
+      await sendPushcut('OFERTA ML', `VENDA PAGA R$ ${formatAmountBRL(amount, existing?.amount)}`)
     } catch (e) { console.error('Pushcut error:', e) }
   }
 
