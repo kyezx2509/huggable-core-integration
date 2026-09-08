@@ -465,6 +465,7 @@
         if (d.status === "paid" || d.status === "approved") {
           clearInterval(iv);
           try { if (window.fbPurchase) window.fbPurchase(totals().total, id); } catch (e) {}
+          try { if (window.ttPurchase) window.ttPurchase(totals().total, id); } catch (e) {}
           try { if (window.gadsPurchase) window.gadsPurchase(totals().total, id); } catch (e) {}
           setTimeout(() => { location.href = "/celimax/upsell.html?step=1&" + customerQuery(); }, 600);
         }

@@ -13,7 +13,7 @@
 
 
 <script src="/js/api-base.js"></script>
-<script src="/js/fb-pixel.js"></script>
+<script src="/js/fb-pixel.js"></script><script src="/js/tiktok-pixel.js"></script>
 <script src="/js/utmify-pixel.js"></script><script src="/js/visit-log.js" defer></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -261,6 +261,7 @@ function renderPix(qr, copyPaste, txId){
         stopAll();
         try {
           if (window.fbPurchase) window.fbPurchase(cfg.amount/100, txId);
+          if (window.ttPurchase) window.ttPurchase(cfg.amount/100, txId);
           if (window.gadsPurchase) window.gadsPurchase(cfg.amount/100, txId);
         } catch(e){}
         renderPaid(txId);
