@@ -3,7 +3,7 @@
     "2906947154796": { name: "Celimax Retinal Collagen Lifting Cream - 1 Unidade", price: 67, img: "https://sweet-install-fairy.lovable.app/celimax/co/f6e92234.png" },
     "2906958297659": { name: "Celimax Retinal Collagen Lifting Cream - 3 Unidades", price: 97, img: "https://sweet-install-fairy.lovable.app/celimax/co/f6e92234.png" },
     "2906929863847": { name: "Celimax Retinal Collagen Lifting Cream - 5 Unidades", price: 127, img: "https://sweet-install-fairy.lovable.app/celimax/co/f6e92234.png" },
-    "2906912000012": { name: "Celimax Retinal Collagen Lifting Cream - 12 Unidades (Tratamento de 1 Ano)", price: 189.9, img: "https://sweet-install-fairy.lovable.app/__l5e/assets-v1/8b2467af-688e-4c40-a37e-00fb72a45992/kit-12-tubes-new.jpeg" },
+    "2906912000012": { name: "Celimax Retinal Collagen Lifting Cream - Kit de Tratamento (6 Unidades)", price: 149.9, img: "https://sweet-install-fairy.lovable.app/__l5e/assets-v1/8b2467af-688e-4c40-a37e-00fb72a45992/kit-12-tubes-new.jpeg" },
 
   };
   const REVIEWS = [
@@ -312,6 +312,7 @@
   // ---- order bump: upgrade para Tratamento de 1 Ano (R$ 149,90 + frete grátis)
   (function annualBump() {
     if (pid === ANNUAL_PID || pid === "carrinho") return;
+    if (!/celimax/i.test(product.name || "")) return;
     const bump = $("#annual-bump");
     if (!bump) return;
 
@@ -333,7 +334,7 @@
 
       const btnBump = $("#annual-bump-btn");
       if (btnBump) {
-        btnBump.textContent = "✓ TRATAMENTO DE 1 ANO ADICIONADO";
+        btnBump.textContent = "✓ KIT DE 6 UNIDADES ADICIONADO";
         btnBump.style.background = "#009ee3";
         btnBump.disabled = true;
       }
