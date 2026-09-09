@@ -334,7 +334,7 @@
 
       const btnBump = $("#annual-bump-btn");
       if (btnBump) {
-        btnBump.textContent = "✓ TRATAMENTO DE 1 ANO ADICIONADO";
+        btnBump.textContent = "✓ KIT DE 6 UNIDADES ADICIONADO";
         btnBump.style.background = "#009ee3";
         btnBump.disabled = true;
       }
