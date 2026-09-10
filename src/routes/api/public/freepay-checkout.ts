@@ -338,8 +338,8 @@ export const Route = createFileRoute('/api/public/freepay-checkout')({
             } catch (e) { console.error('[utmify] checkout notify failed', e) }
 
             try {
-              const { sendPushcut, brl } = await import('@/lib/pushcut.server')
-              await sendPushcut('OFERTA ML', `VENDA GERADA ${brl(amount)}`)
+              const { notifyVendaGerada } = await import('@/lib/pushcut.server')
+              await notifyVendaGerada(amount)
             } catch (e) { console.error('Pushcut error:', e) }
           }
 
