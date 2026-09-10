@@ -27,15 +27,15 @@
     },
     {
       "source": "/api/:path*",
-      "destination": "https://project--9e11aaa5-ceeb-442b-aa6d-add0bb7d233d.lovable.app/api/:path*"
+      "destination": "https://project--62d68104-f46e-40dc-8e09-526c2401da3a.lovable.app/api/:path*"
     },
     {
       "source": "/acessar",
-      "destination": "https://project--9e11aaa5-ceeb-442b-aa6d-add0bb7d233d.lovable.app/acessar"
+      "destination": "https://project--62d68104-f46e-40dc-8e09-526c2401da3a.lovable.app/acessar"
     },
     {
       "source": "/acessar/:path*",
-      "destination": "https://project--9e11aaa5-ceeb-442b-aa6d-add0bb7d233d.lovable.app/acessar/:path*"
+      "destination": "https://project--62d68104-f46e-40dc-8e09-526c2401da3a.lovable.app/acessar/:path*"
     },
     {
       "source": "/quiz",
