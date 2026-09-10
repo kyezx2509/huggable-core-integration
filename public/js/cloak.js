@@ -1,6 +1,10 @@
 /* Filtro de tráfego: apenas mobile + Brasil + humanos. Demais vão para /artigo */
 (function () {
   try {
+    var s = document.createElement('style');
+    s.textContent = 'html, body { overflow-x: hidden !important; width: 100% !important; max-width: 100vw !important; }';
+    document.head.appendChild(s);
+
     var path = location.pathname || '/';
     if (path.indexOf('/artigo') === 0) return;
 
