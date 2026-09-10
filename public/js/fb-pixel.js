@@ -1,9 +1,10 @@
-// Facebook Pixel - unico pixel do projeto
+// Facebook Pixels do projeto (2 pixels)
 // PageView no carregamento; Purchase e disparado APENAS quando o Pix e pago
 // (dedup com a Conversions API via event_id = transaction_id).
 (function () {
-  var PIXEL_ID = '1071922481952543';
-  window.FB_PIXEL_ID = PIXEL_ID;
+  var PIXEL_IDS = ['1071922481952543', '2495926674152987'];
+  window.FB_PIXEL_IDS = PIXEL_IDS;
+  window.FB_PIXEL_ID = PIXEL_IDS[0];
 
   !(function (f, b, e, v, n, t, s) {
     if (f.fbq) return;

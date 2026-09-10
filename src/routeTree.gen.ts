@@ -14,6 +14,7 @@ import { Route as AcessarIndexRouteImport } from './routes/acessar/index'
 import { Route as CheckoutIndexRouteImport } from './routes/checkout/index'
 import { Route as ApiPublicAdminActionRouteImport } from './routes/api/public/admin-action'
 import { Route as ApiPublicComprovanteUrlRouteImport } from './routes/api/public/comprovante-url'
+import { Route as ApiPublicFbEventRouteImport } from './routes/api/public/fb-event'
 import { Route as ApiPublicFreepayCheckoutRouteImport } from './routes/api/public/freepay-checkout'
 import { Route as ApiPublicFreepayWebhookRouteImport } from './routes/api/public/freepay-webhook'
 import { Route as ApiPublicGeoRouteImport } from './routes/api/public/geo'
@@ -47,6 +48,11 @@ const ApiPublicAdminActionRoute = ApiPublicAdminActionRouteImport.update({
 const ApiPublicComprovanteUrlRoute = ApiPublicComprovanteUrlRouteImport.update({
   id: '/api/public/comprovante-url',
   path: '/api/public/comprovante-url',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicFbEventRoute = ApiPublicFbEventRouteImport.update({
+  id: '/api/public/fb-event',
+  path: '/api/public/fb-event',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicFreepayCheckoutRoute =
@@ -105,6 +111,7 @@ export interface FileRoutesByFullPath {
   '/checkout/': typeof CheckoutIndexRoute
   '/api/public/admin-action': typeof ApiPublicAdminActionRoute
   '/api/public/comprovante-url': typeof ApiPublicComprovanteUrlRoute
+  '/api/public/fb-event': typeof ApiPublicFbEventRoute
   '/api/public/freepay-checkout': typeof ApiPublicFreepayCheckoutRoute
   '/api/public/freepay-webhook': typeof ApiPublicFreepayWebhookRoute
   '/api/public/geo': typeof ApiPublicGeoRoute
@@ -121,6 +128,7 @@ export interface FileRoutesByTo {
   '/checkout': typeof CheckoutIndexRoute
   '/api/public/admin-action': typeof ApiPublicAdminActionRoute
   '/api/public/comprovante-url': typeof ApiPublicComprovanteUrlRoute
+  '/api/public/fb-event': typeof ApiPublicFbEventRoute
   '/api/public/freepay-checkout': typeof ApiPublicFreepayCheckoutRoute
   '/api/public/freepay-webhook': typeof ApiPublicFreepayWebhookRoute
   '/api/public/geo': typeof ApiPublicGeoRoute
@@ -138,6 +146,7 @@ export interface FileRoutesById {
   '/checkout/': typeof CheckoutIndexRoute
   '/api/public/admin-action': typeof ApiPublicAdminActionRoute
   '/api/public/comprovante-url': typeof ApiPublicComprovanteUrlRoute
+  '/api/public/fb-event': typeof ApiPublicFbEventRoute
   '/api/public/freepay-checkout': typeof ApiPublicFreepayCheckoutRoute
   '/api/public/freepay-webhook': typeof ApiPublicFreepayWebhookRoute
   '/api/public/geo': typeof ApiPublicGeoRoute
@@ -156,6 +165,7 @@ export interface FileRouteTypes {
     | '/checkout/'
     | '/api/public/admin-action'
     | '/api/public/comprovante-url'
+    | '/api/public/fb-event'
     | '/api/public/freepay-checkout'
     | '/api/public/freepay-webhook'
     | '/api/public/geo'
@@ -172,6 +182,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/api/public/admin-action'
     | '/api/public/comprovante-url'
+    | '/api/public/fb-event'
     | '/api/public/freepay-checkout'
     | '/api/public/freepay-webhook'
     | '/api/public/geo'
@@ -188,6 +199,7 @@ export interface FileRouteTypes {
     | '/checkout/'
     | '/api/public/admin-action'
     | '/api/public/comprovante-url'
+    | '/api/public/fb-event'
     | '/api/public/freepay-checkout'
     | '/api/public/freepay-webhook'
     | '/api/public/geo'
@@ -205,6 +217,7 @@ export interface RootRouteChildren {
   CheckoutIndexRoute: typeof CheckoutIndexRoute
   ApiPublicAdminActionRoute: typeof ApiPublicAdminActionRoute
   ApiPublicComprovanteUrlRoute: typeof ApiPublicComprovanteUrlRoute
+  ApiPublicFbEventRoute: typeof ApiPublicFbEventRoute
   ApiPublicFreepayCheckoutRoute: typeof ApiPublicFreepayCheckoutRoute
   ApiPublicFreepayWebhookRoute: typeof ApiPublicFreepayWebhookRoute
   ApiPublicGeoRoute: typeof ApiPublicGeoRoute
@@ -251,6 +264,13 @@ declare module '@tanstack/react-router' {
       path: '/api/public/comprovante-url'
       fullPath: '/api/public/comprovante-url'
       preLoaderRoute: typeof ApiPublicComprovanteUrlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/fb-event': {
+      id: '/api/public/fb-event'
+      path: '/api/public/fb-event'
+      fullPath: '/api/public/fb-event'
+      preLoaderRoute: typeof ApiPublicFbEventRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/freepay-checkout': {
@@ -325,6 +345,7 @@ const rootRouteChildren: RootRouteChildren = {
   CheckoutIndexRoute: CheckoutIndexRoute,
   ApiPublicAdminActionRoute: ApiPublicAdminActionRoute,
   ApiPublicComprovanteUrlRoute: ApiPublicComprovanteUrlRoute,
+  ApiPublicFbEventRoute: ApiPublicFbEventRoute,
   ApiPublicFreepayCheckoutRoute: ApiPublicFreepayCheckoutRoute,
   ApiPublicFreepayWebhookRoute: ApiPublicFreepayWebhookRoute,
   ApiPublicGeoRoute: ApiPublicGeoRoute,
