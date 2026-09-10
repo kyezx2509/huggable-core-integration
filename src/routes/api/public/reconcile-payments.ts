@@ -105,8 +105,8 @@ export const Route = createFileRoute('/api/public/reconcile-payments')({
           } catch (e) { console.error('[reconcile][fb]', e) }
 
           try {
-            const { sendPushcut, brl } = await import('@/lib/pushcut.server')
-            await sendPushcut('OFERTA ML', `VENDA PAGA ${brl(amountCents)}`)
+            const { notifyVendaPaga } = await import('@/lib/pushcut.server')
+            await notifyVendaPaga(amountCents)
           } catch (e) { console.error('[reconcile][pushcut]', e) }
 
           results.push({ id: tx.transaction_id, gateway, marked: 'paid' })
