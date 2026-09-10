@@ -40,7 +40,7 @@ export function legacyAuthHeader() {
 }
 
 // A Legacy exige uma URL publica valida; em dev (localhost) usamos a URL estavel do projeto.
-const FALLBACK_BASE = 'https://project--9e11aaa5-ceeb-442b-aa6d-add0bb7d233d.lovable.app'
+const FALLBACK_BASE = 'https://project--62d68104-f46e-40dc-8e09-526c2401da3a.lovable.app'
 export function safeWebhookUrl(url: string) {
   try {
     const u = new URL(url)

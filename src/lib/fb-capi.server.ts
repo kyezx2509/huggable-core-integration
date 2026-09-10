@@ -59,7 +59,7 @@ export async function sendFbPurchase(input: FbPurchaseInput): Promise<{ ok: bool
         action_source: 'website',
         event_source_url:
           input.eventSourceUrl ||
-          'https://project--9e11aaa5-ceeb-442b-aa6d-add0bb7d233d.lovable.app/checkout',
+          'https://project--62d68104-f46e-40dc-8e09-526c2401da3a.lovable.app/checkout',
         user_data: userData,
         custom_data: {
           currency: input.currency || 'BRL',
