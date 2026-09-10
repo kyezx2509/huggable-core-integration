@@ -1,15 +1,13 @@
 // Notificacoes Pushcut.
-// O segredo PUSHCUT_WEBHOOK_URL normalmente ja vem no formato completo:
-// https://api.pushcut.io/<token>/notifications/<NomeDaNotificacao>
-// Nesse caso usamos a URL exatamente como esta (o nome da notificacao precisa
-// existir na conta Pushcut, senao a API responde 404).
-// Se vier apenas a base (https://api.pushcut.io/<token>), montamos com um nome padrao.
+// PUSHCUT_WEBHOOK_URL = URL completa da notificacao de VENDA GERADA
+//   ex: https://api.pushcut.io/<token>/notifications/VegaCheckoutPV2
+// A notificacao de VENDA PAGA usa PUSHCUT_PAID_WEBHOOK_URL se existir;
+// caso contrario deriva da principal trocando "VegaCheckoutPV2" por "VegaCheckoutPV".
 
 const DEFAULT_NOTIFICATION = 'VegaCheckoutPV2'
+const PAID_NOTIFICATION = 'VegaCheckoutPV'
 
-function resolveUrl(): string | null {
-  const raw = (process.env['PUSHCUT_WEBHOOK_URL'] || '').trim()
-  if (!raw) return null
+function normalize(raw: string): string | null {
   try {
     const u = new URL(raw.split('?')[0] as string)
     const parts = u.pathname.split('/').filter(Boolean)
@@ -24,13 +22,22 @@ function resolveUrl(): string | null {
   }
 }
 
-/** title = linha de cima (ex: "OFERTA ML"), text = linha de baixo (ex: "VENDA GERADA R$ 19,90") */
-export async function sendPushcut(title: string, text: string): Promise<void> {
-  const url = resolveUrl()
-  if (!url) {
-    console.warn('[pushcut] PUSHCUT_WEBHOOK_URL nao configurada')
-    return
-  }
+function resolveUrl(): string | null {
+  const raw = (process.env['PUSHCUT_WEBHOOK_URL'] || '').trim()
+  return raw ? normalize(raw) : null
+}
+
+function resolvePaidUrl(): string | null {
+  const paidRaw = (process.env['PUSHCUT_PAID_WEBHOOK_URL'] || '').trim()
+  if (paidRaw) return normalize(paidRaw)
+  const base = resolveUrl()
+  if (!base) return null
+  // Deriva a notificacao de pago a partir da de gerado (VegaCheckoutPV2 -> VegaCheckoutPV)
+  if (base.includes(DEFAULT_NOTIFICATION)) return base.replace(DEFAULT_NOTIFICATION, PAID_NOTIFICATION)
+  return base
+}
+
+async function post(url: string, title: string, text: string): Promise<void> {
   try {
     const r = await fetch(`${url}?cb=${Date.now()}`, {
       method: 'POST',
@@ -49,6 +56,31 @@ export async function sendPushcut(title: string, text: string): Promise<void> {
   }
 }
 
+/** title = linha de cima (ex: "OFERTA ML"), text = linha de baixo. Usa a URL de venda gerada. */
+export async function sendPushcut(title: string, text: string): Promise<void> {
+  const url = resolveUrl()
+  if (!url) {
+    console.warn('[pushcut] PUSHCUT_WEBHOOK_URL nao configurada')
+    return
+  }
+  await post(url, title, text)
+}
+
 export function brl(cents: number): string {
   return `R$ ${(Number(cents || 0) / 100).toFixed(2).replace('.', ',')}`
+}
+
+/** Venda gerada: "VENDA GERADA R$ 19,90" na notificacao VegaCheckoutPV2 */
+export async function notifyVendaGerada(amountCents: number): Promise<void> {
+  await sendPushcut('OFERTA ML', `VENDA GERADA ${brl(amountCents)}`)
+}
+
+/** Venda paga: "VENDA PAGA R$ 19,90 🔥" na notificacao VegaCheckoutPV */
+export async function notifyVendaPaga(amountCents: number): Promise<void> {
+  const url = resolvePaidUrl()
+  if (!url) {
+    console.warn('[pushcut] URL de venda paga nao configurada')
+    return
+  }
+  await post(url, 'OFERTA ML', `VENDA PAGA ${brl(amountCents)} 🔥`)
 }
