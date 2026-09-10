@@ -26,27 +26,27 @@ function pixelPairs(): Array<{ pixelId: string; token: string }> {
 }
 
 export interface FbCustomer {
-  name?: string
-  email?: string
-  phone?: string
-  cpf?: string
-  ip?: string
-  userAgent?: string
+  name?: string | undefined
+  email?: string | undefined
+  phone?: string | undefined
+  cpf?: string | undefined
+  ip?: string | undefined
+  userAgent?: string | undefined
 }
 
 export interface FbEventInput {
   eventName: 'Purchase' | 'InitiateCheckout' | 'AddToCart' | 'ViewContent'
   eventId: string // dedup com o pixel do browser
   value: number // BRL
-  currency?: string
-  eventSourceUrl?: string
+  currency?: string | undefined
+  eventSourceUrl?: string | undefined
   customer: FbCustomer
-  fbp?: string
-  fbc?: string
-  externalId?: string
-  contentName?: string
-  contentId?: string
-  quantity?: number
+  fbp?: string | undefined
+  fbc?: string | undefined
+  externalId?: string | undefined
+  contentName?: string | undefined
+  contentId?: string | undefined
+  quantity?: number | undefined
 }
 
 function buildUserData(input: FbEventInput) {
@@ -130,12 +130,12 @@ export async function sendFbEvent(input: FbEventInput): Promise<{ ok: boolean; s
 export interface FbPurchaseInput {
   eventId: string
   value: number
-  currency?: string
-  eventSourceUrl?: string
+  currency?: string | undefined
+  eventSourceUrl?: string | undefined
   customer: FbCustomer
-  fbp?: string
-  fbc?: string
-  externalId?: string
+  fbp?: string | undefined
+  fbc?: string | undefined
+  externalId?: string | undefined
 }
 
 export async function sendFbPurchase(input: FbPurchaseInput) {
