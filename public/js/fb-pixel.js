@@ -74,6 +74,28 @@
         num_items: (product && Number(product.qty)) || 1,
       }, { eventID: eventId });
     } catch (e) {}
+    // Envia tambem pela Conversions API (mesmo event_id = dedup automatico),
+    // garantindo que o evento chegue a campanha mesmo com bloqueio de navegador.
+    try {
+      var t = window.fbTracking ? window.fbTracking() : {};
+      var url = window.apiUrl ? window.apiUrl('/api/public/fb-event') : '/api/public/fb-event';
+      fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          event_name: 'InitiateCheckout',
+          event_id: eventId,
+          value: Number(value) || 0,
+          event_source_url: t.event_source_url || location.href,
+          fbp: t.fbp || '',
+          fbc: t.fbc || '',
+          content_name: 'KIT CELIMAX',
+          content_id: 'kit-celimax',
+          quantity: (product && Number(product.qty)) || 1,
+        }),
+        keepalive: true,
+      }).catch(function () {});
+    } catch (e) {}
   };
   window.fbInitiateCheckoutSent = icAlreadySent;
 
