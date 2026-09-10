@@ -166,11 +166,9 @@
       add.id = 'mlAddCart';
       add.innerHTML = '<span class="material-symbols-outlined">add_shopping_cart</span> Adicionar ao carrinho';
       add.onclick = function () {
-        addItem(currentProduct());
-        add.classList.add('ok');
-        add.innerHTML = '<span class="material-symbols-outlined">check_circle</span> Adicionado!';
-        setTimeout(function () { add.classList.remove('ok'); add.innerHTML = '<span class="material-symbols-outlined">add_shopping_cart</span> Adicionar ao carrinho'; }, 1600);
-        open();
+        var items = get();
+        if (!items.some(function (x) { return x.id === prod.id; })) addItem(currentProduct());
+        window.location.href = '/checkout' + window.location.search;
       };
       if (buy && buy.parentNode) buy.parentNode.insertBefore(add, buy.nextSibling);
       else document.body.appendChild(add);
