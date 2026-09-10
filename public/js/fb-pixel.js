@@ -1,9 +1,10 @@
-// Facebook Pixel - unico pixel do projeto
+// Facebook Pixels do projeto (2 pixels)
 // PageView no carregamento; Purchase e disparado APENAS quando o Pix e pago
 // (dedup com a Conversions API via event_id = transaction_id).
 (function () {
-  var PIXEL_ID = '1071922481952543';
-  window.FB_PIXEL_ID = PIXEL_ID;
+  var PIXEL_IDS = ['1071922481952543', '2495926674152987'];
+  window.FB_PIXEL_IDS = PIXEL_IDS;
+  window.FB_PIXEL_ID = PIXEL_IDS[0];
 
   !(function (f, b, e, v, n, t, s) {
     if (f.fbq) return;
@@ -22,7 +23,7 @@
     s.parentNode.insertBefore(t, s);
   })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
 
-  fbq('init', PIXEL_ID);
+  PIXEL_IDS.forEach(function (id) { fbq('init', id); });
   fbq('track', 'PageView');
 
   function cookie(name) {
@@ -72,6 +73,28 @@
         content_name: (product && product.name) || undefined,
         num_items: (product && Number(product.qty)) || 1,
       }, { eventID: eventId });
+    } catch (e) {}
+    // Envia tambem pela Conversions API (mesmo event_id = dedup automatico),
+    // garantindo que o evento chegue a campanha mesmo com bloqueio de navegador.
+    try {
+      var t = window.fbTracking ? window.fbTracking() : {};
+      var url = window.apiUrl ? window.apiUrl('/api/public/fb-event') : '/api/public/fb-event';
+      fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          event_name: 'InitiateCheckout',
+          event_id: eventId,
+          value: Number(value) || 0,
+          event_source_url: t.event_source_url || location.href,
+          fbp: t.fbp || '',
+          fbc: t.fbc || '',
+          content_name: 'KIT CELIMAX',
+          content_id: 'kit-celimax',
+          quantity: (product && Number(product.qty)) || 1,
+        }),
+        keepalive: true,
+      }).catch(function () {});
     } catch (e) {}
   };
   window.fbInitiateCheckoutSent = icAlreadySent;
