@@ -428,7 +428,7 @@
       $("#pix-code").value = p.reference;
       $("#pix-copy").textContent = "Copiar referencia";
       $("#pay-lead").textContent = "Paga en efectivo en cualquier tienda OXXO para confirmar tu pedido.";
-      $("#pay-expiry").textContent = expTxt ? "Tu referencia vence el " + expTxt + "." : "";
+      $("#pay-expiry").textContent = expTxt ? "Tu referencia vence el " + expTxt : "";
       $("#how-title").textContent = "Cómo pagar en OXXO";
       $("#how-steps").innerHTML = steps(["Acude a cualquier tienda <strong>OXXO</strong>.", "Dile al cajero que quieres hacer un pago de <strong>OXXO Pay</strong>.", "Muestra el código de barras o dicta la <strong>referencia</strong>.", "Paga el monto exacto en efectivo y conserva tu ticket.", "Tu pedido se confirma automáticamente; te avisaremos por correo."]);
     } else {
@@ -440,7 +440,7 @@
       $("#pix-code").value = p.clabe;
       $("#pix-copy").textContent = "Copiar CLABE";
       $("#pay-lead").innerHTML = "Transfiere por SPEI en los próximos <strong><span id=\"pix-timer\">30:00</span></strong> minutos para asegurar tu pedido.";
-      $("#pay-expiry").textContent = expTxt ? "Esta CLABE es válida para un solo pago hasta el " + expTxt + "." : "";
+      $("#pay-expiry").textContent = expTxt ? "Esta CLABE es válida para un solo pago hasta el " + expTxt : "";
       $("#how-title").textContent = "Cómo pagar por SPEI";
       $("#how-steps").innerHTML = steps(["Toca <strong>Copiar CLABE</strong>.", "Abre la app o banca en línea de tu banco.", "Elige <strong>Transferir</strong> y agrega la CLABE como nuevo destinatario.", "Envía <strong>exactamente " + money(total) + "</strong> (un monto distinto se devuelve).", "Listo: tu pedido se confirma automáticamente en minutos."]);
     }
