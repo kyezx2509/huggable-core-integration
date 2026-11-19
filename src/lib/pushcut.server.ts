@@ -67,7 +67,7 @@ export async function sendPushcut(title: string, text: string): Promise<void> {
 }
 
 export function brl(cents: number): string {
-  return `R$ ${(Number(cents || 0) / 100).toFixed(2).replace('.', ',')}`
+  return `$${(Number(cents || 0) / 100).toLocaleString('es-MX', { maximumFractionDigits: 2 })} MXN`
 }
 
 /** Venda gerada: "VENDA GERADA R$ 19,90" na notificacao VegaCheckoutPV2 */

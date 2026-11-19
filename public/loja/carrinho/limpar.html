@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="es-MX">
 <head>
 
 <!-- Google tag (gtag.js) -->
@@ -14,7 +14,7 @@
 <script src="/js/api-base.js"></script><script src="/js/fb-pixel.js"></script><script src="/js/tiktok-pixel.js"></script><script src="/js/utmify-pixel.js"></script><script src="/js/visit-log.js" defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Limpar Carrinho - Debug</title>
+    <title>Vaciar Carrito - Debug</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -70,32 +70,32 @@
 </head>
 <body>
     <div class="container">
-        <h1>🛠️ Debug do Carrinho</h1>
+        <h1>🛠️ Debug del Carrito</h1>
         
         <div class="info">
-            <strong>ℹ️ Informações:</strong><br>
-            Use esta página para limpar o carrinho e ver os dados salvos.
+            <strong>ℹ️ Información:</strong><br>
+            Usa esta página para vaciar el carrito y ver los datos guardados.
         </div>
 
-        <h2>Ações Rápidas:</h2>
-        <button onclick="limparCarrinho()">🗑️ Limpar Carrinho</button>
-        <button onclick="verCarrinho()" class="success">👁️ Ver Dados do Carrinho</button>
-        <button onclick="location.href='index.html'" class="success">🛒 Ir para Carrinho</button>
+        <h2>Acciones Rápidas:</h2>
+        <button onclick="limparCarrinho()">🗑️ Vaciar Carrito</button>
+        <button onclick="verCarrinho()" class="success">👁️ Ver Datos del Carrito</button>
+        <button onclick="location.href='index.html'" class="success">🛒 Ir al Carrito</button>
         
-        <h2>Dados Atuais:</h2>
-        <pre id="dados">Clique em "Ver Dados do Carrinho" para exibir...</pre>
+        <h2>Datos Actuales:</h2>
+        <pre id="dados">Haz clic en "Ver Datos del Carrito" para mostrar...</pre>
         
-        <h2>Status:</h2>
+        <h2>Estado:</h2>
         <div id="status"></div>
     </div>
 
     <script src="/loja/_assets/js/cart.js"></script>
     <script>
         function limparCarrinho() {
-            if (confirm('Tem certeza que deseja limpar TODO o carrinho?')) {
+            if (confirm('¿Seguro que deseas vaciar TODO el carrito?')) {
                 localStorage.removeItem('mercado_cart');
                 document.getElementById('status').innerHTML = '<div style="color: green; padding: 10px; background: #d4edda; border-radius: 4px; margin-top: 10px;">✅ Carrinho limpo com sucesso!</div>';
-                document.getElementById('dados').textContent = 'Carrinho vazio';
+                document.getElementById('dados').textContent = 'Carrito vacío';
             }
         }
 

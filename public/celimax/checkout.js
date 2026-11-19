@@ -1,27 +1,27 @@
 (function () {
   const PRODUCTS = {
-    "2906947154796": { name: "Celimax Retinal Collagen Lifting Cream - 1 Unidade", price: 67, img: "https://sweet-install-fairy.lovable.app/celimax/co/f6e92234.png" },
-    "2906958297659": { name: "Celimax Retinal Collagen Lifting Cream - 3 Unidades", price: 97, img: "https://sweet-install-fairy.lovable.app/celimax/co/f6e92234.png" },
-    "2906929863847": { name: "Celimax Retinal Collagen Lifting Cream - 5 Unidades", price: 127, img: "https://sweet-install-fairy.lovable.app/celimax/co/f6e92234.png" },
-    "2906912000012": { name: "Celimax Retinal Collagen Lifting Cream - Kit de Tratamento (6 Unidades)", price: 149.9, img: "https://sweet-install-fairy.lovable.app/__l5e/assets-v1/8b2467af-688e-4c40-a37e-00fb72a45992/kit-12-tubes-new.jpeg" },
+    "2906947154796": { name: "Celimax Retinal Collagen Lifting Cream - 1 pieza", price: 229, img: "https://sweet-install-fairy.lovable.app/celimax/co/f6e92234.png" },
+    "2906958297659": { name: "Celimax Retinal Collagen Lifting Cream - 3 piezas", price: 329, img: "https://sweet-install-fairy.lovable.app/celimax/co/f6e92234.png" },
+    "2906929863847": { name: "Celimax Retinal Collagen Lifting Cream - 5 piezas", price: 429, img: "https://sweet-install-fairy.lovable.app/celimax/co/f6e92234.png" },
+    "2906912000012": { name: "Celimax Retinal Collagen Lifting Cream - Kit de tratamiento (6 piezas)", price: 499, img: "https://sweet-install-fairy.lovable.app/__l5e/assets-v1/8b2467af-688e-4c40-a37e-00fb72a45992/kit-12-tubes-new.jpeg" },
 
   };
   const REVIEWS = [
-    { n: "Juliana M.", t: "Produto original e bem embalado. Chegou antes do prazo, super recomendo a loja!", a: "/celimax/co/4bd232d9.png" },
-    { n: "Patrícia S.", t: "Comprei com medo por ser promoção, mas veio tudo certinho e funcionando perfeitamente.", a: "/celimax/co/4dfa34de.png" },
-    { n: "Camila R.", t: "Atendimento ótimo e entrega rápida. Já é a segunda compra que faço por aqui.", a: "/celimax/co/73626f59.png" },
-    { n: "Fernanda L.", t: "Preço muito abaixo do mercado e o produto é exatamente igual ao anúncio. Amei!", a: "/celimax/co/75ae5e55.png" },
-    { n: "Aline T.", t: "Pagamento no Pix aprovado na hora e o rastreio chegou no mesmo dia. Confiável.", a: "/celimax/co/d3167525.png" },
+    { n: "Mariana G. · CDMX", t: "Producto original y muy bien empacado. Llegó antes de lo prometido, ¡súper recomendable!", a: "/celimax/co/4bd232d9.png" },
+    { n: "Daniela R. · Guadalajara", t: "Me daba desconfianza por la promoción, pero todo llegó completo y funcionando perfecto.", a: "/celimax/co/4dfa34de.png" },
+    { n: "Fernanda L. · Monterrey", t: "Excelente atención y envío rapidísimo. Ya es mi segunda compra aquí.", a: "/celimax/co/73626f59.png" },
+    { n: "Ana Sofía M. · Puebla", t: "Precio muy por debajo de lo normal y el producto es idéntico al anuncio. ¡Me encantó!", a: "/celimax/co/75ae5e55.png" },
+    { n: "Valeria T. · Querétaro", t: "Pagué por SPEI, se confirmó en minutos y el mismo día me llegó la guía de rastreo.", a: "/celimax/co/d3167525.png" },
   ];
 
   const UPSELLS = {
-    up1: { name: "Creme Uniformizador da Pele - Celimax", price: 37.83 },
-    up2: { name: "Creme Anti-Flacidez para Pescoço - YCZ", price: 28.81 },
+    up1: { name: "Crema unificadora de tono - Celimax", price: 129 },
+    up2: { name: "Crema reafirmante para cuello - YCZ", price: 99 },
   };
 
   const $ = (s, r) => (r || document).querySelector(s);
   const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
-  const money = (v) => "R$\u00a0" + v.toFixed(2).replace(".", ",");
+  const money = (v) => "$" + Number(v || 0).toLocaleString("es-MX", { minimumFractionDigits: 0, maximumFractionDigits: Number(v) % 1 ? 2 : 0 });
   const digits = (v) => (v || "").replace(/\D/g, "");
 
   const params = new URLSearchParams(location.search);
@@ -46,7 +46,7 @@
 
 
   const ANNUAL_PID = "2906912000012";
-  const ANNUAL_BUMP_PRICE = 149.9;
+  const ANNUAL_BUMP_PRICE = 499;
   const ANNUAL_IMG = "https://sweet-install-fairy.lovable.app/__l5e/assets-v1/8b2467af-688e-4c40-a37e-00fb72a45992/kit-12-tubes-new.jpeg";
 
   const state = { qty: Math.max(1, parseInt(params.get("qty") || "1", 10)), shipping: 0, upsells: {}, freeShipping: false };
@@ -69,7 +69,7 @@
     var prod = { id: pid, name: product.name, qty: state.qty };
     if (window.fbInitiateCheckout) {
       try { window.fbInitiateCheckout(value, prod); } catch (e) {}
-      try { if (window.utmifyTrack) window.utmifyTrack("InitiateCheckout", { value: value, currency: "BRL", product: product.name }); } catch (e) {}
+      try { if (window.utmifyTrack) window.utmifyTrack("InitiateCheckout", { value: value, currency: "MXN", product: product.name }); } catch (e) {}
       return;
     }
     // pixel ainda carregando: aguarda em vez de disparar um fbq solto (que duplicava)
@@ -89,7 +89,7 @@
 
     $$(".js-subtotal").forEach((e) => (e.textContent = money(t.sub)));
     $$(".js-total").forEach((e) => (e.textContent = money(t.total)));
-    $$(".js-freight").forEach((e) => (e.textContent = t.freight ? money(t.freight) : "Grátis"));
+    $$(".js-freight").forEach((e) => (e.textContent = t.freight ? money(t.freight) : "Gratis"));
     $$(".js-freight-row").forEach((e) => e.classList.toggle("hide", !$("#shipping-wrap") || $("#shipping-wrap").classList.contains("hide")));
     const offers = 2 - Object.keys(state.upsells).filter((k) => state.upsells[k]).length;
     if ($("#offers-count")) $("#offers-count").textContent = offers;
@@ -121,13 +121,13 @@
       const rest = cartItems.slice(1).map((it) =>
         '<div class="flex items-center gap-3 py-2">' +
         '<img src="' + (it.image || "") + '" alt="" class="w-10 h-10 rounded-lg object-cover border border-slate-200 bg-white">' +
-        '<span class="text-[12px] text-black flex-1 min-w-0 break-words leading-tight">' + (it.title || "Produto") + '</span>' +
+        '<span class="text-[12px] text-black flex-1 min-w-0 break-words leading-tight">' + (it.title || "Producto") + '</span>' +
         '<span class="text-[12px] text-slate-500 whitespace-nowrap">' + (Number(it.quantity) || 1) + "x</span>" +
         '<span class="text-[12px] text-black whitespace-nowrap">' + money(Number(it.price || 0) * (Number(it.quantity) || 1)) + "</span>" +
         "</div>"
       ).join("");
       extra.innerHTML =
-        '<button type="button" class="js-see-all w-full text-[13px] font-medium text-[#3483FA] py-1 text-left">Ver todos os produtos (' + cartItems.length + ")</button>" +
+        '<button type="button" class="js-see-all w-full text-[13px] font-medium text-[#3483FA] py-1 text-left">Ver todos los productos (' + cartItems.length + ")</button>" +
         '<div class="js-all-items hide mt-1 divide-y divide-slate-100">' + rest + "</div>";
       li.parentElement.appendChild(extra);
 
@@ -136,40 +136,21 @@
       btnAll.addEventListener("click", () => {
         const hidden = listAll.classList.toggle("hide");
         btnAll.textContent = hidden
-          ? "Ver todos os produtos (" + cartItems.length + ")"
-          : "Ocultar produtos";
+          ? "Ver todos los productos (" + cartItems.length + ")"
+          : "Ocultar productos";
       });
     });
   }
 
 
 
-  // ---- masks
-  function maskCPF(v) {
-    v = digits(v).slice(0, 11);
-    return v.replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})\.(\d{3})(\d)/, "$1.$2.$3").replace(/(\d{3})\.(\d{3})\.(\d{3})(\d)/, "$1.$2.$3-$4");
-  }
+  // ---- mascaras (Mexico)
   function maskPhone(v) {
-    v = digits(v).slice(0, 11);
-    if (v.length <= 10) return v.replace(/(\d{2})(\d)/, "($1) $2").replace(/(\d{4})(\d)/, "$1-$2");
-    return v.replace(/(\d{2})(\d)/, "($1) $2").replace(/(\d{5})(\d)/, "$1-$2");
+    v = digits(v).slice(0, 10);
+    return v.replace(/^(\d{2})(\d)/, "$1 $2").replace(/^(\d{2}) (\d{4})(\d)/, "$1 $2 $3");
   }
-  function maskCEP(v) { v = digits(v).slice(0, 8); return v.replace(/(\d{5})(\d)/, "$1-$2"); }
-  function validCPF(v) {
-    const c = digits(v);
-    if (c.length !== 11) return false;
-    let s = 0;
-    for (let i = 0; i < 9; i++) s += parseInt(c[i]) * (10 - i);
-    let d1 = ((s * 10) % 11) % 10;
-    s = 0;
-    for (let i = 0; i < 10; i++) s += parseInt(c[i]) * (11 - i);
-    let d2 = ((s * 10) % 11) % 10;
-    return d1 === parseInt(c[9]) && d2 === parseInt(c[10]);
-  }
-
-  $("#document").addEventListener("input", (e) => (e.target.value = maskCPF(e.target.value)));
   $("#phone").addEventListener("input", (e) => (e.target.value = maskPhone(e.target.value)));
-  $("#zipcode").addEventListener("input", (e) => { e.target.value = maskCEP(e.target.value); if (digits(e.target.value).length === 8) lookupCep(); });
+  $("#zipcode").addEventListener("input", (e) => { e.target.value = digits(e.target.value).slice(0, 5); if (e.target.value.length === 5) lookupCep(); });
 
   function err(id, msg) { const el = $(id); el.textContent = msg || ""; el.classList.toggle("hide", !msg); }
 
@@ -192,17 +173,16 @@
   // ---- step 1
   $("#next-button-dados-pessoais").addEventListener("click", () => {
     const name = $("#name").value.trim(), email = $("#email").value.trim();
-    if (name.split(" ").filter(Boolean).length < 2) return err("#err-1", "Informe seu nome completo.");
-    if (!/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(email)) return err("#err-1", "Informe um e-mail válido.");
-    if (!validCPF($("#document").value)) return err("#err-1", "CPF inválido.");
-    if (digits($("#phone").value).length < 10) return err("#err-1", "Informe um celular válido.");
+    if (name.split(" ").filter(Boolean).length < 2) return err("#err-1", "Escribe tu nombre y apellidos.");
+    if (!/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(email)) return err("#err-1", "Escribe un correo electrónico válido.");
+    if (digits($("#phone").value).length !== 10) return err("#err-1", "Escribe un celular de 10 dígitos.");
     err("#err-1", "");
     $("#account-fields").classList.add("hide");
     $("#account-open-head").classList.add("hide");
     $("#account-done-head").classList.remove("hide");
     $("#sum-name").textContent = name;
     $("#sum-email").textContent = email;
-    $("#sum-phone").textContent = "+55 " + $("#phone").value;
+    $("#sum-phone").textContent = "+52 " + $("#phone").value;
     $("#address-idle-head").classList.add("hide");
     $("#address-open-head").classList.remove("hide");
     $("#address-fields").classList.remove("hide");
@@ -215,37 +195,30 @@
     $("#account-fields").classList.remove("hide");
   });
 
-  // ---- CEP
+  // ---- Codigo postal (Mexico): autocompleta estado/municipio/colonias quando possivel
   async function lookupCep() {
-    const cep = digits($("#zipcode").value);
+    const cp = digits($("#zipcode").value);
+    $("#address-rest").classList.remove("hide");
+    $("#shipping-wrap").classList.remove("hide");
+    render();
     try {
-      const r = await fetch("https://viacep.com.br/ws/" + cep + "/json/");
+      const r = await fetch("https://api.zippopotam.us/mx/" + cp);
+      if (!r.ok) { $("#zip-check").classList.add("hide"); return; }
       const d = await r.json();
-      
-      // Sempre libera o restante dos campos, mesmo se houver erro ou CEP de cidade única
-      $("#address-rest").classList.remove("hide");
-      $("#shipping-wrap").classList.remove("hide");
-      
-      if (!d.erro) {
-        $("#zip-check").classList.remove("hide");
-        $("#zip-city").textContent = d.localidade + " - " + d.uf;
-        if (d.logradouro) $("#street").value = d.logradouro;
-        if (d.bairro) $("#neighborhood").value = d.bairro;
-        if (d.localidade) $("#city").value = d.localidade;
-        if (d.uf) $("#uf").value = d.uf.toUpperCase();
-        state.city = d.localidade; 
-        state.uf = d.uf;
-        if (d.logradouro) $("#number").focus();
-      } else {
-        $("#zip-check").classList.add("hide");
-        // Se for erro, apenas limpa a indicação visual, mas deixa os campos abertos
-      }
-      render();
-    } catch (e) {
-      $("#address-rest").classList.remove("hide");
-      $("#shipping-wrap").classList.remove("hide");
-      $("#zip-check").classList.add("hide");
-    }
+      const list = (d && d.places) || [];
+      if (!list.length) { $("#zip-check").classList.add("hide"); return; }
+      $("#zip-check").classList.remove("hide");
+      const st = String(list[0].state || "");
+      const map = { "México": "Estado de México", "Mexico": "Estado de México", "Distrito Federal": "Ciudad de México", "Coahuila de Zaragoza": "Coahuila", "Michoacán de Ocampo": "Michoacán", "Veracruz de Ignacio de la Llave": "Veracruz" };
+      const stName = map[st] || st;
+      if ([...$("#uf").options].some((o) => o.value === stName)) $("#uf").value = stName;
+      $("#zip-city").textContent = stName;
+      $("#zip-city").classList.remove("hide");
+      const cols = [...new Set(list.map((x) => x["place name"]).filter(Boolean))];
+      $("#colonias").innerHTML = cols.map((c) => '<option value="' + c + '">').join("");
+      if (cols.length === 1) $("#neighborhood").value = cols[0];
+      $("#city").focus();
+    } catch (e) { $("#zip-check").classList.add("hide"); }
   }
 
   // ---- shipping
@@ -266,22 +239,22 @@
 
   // ---- step 2
   $("#next-button-frete").addEventListener("click", () => {
-    if (digits($("#zipcode").value).length !== 8) return err("#err-2", "Informe um CEP válido.");
-    if (!$("#street").value.trim()) return err("#err-2", "Informe o endereço.");
-    if (!$("#number").value.trim()) return err("#err-2", "Informe o número.");
-    if (!$("#neighborhood").value.trim()) return err("#err-2", "Informe o bairro.");
-    if (!$("#city").value.trim()) return err("#err-2", "Informe a cidade.");
-    if (!$("#uf").value) return err("#err-2", "Selecione o estado.");
+    if (digits($("#zipcode").value).length !== 5) return err("#err-2", "Escribe un código postal de 5 dígitos.");
+    if (!$("#uf").value) return err("#err-2", "Selecciona tu estado.");
+    if (!$("#city").value.trim()) return err("#err-2", "Escribe tu municipio o alcaldía.");
+    if (!$("#neighborhood").value.trim()) return err("#err-2", "Escribe tu colonia.");
+    if (!$("#street").value.trim()) return err("#err-2", "Escribe tu calle.");
+    if (!$("#number").value.trim()) return err("#err-2", "Escribe el número exterior.");
     err("#err-2", "");
     $("#address-fields").classList.add("hide");
     $("#address-open-head").classList.add("hide");
     $("#address-done-head").classList.remove("hide");
-    $("#sum-addr1").textContent = $("#street").value + ", " + $("#number").value + ($("#complement").value ? " - " + $("#complement").value : "");
-    $("#sum-addr2").textContent = $("#neighborhood").value + ", " + ($("#city").value || state.city || "") + " - " + ($("#uf").value || state.uf || "") + ", " + $("#zipcode").value;
-    $("#sum-frete").textContent = state.shipping ? "SEDEX - " + money(state.shipping) : "CORREIOS - Grátis";
+    $("#sum-addr1").textContent = $("#street").value + " " + $("#number").value + ($("#complement").value ? " Int. " + $("#complement").value : "") + ", Col. " + $("#neighborhood").value;
+    $("#sum-addr2").textContent = $("#city").value + ", " + $("#uf").value + ", C.P. " + $("#zipcode").value;
+    $("#sum-frete").textContent = state.shipping ? "Envío express - " + money(state.shipping) : "Envío estándar - Gratis";
     $("#pay-h2").style.color = "rgb(0,0,0)";
     $("#pay-h2").querySelectorAll("span").forEach((s) => (s.style.color = "rgb(0,0,0)"));
-    $("#pay-sub").textContent = "Selecione a forma de pagamento";
+    $("#pay-sub").textContent = "Elige cómo quieres pagar";
     $("#pay-fields").classList.remove("hide");
     $("#payment").scrollIntoView({ behavior: "smooth", block: "start" });
     render();
@@ -302,14 +275,14 @@
       // Buscamos o span que contém o texto (que agora é o segundo span dentro do span principal)
       const textSpan = $(".js-upsell-btn > span > span:last-child", wrap);
       if (textSpan) {
-        textSpan.textContent = on ? "✓ ADICIONADO AO PEDIDO" : "+ SIM! QUERO ADICIONAR";
+        textSpan.textContent = on ? "✓ AGREGADO A TU PEDIDO" : "+ ¡SÍ! QUIERO AGREGARLO";
       }
       render();
     });
   });
 
 
-  // ---- order bump: upgrade para Tratamento de 1 Ano (R$ 149,90 + frete grátis)
+  // ---- order bump: upgrade para Tratamento de 1 Ano ($509 + frete grátis)
   (function annualBump() {
     if (pid === ANNUAL_PID || pid === "carrinho") return;
     if (!/celimax/i.test(product.name || "")) return;
@@ -334,7 +307,7 @@
 
       const btnBump = $("#annual-bump-btn");
       if (btnBump) {
-        btnBump.textContent = "✓ KIT DE 6 UNIDADES ADICIONADO";
+        btnBump.textContent = "✓ KIT DE 6 PIEZAS AGREGADO";
         btnBump.style.background = "#009ee3";
         btnBump.disabled = true;
       }
@@ -372,43 +345,53 @@
   goto(0);
   setInterval(() => goto(idx + 1), 5000);
   $("#reviews-desktop").innerHTML =
-    '<h2 class="text-black font-medium text-[15px] mb-3">Avaliações dos clientes</h2>' +
+    '<h2 class="text-black font-medium text-[15px] mb-3">Opiniones de clientes</h2>' +
     '<div class="flex flex-col gap-3">' + REVIEWS.map((r) =>
       '<div class="flex items-start gap-3"><img src="' + r.a + '" class="w-9 h-9 rounded-full object-cover" alt="' + r.n + '">' +
       '<div><p class="text-[13px] font-semibold text-black">' + r.n + '</p>' +
       '<div class="flex gap-0.5 text-[#F5A623] text-[11px]">★★★★★</div>' +
       '<p class="text-[12px] text-slate-600 mt-1">' + r.t + '</p></div></div>').join("") + "</div>";
 
-  // ---- finalizar -> FreePay
+  // ---- metodo de pago (SPEI / OXXO)
+  state.method = "spei";
+  function paintMethods() {
+    $$(".pay-opt").forEach((o) => {
+      const on = o.dataset.method === state.method;
+      const c = on ? "rgb(43,111,255)" : "rgb(229,231,235)";
+      o.style.borderColor = c;
+      const r = $(".pay-radio", o); r.style.borderColor = c; r.firstElementChild.style.background = on ? c : "transparent";
+    });
+    const h = $("#pay-hint");
+    if (h) h.textContent = state.method === "oxxo"
+      ? "Al finalizar recibirás una referencia para pagar en efectivo en cualquier OXXO. Tienes hasta 12 días; tu pedido se confirma al pagar."
+      : "Al finalizar te daremos una CLABE para transferir desde tu banco. Tu pedido se confirma automáticamente en minutos.";
+  }
+  $$(".pay-opt").forEach((o) => o.addEventListener("click", () => { state.method = o.dataset.method; paintMethods(); }));
+  paintMethods();
+
+  // ---- finalizar -> XPag
   const btn = $("#btn-finalizar");
   btn.addEventListener("click", async () => {
     const t = totals();
     btn.disabled = true;
-    btn.innerHTML = "<span>Gerando Pix...</span>";
-    // O gateway recebe SEMPRE o nome generico "KIT CELIMAX" (sem nome da loja/produto real)
+    btn.innerHTML = "<span>Generando tu pago...</span>";
+    // El gateway SIEMPRE recibe el nombre generico "KIT CELIMAX"
     const GATEWAY_ITEM_NAME = "KIT CELIMAX";
-    const items = [{ title: GATEWAY_ITEM_NAME, name: GATEWAY_ITEM_NAME, unitPrice: Math.round(t.total * 100), price: t.total, quantity: 1 }];
+    const realItems = isCart
+      ? cartItems.map((it) => ({ name: it.title, price: Number(it.price || 0), quantity: Number(it.quantity || 1) }))
+      : [{ name: product.name, price: product.price, quantity: state.qty }];
     const payload = {
       amount: Math.round(t.total * 100),
+      method: state.method,
       productName: GATEWAY_ITEM_NAME,
-      customer: {
-        name: $("#name").value.trim(),
-        email: $("#email").value.trim(),
-        document: digits($("#document").value),
-        phone: digits($("#phone").value),
+      customer: { name: $("#name").value.trim(), email: $("#email").value.trim(), phone: digits($("#phone").value) },
+      address: {
+        zipcode: digits($("#zipcode").value), state: $("#uf").value, municipality: $("#city").value.trim(),
+        colonia: $("#neighborhood").value.trim(), street: $("#street").value.trim(), exterior: $("#number").value.trim(),
+        interior: $("#complement").value.trim(), reference: ($("#reference") ? $("#reference").value.trim() : ""),
+        shipping: state.shipping ? "express" : "estandar", shipping_price: state.shipping, country: "MX",
       },
-      shipping: {
-        zipcode: digits($("#zipcode").value),
-        street: $("#street").value.trim(),
-        number: $("#number").value.trim(),
-        neighborhood: $("#neighborhood").value.trim(),
-        complement: $("#complement").value.trim(),
-        city: $("#city").value.trim() || state.city || "",
-        state: $("#uf").value || state.uf || "",
-        method: state.shipping ? "SEDEX" : "CORREIOS",
-        price: Math.round(state.shipping * 100),
-      },
-      items: items,
+      items: realItems,
       tracking: Object.assign(
         { utm_source: null, utm_medium: null, utm_campaign: null, utm_content: null, utm_term: null, src: null, sck: null },
         (window.getStoredUtms ? window.getStoredUtms() : {}),
@@ -416,43 +399,61 @@
         (window.fbTracking ? window.fbTracking() : {}),
         { visitor_session_id: localStorage.getItem('_lv_sid') || null }
       ),
-
-
     };
     try {
-      const r = await fetch("/api/public/freepay-checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      const r = await fetch("/api/public/xpag-checkout", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       const d = await r.json();
-      const pix = d.data?.pix || d.pix || {};
-      const code = pix.copy_paste || pix.qr_code || d.pixCode || d.pix_code;
-      const txId = d.data?.id || pix.id || d.transactionId || d.id;
-      if (!r.ok || !code) throw new Error(d.error || "Falha ao gerar Pix");
-      $("#pix-code").value = code;
-      let qrSrc = pix.qr_code_base64;
-      if (qrSrc && !String(qrSrc).startsWith("data:")) qrSrc = "data:image/png;base64," + qrSrc;
-      $("#pix-qr").src = qrSrc || ("https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=0&data=" + encodeURIComponent(code));
-      $$(".js-total").forEach((e) => (e.textContent = money(t.total)));
-      $("#view-checkout").classList.add("hide");
-      $("#view-pix").classList.remove("hide");
-      window.scrollTo(0, 0);
+      const p = d.data || {};
+      if (!r.ok || !p.id) throw new Error(d.error || "No pudimos generar tu pago");
+      showPayment(p, t.total);
       startTimer();
-      setupComprovante(txId);
-      if (txId) pollStatus(txId);
+      setupComprovante(p.id);
+      pollStatus(p.id);
     } catch (e) {
-      err("#err-3", e.message || "Não foi possível gerar o Pix. Tente novamente.");
+      err("#err-3", e.message || "No pudimos generar tu pago. Inténtalo de nuevo.");
       btn.disabled = false;
-      btn.innerHTML = "<span>Finalizar Compra</span>";
+      btn.innerHTML = "<span>Finalizar compra</span>";
     }
   });
 
+  function showPayment(p, total) {
+    const exp = p.expires_at ? new Date(p.expires_at) : null;
+    const expTxt = exp ? exp.toLocaleString("es-MX", { day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" }) : "";
+    const steps = (arr) => arr.map((x, i) => '<li class="flex items-start gap-3"><span class="size-6 shrink-0 text-[13px] font-semibold flex justify-center items-center rounded-full bg-primary text-white">' + (i + 1) + '</span><span class="text-[#3e3e3e]">' + x + '</span></li>').join("");
+    $$(".js-total").forEach((e) => (e.textContent = money(total)));
+    if (p.method === "oxxo") {
+      $("#oxxo-box").classList.remove("hide");
+      $("#oxxo-ref").textContent = String(p.reference).replace(/(\d{4})(?=\d)/g, "$1 ");
+      if (p.barcode_url) $("#oxxo-barcode").src = p.barcode_url; else $("#oxxo-barcode").classList.add("hide");
+      $("#pix-code").value = p.reference;
+      $("#pix-copy").textContent = "Copiar referencia";
+      $("#pay-lead").textContent = "Paga en efectivo en cualquier tienda OXXO para confirmar tu pedido.";
+      $("#pay-expiry").textContent = expTxt ? "Tu referencia vence el " + expTxt + "." : "";
+      $("#how-title").textContent = "Cómo pagar en OXXO";
+      $("#how-steps").innerHTML = steps(["Acude a cualquier tienda <strong>OXXO</strong>.", "Dile al cajero que quieres hacer un pago de <strong>OXXO Pay</strong>.", "Muestra el código de barras o dicta la <strong>referencia</strong>.", "Paga el monto exacto en efectivo y conserva tu ticket.", "Tu pedido se confirma automáticamente; te avisaremos por correo."]);
+    } else {
+      $("#spei-box").classList.remove("hide");
+      $("#spei-clabe").textContent = String(p.clabe).replace(/(\d{3})(\d{3})(\d{11})(\d)/, "$1 $2 $3 $4");
+      $("#spei-bank").textContent = p.bank_name || "STP";
+      $("#spei-benef").textContent = p.beneficiary || "";
+      if (p.reference) { $("#spei-ref-row").classList.remove("hide"); $("#spei-ref").textContent = p.reference; }
+      $("#pix-code").value = p.clabe;
+      $("#pix-copy").textContent = "Copiar CLABE";
+      $("#pay-lead").innerHTML = "Transfiere por SPEI en los próximos <strong><span id=\"pix-timer\">30:00</span></strong> minutos para asegurar tu pedido.";
+      $("#pay-expiry").textContent = expTxt ? "Esta CLABE es válida para un solo pago hasta el " + expTxt + "." : "";
+      $("#how-title").textContent = "Cómo pagar por SPEI";
+      $("#how-steps").innerHTML = steps(["Toca <strong>Copiar CLABE</strong>.", "Abre la app o banca en línea de tu banco.", "Elige <strong>Transferir</strong> y agrega la CLABE como nuevo destinatario.", "Envía <strong>exactamente " + money(total) + "</strong> (un monto distinto se devuelve).", "Listo: tu pedido se confirma automáticamente en minutos."]);
+    }
+    $("#view-checkout").classList.add("hide");
+    $("#view-pix").classList.remove("hide");
+    window.scrollTo(0, 0);
+  }
+
   function startTimer() {
     let left = 30 * 60;
-    const el = $("#pix-timer");
     setInterval(() => {
-      if (left <= 0) return;
+      const el = $("#pix-timer");
+      if (!el || left <= 0) return;
       left--;
       el.textContent = String(Math.floor(left / 60)).padStart(2, "0") + ":" + String(left % 60).padStart(2, "0");
     }, 1000);
@@ -479,8 +480,7 @@
     const p = new URLSearchParams();
     p.set("nome", $("#name").value.trim());
     p.set("email", $("#email").value.trim());
-    p.set("cpf", digits($("#document").value));
-    p.set("phone", digits($("#phone").value));
+        p.set("phone", digits($("#phone").value));
     return p.toString();
   }
 
@@ -494,7 +494,7 @@
       const f = e.target.files && e.target.files[0];
       if (!f) return;
       status.style.color = "#0f9c74";
-      status.textContent = "Enviando comprovante...";
+      status.textContent = "Enviando comprobante...";
       const fd = new FormData();
       fd.append("file", f);
       fd.append("transaction_id", String(txId));
@@ -503,14 +503,14 @@
         const d = await r.json();
         if (d && d.success) {
           status.style.color = "#0f9c74";
-          status.textContent = "\u2713 Comprovante recebido! Nossa equipe vai confirmar seu pedido em instantes.";
+          status.textContent = "\u2713 ¡Comprobante recibido! Nuestro equipo confirmará tu pedido en unos minutos.";
         } else {
           status.style.color = "#c0392b";
-          status.textContent = "Erro ao enviar: " + ((d && d.message) || "tente novamente");
+          status.textContent = "Error al enviar: " + ((d && d.message) || "inténtalo de nuevo");
         }
       } catch (err) {
         status.style.color = "#c0392b";
-        status.textContent = "Erro de conexão, tente novamente.";
+        status.textContent = "Error de conexión, inténtalo de nuevo.";
       }
     });
   }
@@ -542,10 +542,10 @@
     var btn = $("#pix-copy");
     if (!btn) return;
     if (ok) {
-      btn.innerHTML = "Código copiado!";
-      setTimeout(function () { btn.innerHTML = "Copiar código"; }, 2000);
+      var lbl = btn.innerHTML; btn.innerHTML = "¡Copiado!";
+      setTimeout(function () { btn.innerHTML = lbl; }, 2000);
     } else {
-      btn.innerHTML = "Selecione e copie o código acima";
+      var lbl2 = btn.innerHTML; btn.innerHTML = "Mantén presionado el número para copiarlo";
       var inp = $("#pix-code");
       if (inp) {
         inp.removeAttribute("readonly");
@@ -553,7 +553,7 @@
         try { inp.setSelectionRange(0, String(text).length); } catch (e) {}
         inp.select();
       }
-      setTimeout(function () { btn.innerHTML = "Copiar código"; }, 4000);
+      setTimeout(function () { btn.innerHTML = lbl2; }, 4000);
     }
   }
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="es-MX">
 <head>
 
 <!-- Google tag (gtag.js) -->
@@ -31,7 +31,7 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>Pesquisa Mercado Livre</title>
+  <title>Encuesta Mercado Libre</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -308,8 +308,8 @@
 
 <!-- HEADER -->
 <header>
-  <img src="/images/ml-logo.png" alt="Mercado Livre">
-  <div class="menu-icon" aria-label="Menu">
+  <img src="/images/ml-logo.png" alt="Mercado Libre">
+  <div class="menu-icon" aria-label="Menú">
     <span></span><span></span><span></span>
   </div>
 </header>
@@ -317,7 +317,7 @@
 <!-- QUIZ SCREEN -->
 <main id="screen-quiz">
   <div class="card">
-    <div class="banner-top">Responda e ganhe!</div>
+    <div class="banner-top">¡Responde y gana!</div>
 
     <div class="progress-row">
       <div class="progress-dot"></div>
@@ -327,34 +327,34 @@
       <span class="progress-label" id="progress-label">20 %</span>
     </div>
 
-    <img class="question-img" id="question-img" src="" alt="Promoção Mercado Livre">
+    <img class="question-img" id="question-img" src="" alt="Promoción Mercado Libre">
 
     <h2 class="question-text" id="question-text"></h2>
 
     <div class="options-grid" id="options-grid"></div>
 
-    <button class="btn-next" id="btn-next" onclick="handleNext()">Próximo</button>
+    <button class="btn-next" id="btn-next" onclick="handleNext()">Siguiente</button>
   </div>
 </main>
 
 <!-- CONGRATS SCREEN -->
 <main id="screen-congrats">
   <div class="card">
-    <div class="congrats-title">Parabéns!</div>
+    <div class="congrats-title">¡Felicidades!</div>
     <div class="congrats-emojis">🎉 🎊 🎉</div>
 
-    <img class="congrats-img" src="/images/ml-promo-6.jpg" alt="Roleta de prêmios">
+    <img class="congrats-img" src="/images/ml-promo-6.jpg" alt="Ruleta de premios">
 
     <p class="congrats-msg">
-      Como forma de agradecimento, você ganhou um acesso grátis à nossa promoção
-      <strong>"do Mercado Livre"</strong> nele você pode escolher rodar
-      <strong>2 vezes a roleta</strong>, aproveite!
+      Como muestra de agradecimiento, ganaste acceso gratis a nuestra promoción
+      <strong>"de Mercado Libre"</strong> en ella puedes elegir girar
+      <strong>2 veces la ruleta</strong>, ¡aprovéchalo!
     </p>
     <p class="congrats-sub">
-      Esperamos que você aproveite ao máximo cada produto e que eles tragam ainda mais diversão para você e sua família.
+      Esperamos que aproveches al máximo cada producto y que traigan todavía más diversión para ti y tu familia.
     </p>
 
-    <button class="btn-claim" onclick="goToRoleta()">Resgatar Agora</button>
+    <button class="btn-claim" onclick="goToRoleta()">Reclamar Ahora</button>
   </div>
 </main>
 
@@ -362,32 +362,32 @@
   const questions = [
     {
       id: 1,
-      question: "Com que frequência você faz compras online?",
-      options: ["Sempre", "Às vezes", "Ocasionalmente", "Raramente"],
+      question: "¿Con qué frecuencia compras en línea?",
+      options: ["Siempre", "A veces", "Ocasionalmente", "Raramente"],
       image: "/images/ml-promo-1.jpg",
     },
     {
       id: 2,
-      question: "Qual é sua opinião sobre a variedade de produtos disponíveis no Mercado Livre?",
-      options: ["Excelente", "Boa", "Aceitável", "Insatisfatória"],
+      question: "¿Cuál es tu opinión sobre la variedad de productos disponibles en Mercado Libre?",
+      options: ["Excelente", "Buena", "Aceptable", "Insuficiente"],
       image: "/images/ml-promo-2.jpg",
     },
     {
       id: 3,
-      question: "Como você classificaria a eficiência da entrega dos produtos comprados no Mercado Livre?",
-      options: ["Rápida", "Aceitável", "Lenta", "Só compro na Loja"],
+      question: "¿Cómo calificarías la eficiencia de entrega de los productos comprados en Mercado Libre?",
+      options: ["Rápida", "Aceptable", "Lenta", "Solo compro en tienda física"],
       image: "/images/ml-promo-4.jpg",
     },
     {
       id: 4,
-      question: "Em relação ao atendimento ao cliente do Mercado Livre, como você descreveria?",
-      options: ["Excelente", "Bom", "Regular", "Insatisfatório"],
+      question: "En cuanto a la atención al cliente de Mercado Libre, ¿cómo la describirías?",
+      options: ["Excelente", "Bueno", "Regular", "Malo"],
       image: "/images/ml-promo-5.jpg",
     },
     {
       id: 5,
-      question: "Por onde você conheceu o Mercado Livre?",
-      options: ["Pelo Instagram", "Pelo TikTok", "Pelo Facebook", "Minha cidade"],
+      question: "¿Por dónde conociste Mercado Libre?",
+      options: ["Por Instagram", "Por TikTok", "Por Facebook", "Por recomendación"],
       image: "/images/ml-promo-3.jpg",
     },
   ];

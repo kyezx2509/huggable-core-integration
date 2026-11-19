@@ -190,7 +190,7 @@ const Cart = {
      * @returns {string} Valor formatado
      */
     formatPrice: function(value) {
-        return 'R$ ' + value.toFixed(2).replace('.', ',');
+        return '$' + Number(value || 0).toLocaleString('es-MX', { maximumFractionDigits: 0 });
     }
 };
 

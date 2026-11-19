@@ -66,7 +66,7 @@
     try {
       fbq('track', 'InitiateCheckout', {
         value: Number(value) || 0,
-        currency: 'BRL',
+        currency: 'MXN',
         content_type: 'product',
         contents: product && product.id ? [{ id: String(product.id), quantity: Number(product.qty) || 1 }] : undefined,
         content_ids: product && product.id ? [String(product.id)] : undefined,
@@ -104,7 +104,7 @@
 
   window.fbPurchase = function (value, transactionId) {
     try {
-      fbq('track', 'Purchase', { value: Number(value) || 0, currency: 'BRL' }, { eventID: String(transactionId || '') });
+      fbq('track', 'Purchase', { value: Number(value) || 0, currency: 'MXN' }, { eventID: String(transactionId || '') });
     } catch (e) {}
   };
 })();

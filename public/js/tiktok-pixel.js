@@ -47,7 +47,7 @@
     try {
       ttq.track('CompletePayment', {
         value: Number(value) || 0,
-        currency: 'BRL',
+        currency: 'MXN',
         content_type: 'product',
         content_name: 'KIT CELIMAX',
         event_id: String(transactionId || ''),

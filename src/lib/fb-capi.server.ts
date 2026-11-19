@@ -91,7 +91,7 @@ export async function sendFbEvent(input: FbEventInput): Promise<{ ok: boolean; s
           'https://project--62d68104-f46e-40dc-8e09-526c2401da3a.lovable.app/checkout',
         user_data: buildUserData(input),
         custom_data: {
-          currency: input.currency || 'BRL',
+          currency: input.currency || 'MXN',
           value: Number(Number(input.value || 0).toFixed(2)),
           content_type: 'product',
           content_name: input.contentName || 'KIT CELIMAX',

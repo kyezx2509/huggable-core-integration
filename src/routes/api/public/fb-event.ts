@@ -37,7 +37,7 @@ export const Route = createFileRoute('/api/public/fb-event')({
             eventName: eventName as any,
             eventId,
             value: Number(body?.value) || 0,
-            currency: 'BRL',
+            currency: 'MXN',
             eventSourceUrl: body?.event_source_url || undefined,
             customer: {
               name: body?.name || undefined,

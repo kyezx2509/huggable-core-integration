@@ -23,7 +23,7 @@ function getProductData() {
     if (priceElement) {
         const priceText = priceElement.textContent.trim();
         // Remove "R$", espacos, e converte virgula para ponto
-        price = parseFloat(priceText.replace('R$', '').replace(/\./g, '').replace(',', '.').trim()) || 0;
+        price = parseFloat(priceText.replace(/[^\d.]/g, '')) || 0;
     }
 
     // Imagem do produto
@@ -234,7 +234,7 @@ function ensureSecondButtonExists() {
     if (!existingFloatingBtn) {
         // Encontra o preço
         const priceElement = document.querySelector('.new-price2');
-        const priceText = priceElement ? priceElement.textContent.trim() : 'R$ 0,00';
+        const priceText = priceElement ? priceElement.textContent.trim() : '$9';
         
         const floatingBar = document.createElement('div');
         floatingBar.id = 'floatingCartBar';

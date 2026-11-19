@@ -16,7 +16,6 @@ import { Route as ApiPublicAdminActionRouteImport } from './routes/api/public/ad
 import { Route as ApiPublicComprovanteUrlRouteImport } from './routes/api/public/comprovante-url'
 import { Route as ApiPublicFbEventRouteImport } from './routes/api/public/fb-event'
 import { Route as ApiPublicFreepayCheckoutRouteImport } from './routes/api/public/freepay-checkout'
-import { Route as ApiPublicFreepayWebhookRouteImport } from './routes/api/public/freepay-webhook'
 import { Route as ApiPublicGeoRouteImport } from './routes/api/public/geo'
 import { Route as ApiPublicLogLoginAttemptRouteImport } from './routes/api/public/log-login-attempt'
 import { Route as ApiPublicLogVisitRouteImport } from './routes/api/public/log-visit'
@@ -24,6 +23,8 @@ import { Route as ApiPublicPaymentStatusRouteImport } from './routes/api/public/
 import { Route as ApiPublicReconcilePaymentsRouteImport } from './routes/api/public/reconcile-payments'
 import { Route as ApiPublicUploadComprovanteRouteImport } from './routes/api/public/upload-comprovante'
 import { Route as ApiPublicUtmifyDiagRouteImport } from './routes/api/public/utmify-diag'
+import { Route as ApiPublicXpagCheckoutRouteImport } from './routes/api/public/xpag-checkout'
+import { Route as ApiPublicXpagWebhookRouteImport } from './routes/api/public/xpag-webhook'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -61,11 +62,6 @@ const ApiPublicFreepayCheckoutRoute =
     path: '/api/public/freepay-checkout',
     getParentRoute: () => rootRouteImport,
   } as any)
-const ApiPublicFreepayWebhookRoute = ApiPublicFreepayWebhookRouteImport.update({
-  id: '/api/public/freepay-webhook',
-  path: '/api/public/freepay-webhook',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApiPublicGeoRoute = ApiPublicGeoRouteImport.update({
   id: '/api/public/geo',
   path: '/api/public/geo',
@@ -104,6 +100,16 @@ const ApiPublicUtmifyDiagRoute = ApiPublicUtmifyDiagRouteImport.update({
   path: '/api/public/utmify-diag',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicXpagCheckoutRoute = ApiPublicXpagCheckoutRouteImport.update({
+  id: '/api/public/xpag-checkout',
+  path: '/api/public/xpag-checkout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicXpagWebhookRoute = ApiPublicXpagWebhookRouteImport.update({
+  id: '/api/public/xpag-webhook',
+  path: '/api/public/xpag-webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -113,7 +119,6 @@ export interface FileRoutesByFullPath {
   '/api/public/comprovante-url': typeof ApiPublicComprovanteUrlRoute
   '/api/public/fb-event': typeof ApiPublicFbEventRoute
   '/api/public/freepay-checkout': typeof ApiPublicFreepayCheckoutRoute
-  '/api/public/freepay-webhook': typeof ApiPublicFreepayWebhookRoute
   '/api/public/geo': typeof ApiPublicGeoRoute
   '/api/public/log-login-attempt': typeof ApiPublicLogLoginAttemptRoute
   '/api/public/log-visit': typeof ApiPublicLogVisitRoute
@@ -121,6 +126,8 @@ export interface FileRoutesByFullPath {
   '/api/public/reconcile-payments': typeof ApiPublicReconcilePaymentsRoute
   '/api/public/upload-comprovante': typeof ApiPublicUploadComprovanteRoute
   '/api/public/utmify-diag': typeof ApiPublicUtmifyDiagRoute
+  '/api/public/xpag-checkout': typeof ApiPublicXpagCheckoutRoute
+  '/api/public/xpag-webhook': typeof ApiPublicXpagWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -130,7 +137,6 @@ export interface FileRoutesByTo {
   '/api/public/comprovante-url': typeof ApiPublicComprovanteUrlRoute
   '/api/public/fb-event': typeof ApiPublicFbEventRoute
   '/api/public/freepay-checkout': typeof ApiPublicFreepayCheckoutRoute
-  '/api/public/freepay-webhook': typeof ApiPublicFreepayWebhookRoute
   '/api/public/geo': typeof ApiPublicGeoRoute
   '/api/public/log-login-attempt': typeof ApiPublicLogLoginAttemptRoute
   '/api/public/log-visit': typeof ApiPublicLogVisitRoute
@@ -138,6 +144,8 @@ export interface FileRoutesByTo {
   '/api/public/reconcile-payments': typeof ApiPublicReconcilePaymentsRoute
   '/api/public/upload-comprovante': typeof ApiPublicUploadComprovanteRoute
   '/api/public/utmify-diag': typeof ApiPublicUtmifyDiagRoute
+  '/api/public/xpag-checkout': typeof ApiPublicXpagCheckoutRoute
+  '/api/public/xpag-webhook': typeof ApiPublicXpagWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -148,7 +156,6 @@ export interface FileRoutesById {
   '/api/public/comprovante-url': typeof ApiPublicComprovanteUrlRoute
   '/api/public/fb-event': typeof ApiPublicFbEventRoute
   '/api/public/freepay-checkout': typeof ApiPublicFreepayCheckoutRoute
-  '/api/public/freepay-webhook': typeof ApiPublicFreepayWebhookRoute
   '/api/public/geo': typeof ApiPublicGeoRoute
   '/api/public/log-login-attempt': typeof ApiPublicLogLoginAttemptRoute
   '/api/public/log-visit': typeof ApiPublicLogVisitRoute
@@ -156,6 +163,8 @@ export interface FileRoutesById {
   '/api/public/reconcile-payments': typeof ApiPublicReconcilePaymentsRoute
   '/api/public/upload-comprovante': typeof ApiPublicUploadComprovanteRoute
   '/api/public/utmify-diag': typeof ApiPublicUtmifyDiagRoute
+  '/api/public/xpag-checkout': typeof ApiPublicXpagCheckoutRoute
+  '/api/public/xpag-webhook': typeof ApiPublicXpagWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -167,7 +176,6 @@ export interface FileRouteTypes {
     | '/api/public/comprovante-url'
     | '/api/public/fb-event'
     | '/api/public/freepay-checkout'
-    | '/api/public/freepay-webhook'
     | '/api/public/geo'
     | '/api/public/log-login-attempt'
     | '/api/public/log-visit'
@@ -175,6 +183,8 @@ export interface FileRouteTypes {
     | '/api/public/reconcile-payments'
     | '/api/public/upload-comprovante'
     | '/api/public/utmify-diag'
+    | '/api/public/xpag-checkout'
+    | '/api/public/xpag-webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -184,7 +194,6 @@ export interface FileRouteTypes {
     | '/api/public/comprovante-url'
     | '/api/public/fb-event'
     | '/api/public/freepay-checkout'
-    | '/api/public/freepay-webhook'
     | '/api/public/geo'
     | '/api/public/log-login-attempt'
     | '/api/public/log-visit'
@@ -192,6 +201,8 @@ export interface FileRouteTypes {
     | '/api/public/reconcile-payments'
     | '/api/public/upload-comprovante'
     | '/api/public/utmify-diag'
+    | '/api/public/xpag-checkout'
+    | '/api/public/xpag-webhook'
   id:
     | '__root__'
     | '/'
@@ -201,7 +212,6 @@ export interface FileRouteTypes {
     | '/api/public/comprovante-url'
     | '/api/public/fb-event'
     | '/api/public/freepay-checkout'
-    | '/api/public/freepay-webhook'
     | '/api/public/geo'
     | '/api/public/log-login-attempt'
     | '/api/public/log-visit'
@@ -209,6 +219,8 @@ export interface FileRouteTypes {
     | '/api/public/reconcile-payments'
     | '/api/public/upload-comprovante'
     | '/api/public/utmify-diag'
+    | '/api/public/xpag-checkout'
+    | '/api/public/xpag-webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -219,7 +231,6 @@ export interface RootRouteChildren {
   ApiPublicComprovanteUrlRoute: typeof ApiPublicComprovanteUrlRoute
   ApiPublicFbEventRoute: typeof ApiPublicFbEventRoute
   ApiPublicFreepayCheckoutRoute: typeof ApiPublicFreepayCheckoutRoute
-  ApiPublicFreepayWebhookRoute: typeof ApiPublicFreepayWebhookRoute
   ApiPublicGeoRoute: typeof ApiPublicGeoRoute
   ApiPublicLogLoginAttemptRoute: typeof ApiPublicLogLoginAttemptRoute
   ApiPublicLogVisitRoute: typeof ApiPublicLogVisitRoute
@@ -227,6 +238,8 @@ export interface RootRouteChildren {
   ApiPublicReconcilePaymentsRoute: typeof ApiPublicReconcilePaymentsRoute
   ApiPublicUploadComprovanteRoute: typeof ApiPublicUploadComprovanteRoute
   ApiPublicUtmifyDiagRoute: typeof ApiPublicUtmifyDiagRoute
+  ApiPublicXpagCheckoutRoute: typeof ApiPublicXpagCheckoutRoute
+  ApiPublicXpagWebhookRoute: typeof ApiPublicXpagWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -280,13 +293,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicFreepayCheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/public/freepay-webhook': {
-      id: '/api/public/freepay-webhook'
-      path: '/api/public/freepay-webhook'
-      fullPath: '/api/public/freepay-webhook'
-      preLoaderRoute: typeof ApiPublicFreepayWebhookRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/api/public/geo': {
       id: '/api/public/geo'
       path: '/api/public/geo'
@@ -336,6 +342,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicUtmifyDiagRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/xpag-checkout': {
+      id: '/api/public/xpag-checkout'
+      path: '/api/public/xpag-checkout'
+      fullPath: '/api/public/xpag-checkout'
+      preLoaderRoute: typeof ApiPublicXpagCheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/xpag-webhook': {
+      id: '/api/public/xpag-webhook'
+      path: '/api/public/xpag-webhook'
+      fullPath: '/api/public/xpag-webhook'
+      preLoaderRoute: typeof ApiPublicXpagWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -347,7 +367,6 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicComprovanteUrlRoute: ApiPublicComprovanteUrlRoute,
   ApiPublicFbEventRoute: ApiPublicFbEventRoute,
   ApiPublicFreepayCheckoutRoute: ApiPublicFreepayCheckoutRoute,
-  ApiPublicFreepayWebhookRoute: ApiPublicFreepayWebhookRoute,
   ApiPublicGeoRoute: ApiPublicGeoRoute,
   ApiPublicLogLoginAttemptRoute: ApiPublicLogLoginAttemptRoute,
   ApiPublicLogVisitRoute: ApiPublicLogVisitRoute,
@@ -355,6 +374,8 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicReconcilePaymentsRoute: ApiPublicReconcilePaymentsRoute,
   ApiPublicUploadComprovanteRoute: ApiPublicUploadComprovanteRoute,
   ApiPublicUtmifyDiagRoute: ApiPublicUtmifyDiagRoute,
+  ApiPublicXpagCheckoutRoute: ApiPublicXpagCheckoutRoute,
+  ApiPublicXpagWebhookRoute: ApiPublicXpagWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

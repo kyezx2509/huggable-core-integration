@@ -1,7 +1,7 @@
 /* Carrinho lateral (drawer) da loja + botao "Adicionar ao carrinho" */
 (function () {
   var BRL = function (v) {
-    return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    return '$' + Number(v || 0).toLocaleString('es-MX', { maximumFractionDigits: 0 });
   };
   var KEY = 'mercado_cart';
   function get() { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { return []; } }
@@ -11,7 +11,7 @@
 
   function parsePrice(txt) {
     if (!txt) return 0;
-    var m = String(txt).replace(/[^\d,\.]/g, '').replace(/\.(?=\d{3}(\D|$))/g, '').replace(',', '.');
+    var m = String(txt).replace(/[^\d.]/g, '');
     var v = parseFloat(m);
     return isNaN(v) ? 0 : v;
   }
@@ -81,14 +81,14 @@
     if (!box) return;
     var items = get();
     if (!items.length) {
-      box.innerHTML = '<div class="ml-empty">Seu carrinho está vazio</div>';
+      box.innerHTML = '<div class="ml-empty">Tu carrito está vacío</div>';
     } else {
       box.innerHTML = items.map(function (i, idx) {
         return '<div class="ml-ci"><img src="' + (i.image || '') + '" alt="">' +
           '<div class="info"><p class="n">' + i.title + '</p><div class="p">' + BRL(i.price * (i.quantity || 1)) + '</div>' +
-          '<div class="ml-qty"><button type="button" data-a="dec" data-i="' + idx + '" aria-label="Diminuir">−</button><span>' + i.quantity + '</span>' +
+          '<div class="ml-qty"><button type="button" data-a="dec" data-i="' + idx + '" aria-label="Disminuir">−</button><span>' + i.quantity + '</span>' +
           '<button type="button" data-a="inc" data-i="' + idx + '" aria-label="Aumentar">+</button></div></div>' +
-          '<button type="button" class="ml-rm" data-a="rm" data-i="' + idx + '" aria-label="Remover">' +
+          '<button type="button" class="ml-rm" data-a="rm" data-i="' + idx + '" aria-label="Eliminar">' +
           '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg></button></div>';
       }).join('');
 
@@ -121,12 +121,12 @@
     var noFab = isStoreHome();
     var wrap = document.createElement('div');
     wrap.innerHTML = '<div id="mlCartOverlay"></div>' +
-      '<aside id="mlCartDrawer" aria-label="Carrinho"><div class="ml-head"><h3>Meu carrinho</h3><button id="mlCartClose" aria-label="Fechar">×</button></div>' +
+      '<aside id="mlCartDrawer" aria-label="Carrito"><div class="ml-head"><h3>Mi carrito</h3><button id="mlCartClose" aria-label="Cerrar">×</button></div>' +
       '<div id="mlCartItems"></div>' +
-      '<div id="mlCartFooter"><div class="tot"><span>Total</span><b id="mlCartTotal">R$ 0,00</b></div>' +
+      '<div id="mlCartFooter"><div class="tot"><span>Total</span><b id="mlCartTotal">$9</b></div>' +
       '<button class="ml-btn pri" id="mlCheckout">Finalizar compra</button>' +
-      '<button class="ml-btn sec" id="mlKeep">Continuar comprando</button></div></aside>' +
-      (noFab ? '' : '<button id="mlCartFab" aria-label="Abrir carrinho"><span class="material-symbols-outlined">shopping_cart</span><span id="mlCartFabBadge">0</span></button>');
+      '<button class="ml-btn sec" id="mlKeep">Seguir comprando</button></div></aside>' +
+      (noFab ? '' : '<button id="mlCartFab" aria-label="Abrir carrito"><span class="material-symbols-outlined">shopping_cart</span><span id="mlCartFabBadge">0</span></button>');
     document.body.appendChild(wrap);
 
     document.getElementById('mlCartOverlay').onclick = close;
@@ -164,7 +164,7 @@
       var buy = document.querySelector('a.pergunta-botao, button.pergunta-botao, .comprar-btn, .btn-comprar');
       var add = document.createElement('button');
       add.id = 'mlAddCart';
-      add.innerHTML = '<span class="material-symbols-outlined">add_shopping_cart</span> Adicionar ao carrinho';
+      add.innerHTML = '<span class="material-symbols-outlined">add_shopping_cart</span> Agregar al carrito';
       add.onclick = function () {
         var items = get();
         if (!items.some(function (x) { return x.id === prod.id; })) addItem(currentProduct());
