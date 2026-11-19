@@ -83,59 +83,34 @@
 <script>
 const STEPS = {
   '1': {
-    key: 'IMP-PROM',
-    amount: 9900,
-    badge: 'PENDIENTE FISCAL EN TU PEDIDO',
-    badgeColor: '#DC2626',
-    titulo: 'Tasa de Impuesto Promocional (TIP)',
-    subtitulo: 'Pago obligatorio para la emisión de la factura de tu pedido.',
-    explicacao: 'Tu pago fue aprobado, pero el sistema identificó la incidencia de la Tasa de Impuesto Promocional — tributo aplicado sobre productos vendidos en campaña promocional. Sin este pago, la factura de tu pedido no se emite y la mercancía queda retenida en el centro de distribución.',
-    bullets: [
-      'Tasa promocional reducida, cobrada por única vez sobre el pedido.',
-      'Tras el pago, la factura se emite automáticamente en minutos.',
-      'El comprobante queda archivado junto a tu pedido para cualquier revisión fiscal.',
-    ],
-    aviso: 'Si el impuesto no es pagado, el pedido queda retenido en el centro de distribución y se devuelve al remitente en un plazo de hasta 72 horas.',
-    ctaLabel: 'Pagar impuesto promocional - $99',
-    next: '2',
-    msgSucesso: '¡Impuesto pagado — factura emitida!'
+    key: 'GAR-EXT', amount: 9900,
+    badge: 'OFERTA OPCIONAL', badgeColor: '#2563EB',
+    titulo: 'Garantía Extendida de 12 Meses',
+    subtitulo: 'Protege tu compra un año más. Es opcional.',
+    explicacao: 'Tu pedido ya está confirmado. Si quieres, puedes agregar una garantía extendida que cubre fallas de fábrica durante 12 meses adicionales.',
+    bullets: ['Cobertura contra defectos de fabricación por 12 meses extra.','Cambio o reparación sin costo adicional.','Pago único, sin mensualidades.'],
+    aviso: 'Este complemento es totalmente opcional. Tu pedido se enviará igual aunque no lo agregues.',
+    ctaLabel: 'Agregar garantía - $99', next: '2', msgSucesso: '¡Garantía extendida agregada!'
   },
   '2': {
-    key: 'FRETE-REC',
-    amount: 6900,
-    badge: 'RECÁLCULO DE ENVÍO NECESARIO',
-    badgeColor: '#0f9c74',
-    titulo: 'Recálculo de Envío por Zona',
-    subtitulo: 'Cargo adicional obligatorio para que la paquetería acepte la entrega.',
-    explicacao: 'Al generar la guía de envío, la paquetería recalculó el costo con base en el código postal proporcionado e identificó una diferencia por zona de cobertura extendida. Este pago adicional debe liquidarse para que la guía sea aceptada y tu pedido continúe en ruta de entrega.',
-    bullets: [
-      'Diferencia de envío calculada directamente por la paquetería, sin comisión de la tienda.',
-      'Tras realizar el pago, se genera la guía y se activa el número de rastreo el mismo día.',
-      'Garantiza la entrega en la dirección indicada, sin desvíos a sucursales.',
-    ],
-    aviso: 'Sin el pago adicional de envío, la guía se cancela y el pedido regresa a la fila de preparación, con fecha de entrega indefinida.',
-    ctaLabel: 'Pagar recálculo de envío - $69',
-    next: '3',
-    msgSucesso: '¡Envío pagado — guía de envío generada!'
+    key: 'ENV-PRIO', amount: 6900,
+    badge: 'OFERTA OPCIONAL', badgeColor: '#0f9c74',
+    titulo: 'Envío Prioritario',
+    subtitulo: 'Recibe tu pedido antes. Es opcional.',
+    explicacao: 'Tu pedido ya tiene envío estándar incluido. Si lo prefieres, puedes pasarlo a la fila prioritaria para que salga primero del almacén.',
+    bullets: ['Tu pedido se prepara y despacha con prioridad.','Número de rastreo activado más rápido.','Pago único.'],
+    aviso: 'Opcional: sin este complemento tu pedido llega igual con el envío estándar.',
+    ctaLabel: 'Agregar envío prioritario - $69', next: '3', msgSucesso: '¡Envío prioritario activado!'
   },
   '3': {
-    key: 'SEG-ENVIO',
-    amount: 4900,
-    badge: 'ÚLTIMA ETAPA - SEGURO DE ENVÍO',
-    badgeColor: '#12b886',
-    titulo: 'Tarifa Obligatoria de Seguro de Envío',
-    subtitulo: 'Último paso para liberar tu pedido y enviarlo hoy mismo.',
-    explicacao: 'Los productos se envían en paquete sellado con seguro obligatorio contra extravío, violación y daños. Esta tarifa cubre el seguro de transporte y libera tu pedido para el despacho prioritario de hoy. Sin ella, el pedido pasa a la fila normal de envío.',
-    bullets: [
-      'Cobertura total contra extravío, violación y daños durante el transporte.',
-      'Reenvío gratis ante cualquier inconveniente en la entrega.',
-      'Habilita el envío prioritario hoy mismo, en lugar de 3 a 5 días hábiles.',
-    ],
-    aviso: 'El despacho prioritario solo está disponible hoy. Sin el seguro, el pedido se procesa sin cobertura y en la fila normal de envío.',
-    ctaLabel: 'Activar seguro de envío - $49',
-    next: 'sucesso',
-    msgSucesso: '¡Seguro activado — pedido liberado para envío!',
-    permitirPular: true
+    key: 'SEG-ENVIO', amount: 4900,
+    badge: 'OFERTA OPCIONAL', badgeColor: '#12b886',
+    titulo: 'Seguro de Envío',
+    subtitulo: 'Protección contra extravío o daños. Es opcional.',
+    explicacao: 'Puedes agregar un seguro que cubre tu paquete contra extravío, robo o daños durante el transporte.',
+    bullets: ['Cobertura contra extravío, robo y daños en el transporte.','Reenvío sin costo si ocurre algún problema.','Pago único.'],
+    aviso: 'Opcional: tu pedido se envía normalmente aunque no contrates el seguro.',
+    ctaLabel: 'Agregar seguro - $49', next: 'sucesso', msgSucesso: '¡Seguro de envío agregado!'
   }
 };
 
@@ -147,7 +122,6 @@ document.getElementById('progbar').style.width = (parseInt(step, 10) / 3 * 100) 
 
 const nome = params.get('nome') || params.get('name') || 'Cliente';
 const primeiroNome = nome.trim().split(/\s+/)[0] || 'Cliente';
-const cpfRaw = (params.get('cpf') || '').replace(/\D/g, '') || '00000000000';
 const emailParam = params.get('email') || (nome.toLowerCase().replace(/[^a-z0-9]+/g, '.') + '@gmail.com');
 const phoneParam = (params.get('phone') || '11999999999').replace(/\D/g, '');
 
@@ -161,10 +135,10 @@ function renderIntro(){
     <div class="sub">${cfg.subtitulo}</div>
     <div class="exp"><strong>¡Hola, ${primeiroNome}!</strong><br>${cfg.explicacao}</div>
     <ul class="b">${cfg.bullets.map(b=>`<li><span class="c">✓</span><span>${b}</span></li>`).join('')}</ul>
-    <div class="avs">⚠️ <strong>Atención:</strong> ${cfg.aviso}</div>
-    <div class="val"><div class="lb">Total a pagar por SPEI:</div><div class="vv">${fmtBRL(cfg.amount)}</div></div>
+    <div class="avs">ℹ️ ${cfg.aviso}</div>
+    <div class="val"><div class="lb">Total del complemento (SPEI):</div><div class="vv">${fmtBRL(cfg.amount)}</div></div>
     <button class="btn" id="btn-go">${cfg.ctaLabel}</button>
-    ${cfg.permitirPular ? '<button class="pular" id="btn-skip">No deseo continuar con este paso</button>' : ''}
+    <button class="pular" id="btn-skip">No, gracias, continuar sin agregar</button>
   `;
   document.getElementById('btn-go').addEventListener('click', gerarPix);
   const sk = document.getElementById('btn-skip');
@@ -188,7 +162,7 @@ async function gerarPix(){
   const btn = document.getElementById('btn-go');
   btn.disabled = true; btn.textContent = 'Generando SPEI...';
   try {
-    const res = await fetch('/api/public/freepay-checkout', {
+    const res = await fetch('/api/public/xpag-checkout', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({
