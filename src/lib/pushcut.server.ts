@@ -66,21 +66,36 @@ export async function sendPushcut(title: string, text: string): Promise<void> {
   await post(url, title, text)
 }
 
-export function brl(cents: number): string {
-  return `$${(Number(cents || 0) / 100).toLocaleString('es-MX', { maximumFractionDigits: 2 })} MXN`
+let rateCache: { v: number; t: number } | null = null
+const FALLBACK_MXN_BRL = 0.29
+
+/** Cotacao MXN -> BRL (cache 6h, fallback fixo se a API falhar). */
+async function mxnToBrlRate(): Promise<number> {
+  if (rateCache && Date.now() - rateCache.t < 6 * 3600_000) return rateCache.v
+  try {
+    const r = await fetch('https://open.er-api.com/v6/latest/MXN', { signal: AbortSignal.timeout(4000) })
+    const j: any = await r.json()
+    const v = Number(j?.rates?.BRL)
+    if (v > 0) { rateCache = { v, t: Date.now() }; return v }
+  } catch (e) { console.warn('[pushcut] cotacao falhou', e) }
+  return FALLBACK_MXN_BRL
 }
 
-/** Venda gerada: "VENDA GERADA R$ 19,90" na notificacao VegaCheckoutPV2 */
+/** Valor em centavos de MXN convertido para "R$ 1.234,56". */
+export async function brl(cents: number): Promise<string> {
+  const reais = (Number(cents || 0) / 100) * (await mxnToBrlRate())
+  return 'R$ ' + reais.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+}
+
 export async function notifyVendaGerada(amountCents: number): Promise<void> {
-  await sendPushcut('OFERTA ML', `VENDA GERADA ${brl(amountCents)}`)
+  await sendPushcut('OFERTA ML', `VENDA GERADA ${await brl(amountCents)}`)
 }
 
-/** Venda paga: "VENDA PAGA R$ 19,90 🔥" na notificacao VegaCheckoutPV */
 export async function notifyVendaPaga(amountCents: number): Promise<void> {
   const url = resolvePaidUrl()
   if (!url) {
     console.warn('[pushcut] URL de venda paga nao configurada')
     return
   }
-  await post(url, 'OFERTA ML', `VENDA PAGA ${brl(amountCents)} 🔥`)
+  await post(url, 'OFERTA ML', `VENDA PAGA ${await brl(amountCents)} 🔥`)
 }

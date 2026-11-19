@@ -85,12 +85,17 @@
     $$(".js-prod-img").forEach((e) => (e.src = product.img));
     $$(".js-prod-price").forEach((e) => (e.textContent = money(isCart ? Number(cartItems[0].price || 0) * (Number(cartItems[0].quantity) || 1) : product.price * state.qty)));
     $$(".js-qty").forEach((e) => (e.value = isCart ? cartCount : state.qty));
+    $$(".js-prod-price").forEach((e) => { const w = e.closest(".flex-col.items-end"); if (w) w.style.display = "none"; });
+    $$(".js-prod-name").forEach((e) => {
+      let q = e.parentElement.querySelector(".js-qty-label");
+      if (!q) { q = document.createElement("span"); q.className = "js-qty-label text-[12px] text-slate-500"; e.parentElement.appendChild(q); }
+      q.textContent = "Cantidad: " + (isCart ? (Number(cartItems[0].quantity) || 1) : state.qty);
+    });
     $$(".js-count").forEach((e) => (e.textContent = isCart ? cartCount : state.qty));
 
     $$(".js-subtotal").forEach((e) => (e.textContent = money(t.sub)));
     $$(".js-total").forEach((e) => (e.textContent = money(t.total)));
-    $$(".js-freight").forEach((e) => (e.textContent = t.freight ? money(t.freight) : "Gratis"));
-    $$(".js-freight-row").forEach((e) => e.classList.toggle("hide", !$("#shipping-wrap") || $("#shipping-wrap").classList.contains("hide")));
+    $$(".js-freight").forEach((e) => { e.textContent = t.freight ? money(t.freight) : "Gratis"; e.style.color = t.freight ? "" : "#00a650"; });
     const offers = 2 - Object.keys(state.upsells).filter((k) => state.upsells[k]).length;
     if ($("#offers-count")) $("#offers-count").textContent = offers;
   }
@@ -106,13 +111,6 @@
       const stepper = li.querySelector("[data-qty]");
       if (stepper && stepper.parentElement) stepper.parentElement.style.display = "none";
 
-      const qtyTag = document.createElement("span");
-      qtyTag.className = "text-[12px] text-slate-500 whitespace-nowrap";
-      qtyTag.textContent = (Number(cartItems[0].quantity) || 1) + "x";
-      const priceCol = li.querySelector(".js-prod-price");
-      if (priceCol && priceCol.parentElement && priceCol.parentElement.parentElement) {
-        priceCol.parentElement.parentElement.appendChild(qtyTag);
-      }
 
       if (cartItems.length < 2) return;
 
@@ -168,6 +166,7 @@
     open = !open;
     $("#summary-body").className = "grid transition-[grid-template-rows] duration-500 ease-in-out " + (open ? "grid-rows-[1fr]" : "grid-rows-[0fr]");
     $("#summary-caret").style.transform = open ? "" : "rotate(180deg)";
+    $("#summary-head-total").classList.toggle("hide", open);
   });
 
   // ---- step 1
@@ -217,7 +216,17 @@
       const cols = [...new Set(list.map((x) => x["place name"]).filter(Boolean))];
       $("#colonias").innerHTML = cols.map((c) => '<option value="' + c + '">').join("");
       if (cols.length === 1) $("#neighborhood").value = cols[0];
-      $("#city").focus();
+      // Municipio/alcaldía a partir das coordenadas do CP
+      try {
+        const lat = list[0].latitude, lon = list[0].longitude;
+        if (lat && lon && !$("#city").value) {
+          const g = await fetch("https://nominatim.openstreetmap.org/reverse?format=json&zoom=10&accept-language=es&lat=" + lat + "&lon=" + lon);
+          const a = ((await g.json()) || {}).address || {};
+          const mun = a.borough || a.county || a.city || a.town || a.municipality || "";
+          if (mun && !$("#city").value) $("#city").value = mun;
+        }
+      } catch (e) {}
+      (cols.length === 1 ? $("#street") : $("#neighborhood")).focus();
     } catch (e) { $("#zip-check").classList.add("hide"); }
   }
 
