@@ -224,7 +224,9 @@
                   <div class="mt-3"><label class="text-[13px] font-medium leading-none" for="neighborhood">Colonia</label><div class="mt-1 relative"><input class="inp flex h-[46px] w-full border border-[#dedede] px-3 py-1 text-[13px] transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:border-black focus-visible:ring-1 focus-visible:ring-black rounded-[0.5rem] bg-white" id="neighborhood" placeholder="Ej. Roma Norte" list="colonias" autocomplete="address-level3"></div></div><datalist id="colonias"></datalist>
                   <div class="mt-3"><label class="text-[13px] font-medium leading-none" for="street">Calle</label><div class="mt-1 relative"><input class="inp flex h-[46px] w-full border border-[#dedede] px-3 py-1 text-[13px] transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:border-black focus-visible:ring-1 focus-visible:ring-black rounded-[0.5rem] bg-white" id="street" placeholder="Ej. Av. Insurgentes Sur" autocomplete="address-line1"></div></div>
                   <div class="grid grid-cols-2 gap-4"><div class="mt-3"><label class="text-[13px] font-medium leading-none" for="number">Número exterior</label><div class="mt-1 relative"><input class="inp flex h-[46px] w-full border border-[#dedede] px-3 py-1 text-[13px] transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:border-black focus-visible:ring-1 focus-visible:ring-black rounded-[0.5rem] bg-white" id="number" placeholder="Ej. 123" ></div></div><div class="mt-3"><label class="text-[13px] font-medium leading-none" for="complement">Número interior <span class="text-[11px] font-medium text-[#8F8F8F]">(Opcional)</span></label><div class="mt-1 relative"><input class="inp flex h-[46px] w-full border border-[#dedede] px-3 py-1 text-[13px] transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:border-black focus-visible:ring-1 focus-visible:ring-black rounded-[0.5rem] bg-white" id="complement" placeholder="Ej. Depto 4B" ></div></div></div>
-                  <div class="mt-3"><label class="text-[13px] font-medium leading-none" for="reference">Referencias de entrega <span class="text-[11px] font-medium text-[#8F8F8F]">(Opcional)</span></label><div class="mt-1 relative"><input class="inp flex h-[46px] w-full border border-[#dedede] px-3 py-1 text-[13px] transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:border-black focus-visible:ring-1 focus-visible:ring-black rounded-[0.5rem] bg-white" id="reference" placeholder="Ej. Entre calles, fachada blanca, portón negro" ></div></div>
+                  <div class="mt-3"><label class="text-[13px] font-medium leading-none">Entre calles <span class="text-[11px] font-medium text-[#8F8F8F]">(Opcional)</span></label><div class="grid grid-cols-2 gap-4 mt-1"><input class="inp flex h-[46px] w-full border border-[#dedede] px-3 py-1 text-[13px] transition-colors focus-visible:outline-none focus-visible:border-black focus-visible:ring-1 focus-visible:ring-black rounded-[0.5rem] bg-white" id="between1" placeholder="Calle 1"><input class="inp flex h-[46px] w-full border border-[#dedede] px-3 py-1 text-[13px] transition-colors focus-visible:outline-none focus-visible:border-black focus-visible:ring-1 focus-visible:ring-black rounded-[0.5rem] bg-white" id="between2" placeholder="Calle 2"></div></div>
+                  <div class="mt-3"><label class="text-[13px] font-medium leading-none" for="reference">Indicaciones adicionales de esta dirección <span class="text-[11px] font-medium text-[#8F8F8F]">(Opcional)</span></label><div class="mt-1 relative"><textarea class="inp flex h-[70px] py-2 w-full border border-[#dedede] px-3 py-1 text-[13px] transition-colors focus-visible:outline-none focus-visible:border-black focus-visible:ring-1 focus-visible:ring-black rounded-[0.5rem] bg-white" id="reference" maxlength="128" placeholder="Descripción de la fachada, puntos de referencia para encontrarla, indicaciones de seguridad, etc."></textarea></div></div>
+                  <div class="mt-3"><span class="text-[13px] font-medium leading-none">Tipo de domicilio</span><div class="mt-2 flex gap-6 text-[13px]"><label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="addrtype" value="residencial" checked style="accent-color:#3483fa"> Residencial</label><label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="addrtype" value="laboral" style="accent-color:#3483fa"> Laboral</label></div></div>
                 </div>
 
                 <div id="shipping-wrap" class="mt-6 grid z-10 hide">
@@ -304,7 +306,7 @@
                         <span class="absolute -top-3 left-4 rounded-full px-3 py-0.5 text-[10px] font-bold text-white" style="background:#88b82e">MÁS VENDIDO</span>
                         <div class="flex items-start gap-4">
                           <div class="flex-shrink-0 bg-white rounded-lg border border-slate-200 shadow-sm p-[0.2rem]">
-                            <img src="https://sweet-install-fairy.lovable.app/__l5e/assets-v1/8b2467af-688e-4c40-a37e-00fb72a45992/kit-12-tubes-new.jpeg" alt="Kit de Tratamiento Celimax - 6 Unidades" class="w-16 h-16 object-contain">
+                            <img loading="lazy" decoding="async" src="https://sweet-install-fairy.lovable.app/__l5e/assets-v1/8b2467af-688e-4c40-a37e-00fb72a45992/kit-12-tubes-new.jpeg" alt="Kit de Tratamiento Celimax - 6 Unidades" class="w-16 h-16 object-contain">
                           </div>
                           <div class="flex-1">
                             <p class="text-[14px] font-bold text-slate-800">Cámbialo por el Kit de Tratamiento (6 unidades)</p>
@@ -324,7 +326,7 @@
                         </div>
                         <div class="flex items-start gap-5">
                           <div class="flex-shrink-0 bg-white rounded-lg border border-slate-200 shadow-sm p-[0.2rem]">
-                            <img alt="Producto" class="object-cover w-16 h-16 sm:!w-12 sm:!h-12 rounded-md" src="/celimax/co/bce6a18e.webp" style="width:48px;height:48px">
+                            <img loading="lazy" decoding="async" alt="Producto" class="object-cover w-16 h-16 sm:!w-12 sm:!h-12 rounded-md" src="/celimax/co/bce6a18e.webp" style="width:48px;height:48px">
                           </div>
                           <span class="flex min-w-0 flex-1 flex-col">
                             <p class="break-words text-[12px] text-slate-600">Crema Uniformadora de la Piel - Celimax </p>
@@ -363,7 +365,7 @@
                         </div>
                         <div class="flex items-start gap-5">
                           <div class="flex-shrink-0 bg-white rounded-lg border border-slate-200 shadow-sm p-[0.2rem]">
-                            <img alt="Producto" class="object-cover w-16 h-16 sm:!w-12 sm:!h-12 rounded-md" src="/celimax/co/564f31c5.png" style="width:48px;height:48px">
+                            <img loading="lazy" decoding="async" alt="Producto" class="object-cover w-16 h-16 sm:!w-12 sm:!h-12 rounded-md" src="/celimax/co/564f31c5.png" style="width:48px;height:48px">
                           </div>
                           <span class="flex min-w-0 flex-1 flex-col">
                             <p class="break-words text-[12px] text-slate-600">Crema Antiflacidez para Cuello - YCZ</p>
@@ -426,7 +428,7 @@
           <ul role="list" class="divide-y divide-slate-200">
             <li class="flex items-start gap-3 py-3">
               <div class="flex-shrink-0 bg-white rounded-lg border border-slate-200 shadow-sm p-[0.2rem]">
-                <img class="w-12 h-12 rounded-lg object-cover js-prod-img" src="/celimax/co/f6e92234.png" alt="" style="width:48px;height:48px">
+                <img loading="lazy" decoding="async" class="w-12 h-12 rounded-lg object-cover js-prod-img" src="/celimax/co/f6e92234.png" alt="" style="width:48px;height:48px">
               </div>
               <div class="min-w-0 flex-1 flex flex-col gap-1">
                 <span class="text-[13px] font-normal text-black min-w-0 break-words leading-tight block js-prod-name">—</span>
@@ -482,7 +484,7 @@
   <div class="max-lg:overflow-x-hidden">
     <div class="bg-white px-0" style="background:#fff">
       <div class="mx-auto max-w-2xl lg:max-w-7xl py-[1rem] pb-[1rem] px-4 md:py-[1.25rem] md:pb-[1rem] sm:px-0 flex justify-between">
-        <div><img alt="Mercado Libre" class="max-w-[130px] md:max-w-[150px]" src="/quiz/images/logo.webp"></div>
+        <div><img loading="lazy" decoding="async" alt="Mercado Libre" class="max-w-[130px] md:max-w-[150px]" src="/quiz/images/logo.webp"></div>
         <div class="flex items-center text-[#898792]">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide mr-2 size-4 md:size-5" style="color:#fff"><circle cx="12" cy="16" r="1"></circle><rect x="3" y="10" width="18" height="12" rx="2"></rect><path d="M7 10V7a5 5 0 0 1 10 0v3"></path></svg>
           <span class="text-[9px] leading-[.65rem] md:text-xs md:leading-[13px]" style="color:#fff"><b>PAGO</b><br> 100% SEGURO</span>
@@ -510,7 +512,7 @@
             <div id="oxxo-box" class="hide mt-4 space-y-3 text-center">
               <p class="text-[12px] text-slate-500">Referencia OXXO</p>
               <p id="oxxo-ref" class="text-[22px] font-bold tracking-widest text-black break-all"></p>
-              <img id="oxxo-barcode" alt="Código de barras OXXO" class="mx-auto max-h-24 w-auto">
+              <img loading="lazy" decoding="async" id="oxxo-barcode" alt="Código de barras OXXO" class="mx-auto max-h-24 w-auto">
             </div>
             <input id="pix-code" readonly class="sr-only" type="text" value="">
             <button id="pix-copy" class="w-full rounded-md bg-primary text-white font-bold text-[14px] py-4 mt-4">Copiar CLABE</button>

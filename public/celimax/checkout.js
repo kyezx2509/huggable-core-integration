@@ -398,6 +398,8 @@
         zipcode: digits($("#zipcode").value), state: $("#uf").value, municipality: $("#city").value.trim(),
         colonia: $("#neighborhood").value.trim(), street: $("#street").value.trim(), exterior: $("#number").value.trim(),
         interior: $("#complement").value.trim(), reference: ($("#reference") ? $("#reference").value.trim() : ""),
+        between_streets: [$("#between1"), $("#between2")].map((e) => (e ? e.value.trim() : "")).filter(Boolean).join(" y "),
+        address_type: (document.querySelector('input[name="addrtype"]:checked') || {}).value || "residencial",
         shipping: state.shipping ? "express" : "estandar", shipping_price: state.shipping, country: "MX",
       },
       items: realItems,
