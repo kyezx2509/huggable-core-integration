@@ -66,26 +66,9 @@ export async function sendPushcut(title: string, text: string): Promise<void> {
   await post(url, title, text)
 }
 
-let rateCache: { v: number; t: number } | null = null
-const FALLBACK_MXN_BRL = 0.29
-
-/** Cotacao MXN -> BRL (cache 6h, fallback fixo se a API falhar). */
-async function mxnToBrlRate(): Promise<number> {
-  if (rateCache && Date.now() - rateCache.t < 6 * 3600_000) return rateCache.v
-  try {
-    const r = await fetch('https://open.er-api.com/v6/latest/MXN', { signal: AbortSignal.timeout(4000) })
-    const j: any = await r.json()
-    const v = Number(j?.rates?.BRL)
-    if (v > 0) { rateCache = { v, t: Date.now() }; return v }
-  } catch (e) { console.warn('[pushcut] cotacao falhou', e) }
-  return FALLBACK_MXN_BRL
-}
-
-/** Valor em centavos de MXN convertido para "R$ 1.234,56". */
-export async function brl(cents: number): Promise<string> {
-  const reais = (Number(cents || 0) / 100) * (await mxnToBrlRate())
-  return 'R$ ' + reais.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-}
+// Cotacao MXN -> BRL em src/lib/fx.server.ts (compartilhada com o Purchase do Meta).
+import { brl } from '@/lib/fx.server'
+export { brl }
 
 export async function notifyVendaGerada(amountCents: number): Promise<void> {
   await sendPushcut('OFERTA ML', `VENDA GERADA ${await brl(amountCents)}`)

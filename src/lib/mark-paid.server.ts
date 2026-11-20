@@ -13,10 +13,19 @@ export async function markPaid(transactionId: string): Promise<boolean> {
   if (!data) return false
   const tracking: any = data.tracking_json || {}
   const amountCents = Number(data.amount) || 0
+  // O Purchase do Meta e disparado em reais (anuncio roda no Brasil).
+  let brlValue: number
+  try {
+    const { mxnCentsToBrl } = await import('@/lib/fx.server')
+    brlValue = await mxnCentsToBrl(amountCents)
+  } catch (e) {
+    console.error('[fx]', e)
+    brlValue = Number(((amountCents / 100) * 0.29).toFixed(2))
+  }
   try {
     const { sendFbPurchase } = await import('@/lib/fb-capi.server')
     await sendFbPurchase({
-      eventId: transactionId, value: amountCents / 100, currency: 'MXN',
+      eventId: transactionId, value: brlValue, currency: 'BRL',
       eventSourceUrl: tracking.event_source_url || undefined,
       customer: { name: data.customer_name || undefined, email: data.customer_email || undefined, phone: data.customer_phone || undefined, ip: data.customer_ip || undefined, userAgent: tracking.user_agent || undefined },
       fbp: tracking.fbp || undefined, fbc: tracking.fbc || undefined, externalId: data.customer_email || undefined,

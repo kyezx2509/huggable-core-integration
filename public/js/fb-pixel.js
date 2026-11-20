@@ -100,11 +100,34 @@
   window.fbInitiateCheckoutSent = icAlreadySent;
 
 
-  // Purchase somente para pedidos pagos
+  // Purchase somente para pedidos pagos.
+  // O valor chega em MXN (preco cobrado na loja) e e enviado em BRL: o anuncio
+  // roda no Brasil, entao a conversao precisa chegar em reais.
+  var FX_FALLBACK = 0.29;
+  var _fxRate = null;
+  function fxRate() {
+    if (_fxRate) return Promise.resolve(_fxRate);
+    var url = window.apiUrl ? window.apiUrl('/api/public/fx') : '/api/public/fx';
+    return fetch(url)
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        var v = Number(j && j.mxnBrl);
+        _fxRate = v > 0 ? v : FX_FALLBACK;
+        return _fxRate;
+      })
+      .catch(function () { return _fxRate || FX_FALLBACK; });
+  }
+  fxRate(); // pre-aquece a cotacao no carregamento da pagina
 
   window.fbPurchase = function (value, transactionId) {
-    try {
-      fbq('track', 'Purchase', { value: Number(value) || 0, currency: 'MXN' }, { eventID: String(transactionId || '') });
-    } catch (e) {}
+    var mxn = Number(value) || 0;
+    fxRate().then(function (rate) {
+      try {
+        fbq('track', 'Purchase', {
+          value: Number((mxn * rate).toFixed(2)),
+          currency: 'BRL',
+        }, { eventID: String(transactionId || '') });
+      } catch (e) {}
+    });
   };
 })();

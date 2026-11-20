@@ -16,6 +16,7 @@ import { Route as ApiPublicAdminActionRouteImport } from './routes/api/public/ad
 import { Route as ApiPublicComprovanteUrlRouteImport } from './routes/api/public/comprovante-url'
 import { Route as ApiPublicFbEventRouteImport } from './routes/api/public/fb-event'
 import { Route as ApiPublicFreepayCheckoutRouteImport } from './routes/api/public/freepay-checkout'
+import { Route as ApiPublicFxRouteImport } from './routes/api/public/fx'
 import { Route as ApiPublicGeoRouteImport } from './routes/api/public/geo'
 import { Route as ApiPublicLogLoginAttemptRouteImport } from './routes/api/public/log-login-attempt'
 import { Route as ApiPublicLogVisitRouteImport } from './routes/api/public/log-visit'
@@ -62,6 +63,11 @@ const ApiPublicFreepayCheckoutRoute =
     path: '/api/public/freepay-checkout',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicFxRoute = ApiPublicFxRouteImport.update({
+  id: '/api/public/fx',
+  path: '/api/public/fx',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicGeoRoute = ApiPublicGeoRouteImport.update({
   id: '/api/public/geo',
   path: '/api/public/geo',
@@ -119,6 +125,7 @@ export interface FileRoutesByFullPath {
   '/api/public/comprovante-url': typeof ApiPublicComprovanteUrlRoute
   '/api/public/fb-event': typeof ApiPublicFbEventRoute
   '/api/public/freepay-checkout': typeof ApiPublicFreepayCheckoutRoute
+  '/api/public/fx': typeof ApiPublicFxRoute
   '/api/public/geo': typeof ApiPublicGeoRoute
   '/api/public/log-login-attempt': typeof ApiPublicLogLoginAttemptRoute
   '/api/public/log-visit': typeof ApiPublicLogVisitRoute
@@ -137,6 +144,7 @@ export interface FileRoutesByTo {
   '/api/public/comprovante-url': typeof ApiPublicComprovanteUrlRoute
   '/api/public/fb-event': typeof ApiPublicFbEventRoute
   '/api/public/freepay-checkout': typeof ApiPublicFreepayCheckoutRoute
+  '/api/public/fx': typeof ApiPublicFxRoute
   '/api/public/geo': typeof ApiPublicGeoRoute
   '/api/public/log-login-attempt': typeof ApiPublicLogLoginAttemptRoute
   '/api/public/log-visit': typeof ApiPublicLogVisitRoute
@@ -156,6 +164,7 @@ export interface FileRoutesById {
   '/api/public/comprovante-url': typeof ApiPublicComprovanteUrlRoute
   '/api/public/fb-event': typeof ApiPublicFbEventRoute
   '/api/public/freepay-checkout': typeof ApiPublicFreepayCheckoutRoute
+  '/api/public/fx': typeof ApiPublicFxRoute
   '/api/public/geo': typeof ApiPublicGeoRoute
   '/api/public/log-login-attempt': typeof ApiPublicLogLoginAttemptRoute
   '/api/public/log-visit': typeof ApiPublicLogVisitRoute
@@ -176,6 +185,7 @@ export interface FileRouteTypes {
     | '/api/public/comprovante-url'
     | '/api/public/fb-event'
     | '/api/public/freepay-checkout'
+    | '/api/public/fx'
     | '/api/public/geo'
     | '/api/public/log-login-attempt'
     | '/api/public/log-visit'
@@ -194,6 +204,7 @@ export interface FileRouteTypes {
     | '/api/public/comprovante-url'
     | '/api/public/fb-event'
     | '/api/public/freepay-checkout'
+    | '/api/public/fx'
     | '/api/public/geo'
     | '/api/public/log-login-attempt'
     | '/api/public/log-visit'
@@ -212,6 +223,7 @@ export interface FileRouteTypes {
     | '/api/public/comprovante-url'
     | '/api/public/fb-event'
     | '/api/public/freepay-checkout'
+    | '/api/public/fx'
     | '/api/public/geo'
     | '/api/public/log-login-attempt'
     | '/api/public/log-visit'
@@ -231,6 +243,7 @@ export interface RootRouteChildren {
   ApiPublicComprovanteUrlRoute: typeof ApiPublicComprovanteUrlRoute
   ApiPublicFbEventRoute: typeof ApiPublicFbEventRoute
   ApiPublicFreepayCheckoutRoute: typeof ApiPublicFreepayCheckoutRoute
+  ApiPublicFxRoute: typeof ApiPublicFxRoute
   ApiPublicGeoRoute: typeof ApiPublicGeoRoute
   ApiPublicLogLoginAttemptRoute: typeof ApiPublicLogLoginAttemptRoute
   ApiPublicLogVisitRoute: typeof ApiPublicLogVisitRoute
@@ -291,6 +304,13 @@ declare module '@tanstack/react-router' {
       path: '/api/public/freepay-checkout'
       fullPath: '/api/public/freepay-checkout'
       preLoaderRoute: typeof ApiPublicFreepayCheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/fx': {
+      id: '/api/public/fx'
+      path: '/api/public/fx'
+      fullPath: '/api/public/fx'
+      preLoaderRoute: typeof ApiPublicFxRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/geo': {
@@ -367,6 +387,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicComprovanteUrlRoute: ApiPublicComprovanteUrlRoute,
   ApiPublicFbEventRoute: ApiPublicFbEventRoute,
   ApiPublicFreepayCheckoutRoute: ApiPublicFreepayCheckoutRoute,
+  ApiPublicFxRoute: ApiPublicFxRoute,
   ApiPublicGeoRoute: ApiPublicGeoRoute,
   ApiPublicLogLoginAttemptRoute: ApiPublicLogLoginAttemptRoute,
   ApiPublicLogVisitRoute: ApiPublicLogVisitRoute,
