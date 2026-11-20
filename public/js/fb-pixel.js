@@ -2,7 +2,7 @@
 // PageView no carregamento; Purchase e disparado APENAS quando o Pix e pago
 // (dedup com a Conversions API via event_id = transaction_id).
 (function () {
-  var PIXEL_IDS = ['1071922481952543', '2495926674152987'];
+  var PIXEL_IDS = ['1071922481952543', '2495926674152987', '2566725997161990'];
   window.FB_PIXEL_IDS = PIXEL_IDS;
   window.FB_PIXEL_ID = PIXEL_IDS[0];
 
